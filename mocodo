@@ -1,0 +1,53 @@
+:
+:
+:
+:
+Spectateur : idSpectateur,nom,numeroTel,mail
+:
+:
+:
+:
+
+:
+:
+Joue , 0N Groupe ,0N Instrument
+Instrument: idInstrument, nomInstrupent
+Billet, 11 Spectateur , 0N Festival : dateD ,dateF , Type
+:
+:
+:
+
+
+StyleDeMusic : typeStyle 
+Style , 1N Groupe , ON StyleDeMusic
+Groupe: idGroupe, description,photo,reseauSocial,nbPersone
+Present , 1N Festival , 0N Groupe : dateArriver , dateDepart
+Festival :idFestival ,dateDebut ,dateFin
+:
+:
+:
+:
+
+Hebergement : idhebergement , nbPlace ,lieux
+Dormi , 01 Groupe, 0N Hebergement
+Concert, 11 Date,11 Heure, 1N Groupe : tarif ,demontage, montage , duree
+Date: Date
+Activite, 1N Groupe , 11 Date , 11 Heure : nomActivite, privatitation
+:
+:
+:
+:
+
+:
+:
+:
+Heure: Heure
+:
+:
+:
+:
+:
+:
+:
+:
+:
