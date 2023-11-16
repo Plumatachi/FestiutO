@@ -1,5 +1,5 @@
 import sqlalchemy
-from loginSQL import getLogin, getPasswd, getServeur, getBd
+from .loginSQL import getLogin, getPasswd, getServeur, getBd
 import pymysql
 
 pymysql.install_as_MySQLdb()

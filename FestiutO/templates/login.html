@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% if 'utilisateur' in session %}
+    <p id="text-acceuil">Vous êtes connecté en tant que participant</p>
+
+    <!-- profil -->
+    <div class="container-control-profil">
+        <a class="a-lien" id="seDeco" href="{{ url_for('logout') }}">Se déconnecter</a>
+        <a class="a-lien" id="lien-accueil" href="{{ url_for('base') }}">Retour à l'accueil</a>
+
+
+{% else %}
+    <div>
+        <div>
+            <h2>Connexion</h2>
+            <form role="form" method="POST" action ="{{ url_for('login') }}">
+                {{ form.hidden_tag() }}
+              <div>
+                {{ form.email(size=50, class_="form-control element", placeholder="Email") }}
+              </div>
+              <div>
+                <div>{{ form.password(size=50, class_="form-control element", placeholder="Password") }}</div>
+              </div>
+              <div>
+                <input type="submit" value="Se Connecter" class="element">
+              </div>
+              <div>
+                <a  href="{{ url_for('register') }}">S'inscrire</a>
+              </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <button id="btn-retour-mdp">retour</button>
+    </div>
+    {% endif %}
+{% endblock %}
