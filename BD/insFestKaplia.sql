@@ -1,82 +1,61 @@
-INSERT INTO FESTIVAL (idfestival, datedebut, datefin)
+INSERT INTO FESTIVAL (datedebut, datefin)
 VALUES
-    (1, '2023-07-15', '2023-07-19'),
-    (2, '2023-08-15', '2023-08-20');
+    ('2023-07-15', '2023-07-19'),
+    ('2023-08-15', '2023-08-20');
 
 
-INSERT INTO SCENE (idScene, nomScene, lieux)
-VALUES (1, 'Main Stage', 'Central Park');
-
-INSERT INTO SCENE (idScene, nomScene, lieux)
-VALUES (2, 'Rock Stage', 'West Field');
-
-INSERT INTO SCENE (idScene, nomScene, lieux)
-VALUES (3, 'Pop Stage', 'East Field');
-
-INSERT INTO SCENE (idScene, nomScene, lieux)
-VALUES (4, 'Electronic Stage', 'South Field');
-
-INSERT INTO SCENE (idScene, nomScene, lieux)
-VALUES (5, 'Mixt Stage', 'South Field');
-
-INSERT INTO SCENE (idScene, nomScene, lieux)
-VALUES (6, 'HardStyle Stage', 'South Field');
+INSERT INTO SCENE (nomScene, lieux)
+VALUES ('Main Stage', 'Central Park'),
+       ('Rock Stage', 'West Field'),
+       ('Pop Stage', 'East Field'),
+       ('Electronic Stage', 'South Field'),
+       ('Mixt Stage', 'South Field'),
+       ('HardStyle Stage', 'South Field');
 
 
-INSERT INTO JOURNEE (idJournee, nomJournee, dateDebutJ, dateFinJ, idfestival)
+INSERT INTO JOURNEE (nomJournee, dateDebutJ, dateFinJ, idfestival)
 VALUES
-    (1, 'Opening Day', '2023-07-15', '2023-07-15', 1),
-    (2, 'Rock Day', '2023-07-16', '2023-07-16', 1),
-    (3, 'Pop Day', '2023-07-17', '2023-07-17', 1),
-    (4, 'Electronic Day', '2023-08-18', '2023-08-18', 2),
-    (5, 'Closing Day', '2023-08-19', '2023-08-19', 2);
+    ('Opening Day', '2023-07-15', '2023-07-15', 1),
+    ('Rock Day', '2023-07-16', '2023-07-16', 1),
+    ('Pop Day', '2023-07-17', '2023-07-17', 1),
+    ('Electronic Day', '2023-08-18', '2023-08-18', 2),
+    ('Closing Day', '2023-08-19', '2023-08-19', 2);
 
 
-INSERT INTO ACTIVITE (idActivite, nomactivite, privatitation)
+INSERT INTO ACTIVITE (nomactivite, privatitation)
 VALUES
-    (1, 'Concert', 'Publique'),
-    (2, 'Rencontre avec les artistes', 'Privée'),
-    (3, 'Atelier de musique', 'Publique'),
-    (4, 'Conférence', 'Publique'),
-    (5, 'Exposition', 'Publique');
+    ('Concert', 'Publique'),
+    ('Rencontre avec les artistes', 'Privée'),
+    ('Atelier de musique', 'Publique'),
+    ('Conférence', 'Publique'),
+    ('Exposition', 'Publique');
 
-INSERT INTO CONCERT (idConcert, demontage, montage)
+INSERT INTO CONCERT (demontage, montage)
 VALUES
-    (1, 30, 60),
-    (2, 120, 120),
-    (3, 45 , 60),
-    (4, 60 , 120);
+    (30, 60),
+    (120, 120),
+    (45 , 60),
+    (60 , 120);
 
 
 
 
-INSERT INTO EVENEMENT (idEvenement, dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert)
-VALUES (2, '2023-07-17 18:00:00', '2023-07-17 20:00:00', 3, 3, NULL, 2);
-
-INSERT INTO EVENEMENT (idEvenement, dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert)
-VALUES (3, '2023-08-18 22:00:00', '2023-08-18 23:00:00', 2, 4, NULL, 3);
-
-INSERT INTO EVENEMENT (idEvenement, dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert)
-VALUES (4, '2023-08-19 12:00:00', '2023-08-19 14:00:00', 1, 5, 1, NULL);
+INSERT INTO EVENEMENT (dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert)
+VALUES ('2023-07-17 18:00:00', '2023-07-17 20:00:00', 3, 3, NULL, 2),
+        ('2023-08-18 22:00:00', '2023-08-18 23:00:00', 2, 4, NULL, 3),
+        ('2023-08-19 12:00:00', '2023-08-19 14:00:00', 1, 5, 1, NULL),
+        ('2023-07-15 19:00:00', '2023-07-15 20:00:00', 5, 1, NULL, 1),
+        ('2023-07-15 21:00:00', '2023-07-15 23:00:00', 5, 1, 2, NULL);
 
 
-INSERT INTO EVENEMENT (idEvenement, dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert)
+
+INSERT INTO SPECTATEUR (nom, numerotel, mail,motsDePasse)
 VALUES
-(10, '2023-07-15 19:00:00', '2023-07-15 20:00:00', 5, 1, NULL, 1);
-
-INSERT INTO EVENEMENT (idEvenement, dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert)
-VALUES
-(9, '2023-07-15 21:00:00', '2023-07-15 23:00:00', 5, 1, 2, NULL);
-
-
-
-INSERT INTO SPECTATEUR (idspectateur, nom, numerotel, mail,motsDePasse)
-VALUES
-    (1, 'Spectateur 1', '1234567890', 'spectateur1@example.com',"151654161246"),
-    (3, 'Spectateur 3', '1464565465', 'spectateur3@example.com',"161684321315"),
-    (4, 'Spectateur 4', '9461616160', 'spectateur4@example.com',"1019465031354"),
-    (5, 'Spectateur 5', '6494198848', 'spectateur5@example.com',"25406034841649"),
-    (2, 'Spectateur 2', '9876543210', 'spectateur2@example.com',"60164849410148");
+    ('Spectateur 1', '1234567890', 'spectateur1@example.com',"151654161246"),
+    ('Spectateur 2', '9876543210', 'spectateur2@example.com',"60164849410148"),
+    ('Spectateur 3', '1464565465', 'spectateur3@example.com',"161684321315"),
+    ('Spectateur 4', '9461616160', 'spectateur4@example.com',"1019465031354"),
+    ('Spectateur 5', '6494198848', 'spectateur5@example.com',"25406034841649");
 
 -- INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
 -- (1,'Les Rolling Stones', 'Un groupe de rock britannique formé à Londres en 1962.', 'twitter.com/rollingstones', NULL, 4);
@@ -97,7 +76,7 @@ VALUES
 
 INSERT INTO PARTICIPE (idEvenement, idGroupe)
 VALUES
-    (10, 1),
+    (1, 1),
     (2, 1),
     (3, 3),
     (4, 4);
@@ -114,7 +93,7 @@ VALUES
 
 INSERT INTO BILLETEVENEMENT (idspectateur, idEvenement)
 VALUES
-    (1, 10),
+    (1, 1),
     (1, 3),
     (3, 3),
     (4, 4);
@@ -138,52 +117,52 @@ INSERT INTO RESSEMBLE (typeDeMusique, typeDeMusique2) VALUES
     ("Rock","Rock Progressif"),
     ("Hard Rock","Trash Metal");
 
-INSERT INTO INSTRUMENT(idinstrument, nominstrupent) VALUES
-    (1, "Guitare"),
-    (2, "Chant"),
-    (3,"Basse"),
-    (4,"Batterie");
+INSERT INTO INSTRUMENT(nominstrupent) VALUES
+    ("Guitare"),
+    ("Chant"),
+    ("Basse"),
+    ("Batterie");
 
-INSERT INTO MUSICIEN (idMusicien, nom, adresseMail, numeroTelMusicien) VALUES
-    (1, 'Mick Jagger', 'mick@rollingstones.com', 0612345678),
+INSERT INTO MUSICIEN (nom, adresseMail, numeroTelMusicien) VALUES
+    ('Mick Jagger', 'mick@rollingstones.com', 0612345678),
 
-    (2, 'Keith Richards', 'keith@rollingstones.com', 0678901234),
+    ('Keith Richards', 'keith@rollingstones.com', 0678901234),
 
-    (3, 'Charlie Watts', 'charlie@rollingstones.com', 0654321098),
+    ('Charlie Watts', 'charlie@rollingstones.com', 0654321098),
 
-    (4, 'Ronnie Wood', 'ronnie@rollingstones.com', 0665432109),
+    ('Ronnie Wood', 'ronnie@rollingstones.com', 0665432109),
 
-    (5, 'John Lennon', 'john@beatles.com', 0612345778),
+    ('John Lennon', 'john@beatles.com', 0612345778),
 
-    (6, 'Paul McCartney', 'paul@beatles.com', 0677901234),
+    ('Paul McCartney', 'paul@beatles.com', 0677901234),
 
-    (7, 'George Harrison', 'george@beatles.com', 0654321099),
+    ('George Harrison', 'george@beatles.com', 0654321099),
 
-    (8, 'Ringo Starr', 'ringo@beatles.com', 0765432109),
+    ('Ringo Starr', 'ringo@beatles.com', 0765432109),
 
-    (9, 'Angus Young', 'angus@acdc.com', 0662345678),
+    ('Angus Young', 'angus@acdc.com', 0662345678),
 
-    (10, 'Malcolm Young', 'malcolm@acdc.com', 0678911234),
+    ('Malcolm Young', 'malcolm@acdc.com', 0678911234),
 
-    (11, 'Brian Johnson', 'brian@acdc.com', 0674321098),
+    ('Brian Johnson', 'brian@acdc.com', 0674321098),
 
-    (12, 'Cliff Williams', 'cliff@acdc.com', 0666432109),
+    ('Cliff Williams', 'cliff@acdc.com', 0666432109),
 
-    (13, 'James Hetfield', 'james@metallica.com', 0612345618),
+    ('James Hetfield', 'james@metallica.com', 0612345618),
 
-    (14, 'Lars Ulrich', 'lars@metallica.com', 0678901334),
+    ('Lars Ulrich', 'lars@metallica.com', 0678901334),
 
-    (15, 'Kirk Hammett', 'kirk@metallica.com', 0654331098),
+    ('Kirk Hammett', 'kirk@metallica.com', 0654331098),
 
-    (16, 'Robert Trujillo', 'robert@metallica.com', 0667432109),
+    ('Robert Trujillo', 'robert@metallica.com', 0667432109),
 
-    (17, 'Roger Waters', 'roger@pinkfloyd.com', 0712345678),
+    ('Roger Waters', 'roger@pinkfloyd.com', 0712345678),
 
-    (18, 'David Gilmour', 'david@pinkfloyd.com', 0678901214),
+    ('David Gilmour', 'david@pinkfloyd.com', 0678901214),
 
-    (19, 'Richard Wright', 'richard@pinkfloyd.com', 0654821098),
+    ('Richard Wright', 'richard@pinkfloyd.com', 0654821098),
 
-    (20, 'Nick Mason', 'nick@pinkfloyd.com', 0765432110);
+    ('Nick Mason', 'nick@pinkfloyd.com', 0765432110);
 
 INSERT INTO APPARTIENT(idGroupe, idMusicien) VALUES
     (1,1),
@@ -249,11 +228,11 @@ INSERT INTO JOUE (idgroupe, idinstrument, idMusicien) VALUES
 
     (5, 4, 20);
 
-INSERT INTO HEBERGEMENT(idhebergement, nbplace, lieux) VALUES
-    (1, 150, "Manhattan"),
-    (2, 100, "Queens"),
-    (3, 80, "Bronks"),
-    (4, 200, "Brooklyn");
+INSERT INTO HEBERGEMENT(nbplace, lieux) VALUES
+    (150, "Manhattan"),
+    (100, "Queens"),
+    (80, "Bronks"),
+    (200, "Brooklyn");
 
 INSERT INTO DORMIR(nbPersonneGroupe, dateArrivee, dateDepart, idgroupe, idhebergement) VALUES
     (4, '2023-07-15', '2023-07-19', 1, 1),

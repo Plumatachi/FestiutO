@@ -1,5 +1,5 @@
 CREATE TABLE `JOURNEE`(
-  `idJournee` int,
+  `idJournee` int auto_increment,
   `nomJournee` VARCHAR(42),
   `dateDebutJ` date,
   `dateFinJ` date,
@@ -8,7 +8,7 @@ CREATE TABLE `JOURNEE`(
 );
 
 CREATE TABLE `EVENEMENT`(
-  `idEvenement` int,
+  `idEvenement` int auto_increment,
   `dateDebutE` DATETIME,
   `dateFinE` DATETIME,
   `idScene` int,
@@ -19,21 +19,21 @@ CREATE TABLE `EVENEMENT`(
 );
 
 CREATE TABLE `SCENE` (
-  `idScene` int,
+  `idScene` int auto_increment,
   `nomScene` VARCHAR(42),
   `lieux` VARCHAR(42),
   PRIMARY KEY(idScene)
 );
 
 CREATE TABLE `ACTIVITE` (
-  `idActivite` int,
+  `idActivite` int auto_increment,
   `nomactivite` VARCHAR(42),
   `privatitation` VARCHAR(42),
   PRIMARY KEY ( `idActivite`)
 )  ;
 
 CREATE TABLE `CONCERT` (
-  `idConcert` int,
+  `idConcert` int auto_increment,
   `demontage` int,
   `montage` int,
   PRIMARY KEY ( `idConcert`)
@@ -52,7 +52,7 @@ CREATE TABLE `BILLETEVENEMENT` (
 )  ;
 
 CREATE TABLE `FESTIVAL` (
-  `idfestival` int,
+  `idfestival` int auto_increment,
   `datedebut` date,
   `datefin` date,
   PRIMARY KEY (`idfestival`)
@@ -60,7 +60,7 @@ CREATE TABLE `FESTIVAL` (
 
 
 CREATE TABLE `GROUPE` (
-  `idgroupe` int,
+  `idgroupe` int auto_increment,
   `nomDuGroupe` VARCHAR(42),
   `description` VARCHAR(100),
   `reseausocial` VARCHAR(100),
@@ -70,14 +70,14 @@ CREATE TABLE `GROUPE` (
 )  ;
 
 CREATE TABLE `HEBERGEMENT` (
-  `idhebergement` int,
+  `idhebergement` int auto_increment,
   `nbplace` int,
   `lieux` VARCHAR(100),
   PRIMARY KEY (`idhebergement`)
 )  ;
 
 CREATE TABLE `INSTRUMENT` (
-  `idinstrument` int,
+  `idinstrument` int auto_increment,
   `nominstrupent` VARCHAR(42),  
   PRIMARY KEY (`idinstrument`)
 )  ;
@@ -103,10 +103,10 @@ CREATE TABLE `STYLEDEMUSIQUE` (
 ) ;
 
 CREATE TABLE `SPECTATEUR` (
-  `idspectateur` int,
+  `idspectateur` int auto_increment,
   `nom` VARCHAR(42),
   `numerotel` VARCHAR(10),
-  `mail` VARCHAR(100),
+  `mail` VARCHAR(100) UNIQUE,
   `motsDePasse` varchar(20),
   PRIMARY KEY (`idspectateur`)
 )  ;
@@ -127,7 +127,7 @@ CREATE TABLE `DORMIR` (
 ) ;
 
 CREATE TABLE `MUSICIEN` (
-  `idMusicien` int,
+  `idMusicien` int auto_increment,
   `nom` VARCHAR(42),
   `adresseMail` VARCHAR(42),
   `numeroTelMusicien` int,
