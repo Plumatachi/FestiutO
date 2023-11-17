@@ -1,0 +1,46 @@
+
+
+.form{
+    margin: 5em auto;
+    width: 30%;
+    padding: 5em;
+    text-align: center;
+    align-items: center;
+    background-color: aquamarine;
+    border-radius: 30px;
+}
+
+.register-container{
+    text-align:  center;
+    margin: 0 auto;
+    width: 40%;
+}
+
+.btn-container *{
+    color: none;
+    border: none;
+    width: 50%;
+    border-radius: 10px;
+    margin: 1em;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.input{
+    width: 100%;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.element *{
+    border-radius: 30px;
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: #009af0;
+    background: linear-gradient(to right, #0473b3, aquamarine);
+    
+
+}
+

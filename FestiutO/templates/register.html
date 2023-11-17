@@ -8,28 +8,28 @@
 {% block title %}Connexion{% endblock %}
 {% block content %}
 
-    <div id="register-container">
-        <div id="register-box">
-            <h2 class="element">S'inscrire</h2>
-            <form class="form-horizontal" role="form" method="POST" action ="{{ url_for('register') }}">
+    <div>
+        <div>
+            <h2>S'inscrire</h2>
+            <form role="form" method="POST" action ="{{ url_for('register') }}">
                 {{ form.hidden_tag() }}
-            <div class="user-box">
+            <div>
                 {{ form.email(size=50, class_="form-control element", placeholder="Email") }}
             </div>
-            <div class="user-box">
+            <div>
                 {{ form.nom(size=50, class_="form-control element", placeholder="Username") }}
             </div>
-            <div class="user-box">
+            <div>
                 <div>{{ form.numerotelephone(size=50, class_="form-control element", placeholder="0610203020") }}</div>
             </div>
-            <div class="user-box">
+            <div >
                 <div>{{ form.password(size=50, class_="form-control element", placeholder="Password") }}</div>
             </div>
-            <div class="user-box">
+            <div>
                 <div>{{ form.confirm(size=50, class_="form-control element", placeholder="Confirm Password") }}</div>
             </div>
-            <div class="valid-container">
-                <input type="submit" value="S'enregistrer" class="element">
+            <div>
+                <input type="submit" value="S'enregistrer">
             </div>
             </form>
         </div>
