@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/register.css') }}">
+{% endblock %}
+
+{% block title %}Connexion{% endblock %}
+{% block content %}
+
+    <div>
+        <div>
+            <h2>S'inscrire</h2>
+            <form role="form" method="POST" action ="{{ url_for('register') }}">
+                {{ form.hidden_tag() }}
+            <div>
+                {{ form.email(size=50, class_="form-control element", placeholder="Email") }}
+            </div>
+            <div>
+                {{ form.nom(size=50, class_="form-control element", placeholder="Username") }}
+            </div>
+            <div>
+                <div>{{ form.numerotelephone(size=50, class_="form-control element", placeholder="0610203020") }}</div>
+            </div>
+            <div >
+                <div>{{ form.password(size=50, class_="form-control element", placeholder="Password") }}</div>
+            </div>
+            <div>
+                <div>{{ form.confirm(size=50, class_="form-control element", placeholder="Confirm Password") }}</div>
+            </div>
+            <div>
+                <input type="submit" value="S'enregistrer">
+            </div>
+            </form>
+        </div>
+    </div>
+    <div id="mdp-container">
+        <button id="btn-retour-mdp">retour</button>
+    </div>
+{% endblock %}
