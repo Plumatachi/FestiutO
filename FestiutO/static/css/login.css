@@ -1,12 +1,11 @@
 
-
 .form{
     margin: 5em auto;
     width: 30%;
     padding: 5em;
     text-align: center;
     align-items: center;
-    background-color: aquamarine;
+    background: linear-gradient(to bottom, rgb(238, 76, 44), rgb(88, 16, 1));
     border-radius: 30px;
 }
 
@@ -27,19 +26,21 @@
 }
 
 .input{
-    width: 100%;
-    margin: 10px;
+    width: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border-radius: 10px;
     border: none;
 }
 
 .element *{
     border-radius: 30px;
+    width: 84%;
     border: none;
     padding: 1em;
     cursor: pointer;
-    background-color: #009af0;
-    background: linear-gradient(to right, #0473b3, aquamarine);
+    background-color: rgb(130, 139, 4);
+    background: white;
     
 
 }

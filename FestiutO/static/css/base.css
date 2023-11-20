@@ -1,11 +1,9 @@
-body {
-    font-family: 'Alumni Sans', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+body, .input *, .element{
+    font-family: 'Inter', sans-serif;
 }
 
 a {
     text-decoration: none;
-}
-
-.input *{
-    font-family: 'Alumni Sans', sans-serif;
 }
