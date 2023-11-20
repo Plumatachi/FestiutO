@@ -9,12 +9,6 @@
     border-radius: 30px;
 }
 
-.register-container{
-    text-align:  center;
-    margin: 0 auto;
-    width: 40%;
-}
-
 .btn-container *{
     color: none;
     border: none;
@@ -41,7 +35,14 @@
     cursor: pointer;
     background-color: rgb(130, 139, 4);
     background: white;
-    
-
 }
 
+.registerA{
+    color: rgb(16, 16, 17);
+    background-color: rgb(233, 233, 237);
+}
+
+.registerA:hover{
+    background-color: rgb(208, 208, 215);
+    cursor: default;
+}

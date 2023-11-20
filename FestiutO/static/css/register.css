@@ -1,0 +1,25 @@
+.element *{
+    border-radius: 30px;
+    width: 84%;
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: rgb(130, 139, 4);
+    background: white;
+}
+
+.form * {
+    font-family: 'Inter', sans-serif;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.form{
+    margin: 5em auto;
+    width: 30%;
+    padding: 5em;
+    text-align: center;
+    align-items: center;
+    background: linear-gradient(to bottom, rgb(238, 76, 44), rgb(88, 16, 1));
+    border-radius: 30px;
+}   

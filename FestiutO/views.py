@@ -44,6 +44,12 @@ def register():
     if not f.is_submitted():
         f.next.data = request.args.get("next")
     elif f.validate_on_submit():
+        if f.password.data != f.confirm.data:
+            return render_template(
+                "register.html",
+                title="register",
+                form=f,
+            )
         Spectateur.Insert.insert_spectateur(cnx, f.nom.data, f.numerotelephone.data, f.email.data, f.password.data)
         return render_template("login.html",title="login",form=LoginForm())
     return render_template(
