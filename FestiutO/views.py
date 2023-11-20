@@ -8,7 +8,7 @@ from .requete import get_cnx , Spectateur
 cnx = get_cnx()
 
 @app.route("/")
-def base():
+def home():
     return render_template(
     "home.html",
     title="Home"
@@ -24,7 +24,7 @@ def login():
         if user != None:
             session['utilisateur'] = user
             print("login : "+str(session['utilisateur']))
-            next = f.next.data or url_for("base")
+            next = f.next.data or url_for("home")
             return redirect(next)
     return render_template(
         "login.html",
@@ -35,7 +35,7 @@ def login():
 @app.route("/logout/")
 def logout():
     session.pop('utilisateur', None)
-    return redirect(url_for('base'))
+    return redirect(url_for('home'))
 
 
 @app.route("/register/", methods=("GET","POST",))
