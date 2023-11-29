@@ -1,0 +1,15 @@
+header {
+    height: 40em;
+    background-image: url("https://media.discordapp.net/attachments/1174654198877528064/1179443548068794458/festival_musique_ete.jpg?ex=6579cd66&is=65675866&hm=e9035535b198a55b3dd6a790fae867013f8398d0b13af6c50bf2a2eb5bebbc3a&=&format=webp&width=608&height=395");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.header span {
+    font-size: 3em;
+    font-weight: bold;
+    color: rgb(61, 56, 56);
+    text-shadow: 2px 2px 2px black;
+    margin-left: 2em;
+}

@@ -1,17 +1,21 @@
 <html lang="fr">
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
         {% block styles %}
         <!-- css -->
         {% endblock %}
     <body>
         <header class="header">
             <nav class="nav">
-                <ul>
-                    <li><a href="{{ url_for('home') }}">accueil</a></li>
-                    <li><a href="{{ url_for('login') }}">login</a></li>
+                <ul class="flex">
+                    <li><a href="{{ url_for('home') }}">Accueil</a></li>
+                    <li><a href="{{ url_for('billeterie') }}">Billeterie</a></li>
+                    <li><a href="{{ url_for('programme') }}">Programme</a></li>
+                    <li><a href="{{ url_for('login') }}">Connexion</a></li>
                 </ul>
             </nav>
+            <span>Festiut'O.</span>
         </header>
         <main>
             {% block content %}

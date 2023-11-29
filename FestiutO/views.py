@@ -14,7 +14,21 @@ def home():
     title="Home"
     )
 
-@app.route("/login/", methods=("GET","POST",))
+@app.route("/Billeterie/")
+def billeterie():
+    return render_template(
+    "billeterie.html",
+    title="Home"
+    )
+
+@app.route("/Programme/")
+def programme():
+    return render_template(
+    "programme.html",
+    title="Home"
+    )
+
+@app.route("/Login/", methods=("GET","POST",))
 def login():
     f = LoginForm ()
     if not f.is_submitted():
@@ -32,13 +46,13 @@ def login():
         form=f,
     )
     
-@app.route("/logout/")
+@app.route("/Logout/")
 def logout():
     session.pop('utilisateur', None)
     return redirect(url_for('home'))
 
 
-@app.route("/register/", methods=("GET","POST",))
+@app.route("/Register/", methods=("GET","POST",))
 def register():
     f = RegisterForm()
     if not f.is_submitted():
