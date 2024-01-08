@@ -1,6 +1,7 @@
 
 .form{
-    margin: 5em auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 30%;
     padding: 5em;
     text-align: center;
@@ -9,10 +10,9 @@
     border-radius: 30px;
 }
 
-.register-container{
-    text-align:  center;
-    margin: 0 auto;
-    width: 40%;
+main{
+    background-color: rgb(24, 23, 14);
+    padding-top: 3em;
 }
 
 .btn-container *{
@@ -41,7 +41,14 @@
     cursor: pointer;
     background-color: rgb(130, 139, 4);
     background: white;
-    
-
 }
 
+.registerA{
+    color: rgb(16, 16, 17);
+    background-color: rgb(233, 233, 237);
+}
+
+.registerA:hover{
+    background-color: rgb(208, 208, 215);
+    cursor: default;
+}

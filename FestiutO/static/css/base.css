@@ -4,19 +4,11 @@ body, .input *, .element{
     font-family: 'Inter', sans-serif;
 }
 
+
 a {
     text-decoration: none;
 }
-#ulnav{
-    display: flex ;
-    flex-direction: row-reverse;
-    list-style : none;
-}
 
-#ulnav > li{
-    margin-right: 10px;
-}
-
-#ulnav > li> a{
-    color: #3B3224;
-}
+li {
+    list-style-type: none;
+}    
