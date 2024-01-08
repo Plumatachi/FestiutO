@@ -3,6 +3,7 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -36,9 +37,6 @@
                 </div>
             </form>
         </div>
-    </div>
-    <div>
-        <button id="btn-retour-mdp">retour</button>
     </div>
     {% endif %}
 {% endblock %}
