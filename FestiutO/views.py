@@ -164,3 +164,12 @@ def index():
         # Par exemple, imprimez-la dans la console
         print(selected_date)
     return render_template('index.html', form=form)
+
+
+@app.route('/Billeterie/acheter_le_billet/confirmation', methods=['GET', 'POST'])
+def confirmation():
+    return render_template('confirmation.html')
+
+@app.route('/Profil/favoris')
+def favoris():
+    return render_template('favoris.html')

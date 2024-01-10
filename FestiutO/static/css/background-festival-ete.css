@@ -9,3 +9,6 @@ html {
 main, header{
     background-color: transparent;
 }
+main {
+    margin-top: 8em;
+}
