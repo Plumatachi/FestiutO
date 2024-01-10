@@ -1,9 +1,9 @@
 html {
-    background-image: url("../imagesHtml/festival_musique_ete.jpg");
+    background-image: url("../imagesHtml/festival_de_musique.jpg");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: top center;
-    background-color: rgb(25, 22, 14);
+    background-color: rgb(67, 50, 56);
 }
 
 main, header{
