@@ -64,7 +64,7 @@ CREATE TABLE `GROUPE` (
   `nomDuGroupe` VARCHAR(42),
   `description` VARCHAR(100),
   `reseausocial` VARCHAR(100),
-  `photo` LONGBLOB,  
+  `photo` varchar(100),  
   `nbpersonne` int,
   PRIMARY KEY (`idgroupe`)
 )  ;

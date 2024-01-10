@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if 'utilisateur' in session %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/acceuil.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival-ete.css') }}">
+{% endblock %}
+
+<div class="divCentral">
+    <div class="positionMessageVersBillet">
+        <div class="messageVersBillet">
+            <h2 class="titreMessageVersBillet">Festiut’O du 15 septembre au 18 décembre 2023</h2>
+            <a href="/Billeterie/" class="lienMessaegVersBillet">&gt; Réservez vos billets dès maintenant !</a>
+        </div>
+    </div>
+
+    <div class="positionListeGroupeMusique">
+        <div class="listeGroupeMusique">
+            <div class="divTitreGroupeMusique">
+                <h2 class="titreGroupeMusique" id ="titreGroupeMusique">{{lireImage[1][2]}}</h2>
+            </div>
+            <div class="divChoixGroupeMusique">
+                <button class="boutonChoixGroupe" onclick="changerImage(-1)">&lt;</button>
+                <div class="conteneurGroupe" id ="divConteneurGroupe">
+                {% for image, id , nomGroupe in lireImage %}
+                    {% if loop.index == 1 %}
+                        <img class="imageGroupe1 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    {% elif loop.index == 2 %}
+                        <img class="imageGroupe2 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    {% elif loop.index == 3 %}
+                        <img class="imageGroupe3 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    {% else %}
+                        <img class="imageGroupe imageCacher" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <button class="boutonChoixGroupe" onclick="changerImage(1)">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="positionMessageVersActiviter">
+        <div class="messageVersActiviter">
+            <a href="/Programme/" class="lienMessageVersActiviter">Consultez ici les évènements qui auront lieu lors du festival !</a>
+        </div>
+    </div>
+
+    <script>
+        let listeImage = {{ lireImage | tojson | safe }};
+
+    function changerImage(type){
+        var maDiv = document.getElementById('divConteneurGroupe');
+        var enfants = maDiv.children;
+
+        if(type == -1 ){
+            for (var i = 0; i < enfants.length; i++) {
+                console.log(enfants.length);
+        
+                if(enfants[i].classList.contains('imageGroupe1') ){
+                    enfants[i].className = ''
+                    enfants[i].classList.add("imageGroupe2");
+                    enfants[i].classList.add('imageGroupe');
+                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                }
+                else if(enfants[i].classList.contains('imageGroupe2') ){
+                    enfants[i].className = ''
+                    enfants[i].classList.add("imageGroupe3");
+                    enfants[i].classList.add('imageGroupe');
+                }
+                else if(enfants[i].classList.contains('imageGroupe3')){
+                    enfants[i].className = ''
+                    enfants[i].classList.add("imageCacher");
+                    enfants[i].classList.add('imageGroupe');
+                }
+                else if(i != enfants.length-1){
+                    if(enfants[i+1].classList.contains('imageGroupe1')){
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageGroupe1");
+                        enfants[i].classList.add('imageGroupe');
+                    }
+                }
+                else{
+                    if(enfants[0].classList.contains('imageGroupe1')){
+                        console.log("12")
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageCacher");
+                        enfants[i].classList.add('imageGroupe');
+                    }
+                    if(enfants[0].classList.contains('imageGroupe2')){
+                        console.log("13")
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageGroupe1");
+                        enfants[i].classList.add('imageGroupe');
+                    }
+                    if(enfants[0].classList.contains('imageGroupe3')){
+                        console.log("14")
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageGroupe2");
+                        enfants[i].classList.add('imageGroupe');
+                        document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                    }
+                }
+                
+            }
+        }
+        else{
+            for (var i = 0; i < enfants.length; i++) {
+                console.log("coucouc");
+                if(enfants[i].classList.contains('imageGroupe1') ){
+                    enfants[i].className = ''
+                    enfants[i].classList.add("imageCacher");
+                    enfants[i].classList.add('imageGroupe');
+                }
+                else if(enfants[i].classList.contains('imageGroupe2')){
+                    enfants[i].className = ''
+                    enfants[i].classList.add("imageGroupe1");
+                    enfants[i].classList.add('imageGroupe');
+                }
+                else if(enfants[i].classList.contains('imageGroupe3')){
+                    enfants[i].className = ''
+                    enfants[i].classList.add("imageGroupe2");
+                    enfants[i].classList.add('imageGroupe');
+                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                }
+                else if(i != 0){
+                    if(enfants[i-1].classList.contains('imageGroupe2')){
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageGroupe3");
+                        enfants[i].classList.add('imageGroupe');
+                    }
+                }
+                else{
+                    if(enfants[enfants.length-1].classList.contains('imageGroupe1')){
+                        console.log("12")
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageGroupe2");
+                        enfants[i].classList.add('imageGroupe');
+                        document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                    }
+                    if(enfants[enfants.length-1].classList.contains('imageGroupe2')){
+                        console.log("13")
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageCacher");
+                        enfants[i].classList.add('imageGroupe');
+                    }
+                    if(enfants[enfants.length-1].classList.contains('imageGroupe3')){
+                        console.log("14")
+                        enfants[i].className = ''
+                        enfants[i].classList.add("imageGroupe3");
+                        enfants[i].classList.add('imageGroupe');
+                    }
+                }
+                
+            } 
+        }
+    }
+    </script>
+</div>
+
+
+
+{% endif %}
+
+{% if 'utilisateur' not in session %}
+<div> Vous devez vous connecté
+    <a href="{{ url_for('login') }}">Se connecter</a>
+</div>
+{% endif %}
+{% endblock %}

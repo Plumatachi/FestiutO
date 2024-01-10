@@ -2,16 +2,18 @@ from flask import render_template, url_for, redirect, request, session, jsonify,
 from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import get_cnx , Spectateur
+from .requete import get_cnx , Spectateur ,Groupe
 
 
 cnx = get_cnx()
 
 @app.route("/")
 def home():
+    listeImageId = Groupe.Get.get_images_groupe()
     return render_template(
-    "home.html",
-    title="Home"
+    "acceuil.html",
+    title="Home",
+    lireImage= listeImageId
     )
 
 @app.route("/Billeterie/")
@@ -22,6 +24,9 @@ def billeterie():
     title="Home",
     form=form
     )
+    
+    
+
 
 @app.route("/Billeterie/billeterie_post", methods=("GET","POST",))
 def billeterie_post():
@@ -39,9 +44,11 @@ def billeterie_post():
 
 @app.route("/Programme/")
 def programme():
+    listeImageId = Groupe.Get.get_images_groupe()
     return render_template(
     "programme.html",
-    title="Home"
+    title="Home",
+    lireImage= listeImageId
     )
 
 @app.route("/Login/", methods=("GET","POST",))

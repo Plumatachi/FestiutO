@@ -19,7 +19,20 @@ def afficher_table(cnx, table):
     except:
         print("Erreur lors de l'affichage de la table")
         raise
-    
+class Groupe:
+    class Get:
+        def get_images_groupe():
+            try:
+                res = []
+                result = cnx.execute(text("SELECT photo,idgroupe,nomDuGroupe FROM GROUPE;"))
+                for row in result:
+                    print(row)
+                    res.append((row[0],row[1],row[2]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+        
 class Spectateur:
     class Get:
         def get_all_spectateur_avec_email(cnx, email):
