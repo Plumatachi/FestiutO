@@ -1,0 +1,15 @@
+html {
+    background-image: url("../imagesHtml/festival_de_musique.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
+    background-color: rgb(67, 50, 56);
+}
+
+main, header{
+    background-color: transparent;
+}
+
+main {
+    margin-top: 8em;
+}

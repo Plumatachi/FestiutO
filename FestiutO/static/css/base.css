@@ -1,10 +1,5 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap'); */
 
-body, .input *, .element{
-    font-family: 'Inter', sans-serif;
-}
-
-
 a {
     text-decoration: none;
 }
@@ -12,3 +7,12 @@ a {
 li {
     list-style-type: none;
 }    
+
+.header span {
+    position: absolute;
+    font-size: 3em;
+    font-weight: bold;
+    color: rgb(61, 56, 56);
+    text-shadow: 2px 2px 2px black;
+    margin-left: 2em;
+}

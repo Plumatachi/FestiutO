@@ -1,3 +1,7 @@
+main{
+    margin-top: 9em;
+}
+
 .form {
     margin-left: auto;
     margin-right: auto;
@@ -5,7 +9,10 @@
     padding: 5em;
     text-align: center;
     border-radius: 30px;
-    filter: drop-shadow(0 0 1.2rem #000);
+}
+
+input{
+    filter: drop-shadow(0 0 0.5rem #000);
 }
 
 .registerA {
@@ -25,19 +32,6 @@
     color: rgb(0, 0, 0);
     cursor: pointer;
 }
-
-
-
-main{
-    background-color: transparent;
-    padding-top: 3em;
-}
-header {
-    margin: 1em;
-    
-    border-radius: 10px;
-}
-
 
 .btn-container *{
     color: none;

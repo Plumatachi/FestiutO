@@ -1,0 +1,14 @@
+html {
+    background-image: url("../imagesHtml/festival_musique_ete.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
+    background-color: rgb(25, 22, 14);
+}
+
+main, header{
+    background-color: transparent;
+}
+main {
+    margin-top: 8em;
+}

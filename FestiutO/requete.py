@@ -22,12 +22,12 @@ def afficher_table(cnx, table):
     
 class Spectateur:
     class Get:
-        def get_nom_spectateur_avec_email(cnx, email):
+        def get_all_spectateur_avec_email(cnx, email):
             try:
-                result = cnx.execute(text("SELECT nom FROM SPECTATEUR WHERE mail = '" + email + "';"))
+                result = cnx.execute(text("SELECT * FROM SPECTATEUR WHERE mail = '" + email + "';"))
                 for row in result:
-                    print(row[0])
-                    return row[0]
+                    print (row)
+                    return row
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
@@ -49,4 +49,19 @@ class Spectateur:
             except:
                 print("Erreur lors de l'insertion du spectateur")
                 raise
-        
+    class Update:
+        def update_mdp(cnx, email, password):
+            try:
+                cnx.execute(text("UPDATE SPECTATEUR SET motsDePasse = '" + password + "' WHERE mail = '" + email + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du mot de passe")
+                raise
+
+        def update_email(cnx, email, new_email):
+            try:
+                cnx.execute(text("UPDATE SPECTATEUR SET mail = '" + new_email + "' where mail = '" + email + "';"))
+                cnx.commit()
+            except:
+                print( "Erreur lors de la mise à jour de l'email")
+                raise

@@ -1,0 +1,51 @@
+main{
+    margin: 9em;
+}
+
+.a-container li {
+    list-style-type: none;
+    background-color: transparent;
+}
+
+.a-container li:hover {
+    background-color: rgb(231, 7, 7);
+}
+
+li a {
+    color: black;
+    box-shadow: 1em black;
+
+}
+
+.a-container li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.a-container{
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.a-container li a{
+    border-radius: 10px;
+    padding: 1.4em;
+    font-weight: bold;
+}
+
+.a-container li {
+    border-radius: 10px;
+}
+
+.a-container *:hover{
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+
+
+}
+
+.flex{
+    display: flex;
+}

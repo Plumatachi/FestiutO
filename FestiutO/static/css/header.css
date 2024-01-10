@@ -4,11 +4,11 @@ nav ul {
     padding: 0;
     display: flex;
     justify-content: end;
-
-}
+}   
 
 nav ul li {
     margin: 15px;
+    height: 100%;
 }
 
 nav ul li a:hover {
