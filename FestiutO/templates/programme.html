@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script  src="../static/js/jsProgramme.js">
+    let listeImage = {{ lireImage | tojson | safe }};
+    
+</script>
 {% if 'utilisateur' in session %}
 {% block styles %}
 {{ super() }}
@@ -22,6 +26,7 @@
                         <img class="imageGroupe1 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
                     {% elif loop.index == 2 %}
                         <img class="imageGroupe2 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                        <script>changerInfoJournee({{ id }})</script>
                     {% elif loop.index == 3 %}
                         <img class="imageGroupe3 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
                     {% else %}
@@ -34,118 +39,14 @@
         </div>
     </div>
 
+    <div class="positionEvenements">    
+        <div class="divCaseEvenements" id="divCaseEvenements">
+            
+
+        </div>
+    </div>
 </div>
 
-<script>
-    let listeImage = {{ lireImage | tojson | safe }};
-
-function changerImage(type){
-    var maDiv = document.getElementById('divConteneurGroupe');
-    var enfants = maDiv.children;
-
-    if(type == -1 ){
-        for (var i = 0; i < enfants.length; i++) {
-            console.log(enfants.length);
-    
-            if(enfants[i].classList.contains('imageGroupe1') ){
-                enfants[i].className = ''
-                enfants[i].classList.add("imageGroupe2");
-                enfants[i].classList.add('imageGroupe');
-            }
-            else if(enfants[i].classList.contains('imageGroupe2') ){
-                enfants[i].className = ''
-                enfants[i].classList.add("imageGroupe3");
-                enfants[i].classList.add('imageGroupe');
-                document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
-            }
-            else if(enfants[i].classList.contains('imageGroupe3')){
-                enfants[i].className = ''
-                enfants[i].classList.add("imageCacher");
-                enfants[i].classList.add('imageGroupe');
-            }
-            else if(i != enfants.length-1){
-                if(enfants[i+1].classList.contains('imageGroupe1')){
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageGroupe1");
-                    enfants[i].classList.add('imageGroupe');
-                }
-            }
-            else{
-                if(enfants[0].classList.contains('imageGroupe1')){
-                    console.log("12")
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageCacher");
-                    enfants[i].classList.add('imageGroupe');
-                }
-                if(enfants[0].classList.contains('imageGroupe2')){
-                    console.log("13")
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageGroupe1");
-                    enfants[i].classList.add('imageGroupe');
-                }
-                if(enfants[0].classList.contains('imageGroupe3')){
-                    console.log("14")
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageGroupe2");
-                    enfants[i].classList.add('imageGroupe');
-                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
-                }
-            }
-            
-        }
-    }
-    else{
-        for (var i = 0; i < enfants.length; i++) {
-            console.log("coucouc");
-            if(enfants[i].classList.contains('imageGroupe1') ){
-                enfants[i].className = ''
-                enfants[i].classList.add("imageCacher");
-                enfants[i].classList.add('imageGroupe');
-            }
-            else if(enfants[i].classList.contains('imageGroupe2')){
-                enfants[i].className = ''
-                enfants[i].classList.add("imageGroupe1");
-                enfants[i].classList.add('imageGroupe');
-            }
-            else if(enfants[i].classList.contains('imageGroupe3')){
-                enfants[i].className = ''
-                enfants[i].classList.add("imageGroupe2");
-                enfants[i].classList.add('imageGroupe');
-                document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
-            }
-            else if(i != 0){
-                if(enfants[i-1].classList.contains('imageGroupe2')){
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageGroupe3");
-                    enfants[i].classList.add('imageGroupe');
-                }
-            }
-            else{
-                if(enfants[enfants.length-1].classList.contains('imageGroupe1')){
-                    console.log("12")
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageGroupe2");
-                    enfants[i].classList.add('imageGroupe');
-                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
-                }
-                if(enfants[enfants.length-1].classList.contains('imageGroupe2')){
-                    console.log("13")
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageCacher");
-                    enfants[i].classList.add('imageGroupe');
-                }
-                if(enfants[enfants.length-1].classList.contains('imageGroupe3')){
-                    console.log("14")
-                    enfants[i].className = ''
-                    enfants[i].classList.add("imageGroupe3");
-                    enfants[i].classList.add('imageGroupe');
-                }
-            }
-            
-        } 
-    }
-}
-</script>
 
 {% endif %}
 

@@ -1,6 +1,6 @@
-.htmlBillet{
+.html{
     /* background-color: black; */
-        background-image: url("./images/festival_de_musique.jpg");
+        background-image: url("../imagesHtml/festival_musique.png");
         background-repeat: no-repeat;
         background-size: 100% auto;
         background-position: top center;

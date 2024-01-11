@@ -19,6 +19,22 @@ def afficher_table(cnx, table):
     except:
         print("Erreur lors de l'affichage de la table")
         raise
+    
+    
+class Journee:
+    class Get:
+        def get_journee_date():
+            try:
+                res = []
+                result = cnx.execute(text("SELECT dateDebutJ FROM JOURNEE;"))
+                for row in result:
+                    res.append(row[0])
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+        
+        
 class Groupe:
     class Get:
         def get_images_groupe():
@@ -32,6 +48,20 @@ class Groupe:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
+            
+            
+        def get_activite_groupe(idGroupe):
+            try:
+                res = []
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
+                for row in result:
+                    print(row)
+                    res.append((row[0],row[1],row[2]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+        
         
 class Spectateur:
     class Get:

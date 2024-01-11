@@ -12,7 +12,6 @@ drop table IF EXISTS `HEBERGEMENT`;
 drop table IF EXISTS `DORMIR`;
 drop table IF EXISTS `MUSICIEN`;
 drop table IF EXISTS `STYLEDEMUSIQUE`;
-drop table IF EXISTS `STYLE`;
 drop table IF EXISTS `RESSEMBLE`;
 drop table IF EXISTS `BILLETEVENEMENT`;
 drop table IF EXISTS `EVENEMENT`;

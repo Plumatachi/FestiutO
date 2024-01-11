@@ -5,7 +5,7 @@
 
 login = "noblesse" # pip install pymysql
 passwd = "noblesse"
-serveur= "servinfo-mariadb"
+serveur= "servinfo-maria"
 bd = "DBnoblesse"
 
 def getLogin():
