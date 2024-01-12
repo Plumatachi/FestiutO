@@ -10,15 +10,22 @@ cnx = get_cnx()
 
 @app.route("/")
 def home():
-    listeImageId = Groupe.Get.get_images_groupe()
-    user = session['utilisateur']
-    return render_template(
-    "acceuil.html",
-    title="Home",
-    lireImage= listeImageId,
-    user = user
-    )
-
+    try:
+        user = session['utilisateur']
+        listeImageId = Groupe.Get.get_images_groupe()
+        return render_template(
+        "acceuil.html",
+        title="Home",
+        lireImage= listeImageId,
+        user = user
+        )
+    except:
+        listeImageId = Groupe.Get.get_images_groupe()
+        return render_template(
+        "acceuil.html",
+        title="Home",
+        lireImage= listeImageId,
+        )
 
 @app.route("/Billeterie/")
 def billeterie():
