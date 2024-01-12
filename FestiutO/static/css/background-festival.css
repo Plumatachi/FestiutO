@@ -9,3 +9,12 @@ html {
 main {
     margin-top: 8em;
 }
+
+.titreFestio {
+    position: absolute;
+    font-size: 3em;
+    font-weight: bold;
+    color: rgb(61, 56, 56);
+    text-shadow: 2px 2px 2px black;
+    margin-left: 2em;
+}

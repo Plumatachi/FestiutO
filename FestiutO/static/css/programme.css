@@ -6,12 +6,7 @@
         background-position: top center;
         background-color: RGB(67, 50, 56);
 }
-.titreFestio{
-    font-size: 5vw;
-    opacity: 66%;
-    color: black;
-    transform: rotate(-10deg);
-}
+
 
 .bodyAccueille {
     font-family: Arial, sans-serif;
