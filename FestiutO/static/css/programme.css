@@ -1,6 +1,6 @@
-.html{
+.htmlBillet{
     /* background-color: black; */
-        background-image: url("../imagesHtml/festival_musique.png");
+        background-image: url("./images/festival_de_musique.jpg");
         background-repeat: no-repeat;
         background-size: 100% auto;
         background-position: top center;
@@ -49,7 +49,7 @@
 
 .positionListeGroupeMusique{
     position: absolute;
-    top: 75vw;
+    top: 23vw;
     width: 93vw;
     height: 26vw;
 }
@@ -142,4 +142,62 @@
 
 .imageCacher{
     display: none;
+}
+.positionEvenements{
+    position: absolute;
+    top: 58vw;
+    width: 93vw;
+    height: 26vw;
+}
+
+.divCaseEvenements{
+    background-color: RGBA(0, 0, 0,0.95);
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement les éléments dans le conteneur */
+    justify-content: center;
+    padding: 2%;
+}
+
+.texteEvenement{
+    color: aliceblue;
+    font-size: 2vw;
+    margin-left: 5%;
+    margin-right: 2%;
+}
+
+.buttonInscription{
+    margin-left: 2%;
+    background-color: aqua;
+    color: green;
+    border-radius: 30px;
+    height: 4vw;
+    margin-top: 1vw;
+    width: 6vw;
+
+}
+
+.h2Evenement{
+    color: aliceblue;
+    font-size: 4vw;
+    margin-bottom: 2%;
+}
+
+
+.divContientTexteDateEvenement{
+    background-color: blueviolet;
+    border-radius: 30px;
+    width: 90%;
+}
+
+
+.divPetBoutonProgramme{
+    display : flex;
+    background-color: black;
+    margin: 2%;
+    border-radius: 30px;
+    width: auto;
 }
