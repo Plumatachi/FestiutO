@@ -11,16 +11,12 @@
 {% block content %}
 
 <h1>Mes Favoris</h1>
-<div>
+<div class="groupeList">
 {% for groupe in groupFavorisList %}
-<div class="groupeList flex">
-
-<div class="groupe">
+<div class="groupe flex">
     <h2>{{ groupe[0] }}</h2>
     <img class="groupeImage" src="{{ url_for('static', filename='imagesHtml/' + groupe[2]) }}" alt="Photo du groupe {{ groupe[1] }}">
-
     <a href="{{ url_for('groupe',idUser=user[0], idGroupe=groupe[3]) }}">Voir le groupe</a>
-</div>
 </div>
 
 {% endfor %}
