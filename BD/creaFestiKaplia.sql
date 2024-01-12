@@ -64,7 +64,7 @@ CREATE TABLE `GROUPE` (
   `nomDuGroupe` VARCHAR(42),
   `description` VARCHAR(100),
   `reseausocial` VARCHAR(100),
-  `photo` LONGBLOB,  
+  `photo` VARCHAR(200),  
   `nbpersonne` int,
   PRIMARY KEY (`idgroupe`)
 )  ;
@@ -153,6 +153,13 @@ CREATE TABLE `APPARTIENT` (
     PRIMARY KEY (`idGroupe`, `idMusicien`)
 );
 
+CREATE TABLE `FAVORIS` (
+    `idFav` int auto_increment,
+    `idspectateur` int REFERENCES `SPECTATEUR` (`idspectateur`),
+    `idgroupe` int REFERENCES `GROUPE` (`idgroupe`),
+    PRIMARY KEY (`idFav`)
+);
+
 ALTER TABLE `JOURNEE` ADD FOREIGN KEY(`idfestival`) REFERENCES `FESTIVAL` (`idfestival`);
 ALTER TABLE `BILLETEVENEMENT` ADD FOREIGN KEY(`idEvenement`) REFERENCES `EVENEMENT` (`idEvenement`);
 ALTER TABLE `BILLETEVENEMENT` ADD FOREIGN KEY(`idspectateur`) REFERENCES `SPECTATEUR` (`idspectateur`);
@@ -176,9 +183,6 @@ ALTER TABLE `EVENEMENT` ADD FOREIGN KEY(`idConcert`) REFERENCES `CONCERT` (`idCo
 ALTER TABLE `EVENEMENT` ADD FOREIGN KEY(`idActivite`) REFERENCES `ACTIVITE` (`idActivite`);
 ALTER TABLE `APPARTIENT` ADD FOREIGN KEY(`idGroupe`) REFERENCES `GROUPE` (`idGroupe`);
 ALTER TABLE `APPARTIENT` ADD FOREIGN KEY(`idMusicien`) REFERENCES `MUSICIEN` (`idMusicien`);
-
-
-
 
 
 
@@ -321,3 +325,5 @@ begin
         signal SQLSTATE '45000' SET MESSAGE_TEXT = 'Un spectateur ne peut pas réserver deux fois la même journée.';
     END IF;
 end |
+
+

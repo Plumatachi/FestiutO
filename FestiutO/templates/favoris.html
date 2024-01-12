@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/favoris.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival-ete.css') }}">
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+<h1>Mes Favoris</h1>
+<div>
+{% for groupe in groupFavorisList %}
+<div class="groupeList flex">
+
+<div class="groupe">
+    <h2>{{ groupe[0] }}</h2>
+    <img class="groupeImage" src="{{ url_for('static', filename='imagesHtml/' + groupe[2]) }}" alt="Photo du groupe {{ groupe[1] }}">
+
+    <a href="{{ url_for('groupe',idUser=user[0], idGroupe=groupe[3]) }}">Voir le groupe</a>
+</div>
+</div>
+
+{% endfor %}
+</div>
+{% endblock %}
+

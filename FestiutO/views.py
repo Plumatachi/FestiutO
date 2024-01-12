@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, request, session, jsonify,
 from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import get_cnx , Spectateur
+from .requete import FAVORIS, FONCTION, get_cnx , Spectateur, Groupe
 
 
 cnx = get_cnx()
@@ -91,9 +91,9 @@ def register():
 
 @app.route("/Profil/")
 def profil():
-    profil_id = session['utilisateur']
-    print("profil : "+str(profil_id))
-    return render_template( "profil.html", title="Profil", profil_id=profil_id)
+    user = session['utilisateur']
+    print("profil : "+str(user))
+    return render_template( "profil.html", title="Profil", user=user)
 
 @app.route("/Profil/Modifier/Mots_de_passe/", methods=("GET","POST",))
 def modifier_mdp():
@@ -170,6 +170,32 @@ def index():
 def confirmation():
     return render_template('confirmation.html')
 
-@app.route('/Profil/favoris')
-def favoris():
-    return render_template('favoris.html')
+@app.route('/Profil/favoris/<idUser>')
+def favoris(idUser):
+    userInfo = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
+    groupFavorisList = FAVORIS.GET.get_favoris_with_idSpectateur(cnx, idUser)
+
+    return render_template('favoris.html', user=userInfo, groupFavorisList=groupFavorisList)
+
+@app.route('/Profil/favoris/<idUser>/<idGroupe>')
+def groupe(idUser, idGroupe):
+    groupInfo = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    isInFavoris = FONCTION.idGroupe_in_like_with_idSpectateur(cnx, idUser, idGroupe)
+    
+    if isInFavoris:
+        isInFavoris = 1
+    else:
+        isInFavoris = 0
+
+    print(isInFavoris)
+    return render_template('groupe.html', groupe=groupInfo, user=idUser, like=isInFavoris)
+
+@app.route('/Profil/favoris/<idUser>/<idGroupe>/like')
+def like(idUser, idGroupe):
+    FAVORIS.Insert.insert_favoris(cnx, idUser, idGroupe)
+    return redirect(url_for('groupe', idUser=idUser, idGroupe=idGroupe))
+
+@app.route('/Profil/favoris/<idUser>/<idGroupe>/dislike')
+def dislike(idUser, idGroupe):
+    FAVORIS.Delete.delete_favoris(cnx, idUser, idGroupe)
+    return redirect(url_for('groupe', idUser=idUser, idGroupe=idGroupe))
