@@ -15,7 +15,5 @@ html {
 
 .titreFestio{
     font-size: 5vw;
-    opacity: 66%;
     color: black;
-    transform: rotate(-10deg);
 }
