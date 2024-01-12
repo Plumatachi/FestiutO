@@ -34,7 +34,7 @@ h1, h2, a{
     justify-content: center;
 }
 
-a{
+.groupe a{
     color: white;
     text-decoration: none;
     border-radius: 10px;
@@ -42,7 +42,7 @@ a{
     font-weight: bold;
 }
 
-a:hover{
+.groupe a:hover{
     background-color: rgba(9, 255, 255, 0.856);
     color: white;
     text-decoration: none;
