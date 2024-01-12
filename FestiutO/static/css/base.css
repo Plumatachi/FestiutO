@@ -8,14 +8,11 @@ li {
     list-style-type: none;
 }    
 
-.header h1 {
-    font-size: 5vw;
-    opacity: 66%;
-    color: black;
-    transform: rotate(-10deg);
-}
-
-body{
-    margin: 50px;
-    position: relative;
+.header span {
+    position: absolute;
+    font-size: 3em;
+    font-weight: bold;
+    color: rgb(61, 56, 56);
+    text-shadow: 2px 2px 2px black;
+    margin-left: 2em;
 }

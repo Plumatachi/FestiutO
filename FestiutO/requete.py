@@ -35,45 +35,6 @@ class Journee:
                 raise
         
         
-class Groupe:
-    class Get:
-        def get_images_groupe():
-            try:
-                res = []
-                result = cnx.execute(text("SELECT photo,idgroupe,nomDuGroupe FROM GROUPE;"))
-                for row in result:
-                    print(row)
-                    res.append((row[0],row[1],row[2]))
-                return res
-            except:
-                print("Erreur lors de la récupération du nom de l'utilisateur")
-                raise
-            
-            
-        def get_consert_groupe(idGroupe):
-            try:
-                res = []
-                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
-                for row in result:
-                    print(row)
-                    res.append((row[0],row[1],row[2],row[3]))
-                return res
-            except:
-                print("Erreur lors de la récupération du nom de l'utilisateur")
-                raise
-            
-        def get_activite_groupe(idGroupe):
-            try:
-                res = []
-                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idActivite IS NOT NULL;"))
-                for row in result:
-                    print(row)
-                    res.append((row[0],row[1],row[2],row[3]))
-                return res
-            except:
-                print("Erreur lors de la récupération du nom de l'utilisateur")
-                raise
-        
         
 class Musicien:
     class Get:
@@ -224,4 +185,41 @@ class Groupe:
                     return groupe
             except:
                 print("Erreur lors de la récupération du groupe")
+                raise
+            
+        def get_images_groupe():
+            try:
+                res = []
+                result = cnx.execute(text("SELECT photo,idgroupe,nomDuGroupe FROM GROUPE;"))
+                for row in result:
+                    print(row)
+                    res.append((row[0],row[1],row[2]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+            
+            
+        def get_consert_groupe(idGroupe):
+            try:
+                res = []
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
+                for row in result:
+                    print(row)
+                    res.append((row[0],row[1],row[2],row[3]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+            
+        def get_activite_groupe(idGroupe):
+            try:
+                res = []
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idActivite IS NOT NULL;"))
+                for row in result:
+                    print(row)
+                    res.append((row[0],row[1],row[2],row[3]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise

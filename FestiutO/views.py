@@ -188,14 +188,6 @@ def get_Info_journee_Groupe():
      listeInfo = Groupe.Get.get_consert_groupe(param1)
      return jsonify(listeInfo)
  
-
-@app.route('/get_Info_journee_activiter', methods=['GET'])
-def get_Info_journee_Groupe():
-     param1 = request.args.get('idgroupe')
-     listeInfo = Groupe.Get.get_activite_groupe(param1)
-     return jsonify(listeInfo)
-
-
 @app.route('/Profil/favoris/<idUser>')
 def favoris(idUser):
     userInfo = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
