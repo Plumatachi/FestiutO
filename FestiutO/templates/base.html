@@ -9,7 +9,7 @@
     <body>
         {% if 'utilisateur' not in session %}
         <header class="header">
-            <h1>Festiut'O.</h1>
+            <span>Festiut'O.</span>
             <nav class="nav">
                 <ul class="flex">
                     <li><a href="{{ url_for('home') }}">Accueil</a></li>
@@ -22,7 +22,7 @@
         {% endif %}
         {% if 'utilisateur' in session %}
         <header class="header">
-            <h1>Festiut'O.</h1>
+            <span>Festiut'O.</span>
             <nav class="nav">
                 <ul class="flex">
                     <li><a href="{{ url_for('home') }}">Accueil</a></li>
