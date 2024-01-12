@@ -69,20 +69,15 @@ main{
 
 
 .positionCalendrier{
-     position: absolute;
+    position: absolute;
     top: 33vw;
     width: 116%;
     margin-left: 2%;
-    display: none;
-
-
-
 }
 
 /* Calendar */
 
 .container {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;

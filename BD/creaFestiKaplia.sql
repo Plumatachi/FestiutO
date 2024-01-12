@@ -64,7 +64,7 @@ CREATE TABLE `GROUPE` (
   `nomDuGroupe` VARCHAR(42),
   `description` VARCHAR(100),
   `reseausocial` VARCHAR(100),
-  `photo` VARCHAR(200),  
+  `photo` varchar(100),  
   `nbpersonne` int,
   PRIMARY KEY (`idgroupe`)
 )  ;
@@ -183,6 +183,9 @@ ALTER TABLE `EVENEMENT` ADD FOREIGN KEY(`idConcert`) REFERENCES `CONCERT` (`idCo
 ALTER TABLE `EVENEMENT` ADD FOREIGN KEY(`idActivite`) REFERENCES `ACTIVITE` (`idActivite`);
 ALTER TABLE `APPARTIENT` ADD FOREIGN KEY(`idGroupe`) REFERENCES `GROUPE` (`idGroupe`);
 ALTER TABLE `APPARTIENT` ADD FOREIGN KEY(`idMusicien`) REFERENCES `MUSICIEN` (`idMusicien`);
+
+
+
 
 
 
