@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, request, session, jsonify,
 from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import get_cnx , Spectateur ,Groupe, Journee
+from .requete import get_cnx , Spectateur ,Groupe, Journee , Musicien
 
 
 cnx = get_cnx()
@@ -15,6 +15,7 @@ def home():
     title="Home",
     lireImage= listeImageId
     )
+
 
 @app.route("/Billeterie/")
 def billeterie():
@@ -186,6 +187,13 @@ def favoris():
 
 
 @app.route('/get_Info_journee_Groupe', methods=['GET'])
+def get_Info_journee_Groupe():
+     param1 = request.args.get('idgroupe')
+     listeInfo = Groupe.Get.get_consert_groupe(param1)
+     return jsonify(listeInfo)
+ 
+
+@app.route('/get_Info_journee_activiter', methods=['GET'])
 def get_Info_journee_Groupe():
      param1 = request.args.get('idgroupe')
      listeInfo = Groupe.Get.get_activite_groupe(param1)

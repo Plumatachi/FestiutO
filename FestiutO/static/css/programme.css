@@ -159,12 +159,14 @@
     flex-direction: column;
     align-items: center; /* Centre verticalement les éléments dans le conteneur */
     justify-content: center;
+    padding: 2%;
 }
 
 .texteEvenement{
     color: aliceblue;
     font-size: 2vw;
     margin-left: 5%;
+    margin-right: 2%;
 }
 
 .buttonInscription{
@@ -194,4 +196,8 @@
 
 .divPetBoutonProgramme{
     display : flex;
+    background-color: black;
+    margin: 2%;
+    border-radius: 30px;
+    width: auto;
 }

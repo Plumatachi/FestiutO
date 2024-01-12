@@ -6,7 +6,7 @@ for (let i = 0; i < listeDate.length; i++){
 }
 
 function afficherCalendrier() {
-    let calendrier = document.getElementById("positionCalendrierID");
+    let calendrier = document.getElementById("displaynoneCaldendrier");
     if (calendrier.style.display === 'none') {
         calendrier.style.display = 'flex';  // Afficher la div si elle est cachée
     } else {

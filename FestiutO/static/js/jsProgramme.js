@@ -137,18 +137,31 @@ function changerInfoJournee(idgroupe){
                     h2Evenement.textContent = jourMoisFormat;
                     h2Evenement.classList.add('h2Evenement');
 
+                    h3Consert = document.createElement("h3");
+                    h3Consert.textContent = "Consert";
+                    h3Consert.classList.add('h2Evenement');
+
+
                     PEvenement = document.createElement("p");
                     PEvenement.classList.add('texteEvenement');
-                    PEvenement.textContent = data[i][2] + " : " +new Date(data[i][0]).toTimeString().split(' ')[0].slice(0, -3);
+                    PEvenement.textContent = data[i][2] + " : " +new Date(data[i][0]).toTimeString().split(' ')[0].slice(0, -3) + ": a "+data[i][3];
+
+
+                    var lien = document.createElement('a');
+                    // Définissez l'attribut 'href' avec l'URL souhaitée
+                    lien.href = "{{ url_for('Musicien', mon_parametre='1') }}";
+
 
                     buttonEvenement = document.createElement("button");
                     buttonEvenement.textContent = "S'inscrire";
-                    buttonEvenement.setAttribute('onclick', 'inscrireEvenement()');
+                    buttonEvenement.setAttribute('onclick', "afficherMusicien('"+i+"')");
                     buttonEvenement.classList.add('buttonInscription');
 
                     divDate.appendChild(h2Evenement);
+                    divDate.appendChild(h3Consert);
                     divEvement.appendChild(PEvenement);
-                    divEvement.appendChild(buttonEvenement);
+                    lien.appendChild(buttonEvenement);
+                    divEvement.appendChild(lien);
                     divDate.appendChild(divEvement);
                     document.getElementById("divCaseEvenements").appendChild(divDate);
 
@@ -160,7 +173,7 @@ function changerInfoJournee(idgroupe){
                     divEvement.classList.add('divPetBoutonProgramme');
                     PEvenement = document.createElement("p");
                     PEvenement.classList.add('texteEvenement');
-                    PEvenement.textContent = data[i][2] + " : " +new Date(data[i][0]).toTimeString().split(' ')[0].slice(0, -3);
+                    PEvenement.textContent = data[i][2] + " : " +new Date(data[i][0]).toTimeString().split(' ')[0].slice(0, -3) + ": a "+data[i][3];
 
                     buttonEvenement = document.createElement("button");
                     buttonEvenement.textContent = "S'inscrire";
@@ -186,4 +199,10 @@ function changerInfoJournee(idgroupe){
             }
         }
     });
+
+}
+
+
+function afficherMusicien(id){
+    {{ url_for('changer_page', mon_parametre='valeur_du_parametre') }}
 }

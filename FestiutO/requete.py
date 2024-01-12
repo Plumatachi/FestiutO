@@ -50,19 +50,45 @@ class Groupe:
                 raise
             
             
+        def get_consert_groupe(idGroupe):
+            try:
+                res = []
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
+                for row in result:
+                    print(row)
+                    res.append((row[0],row[1],row[2],row[3]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+            
         def get_activite_groupe(idGroupe):
             try:
                 res = []
-                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idActivite IS NOT NULL;"))
                 for row in result:
                     print(row)
-                    res.append((row[0],row[1],row[2]))
+                    res.append((row[0],row[1],row[2],row[3]))
                 return res
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
         
         
+class Musicien:
+    class Get:
+        def get_info_Musicien(id):
+            try:
+                res = []
+                result = cnx.execute(text("select nominstrupent,nom,nomDuGroupe from MUSICIEN natural join APPARTIENT natural join GROUPE natural join JOUE natural join INSTRUMENT where idMusicien = '" + id + "' ;"))
+                for row in result:
+                    print(row)
+                    res.append((row[0],row[1],row[2],row[3]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+               
 class Spectateur:
     class Get:
         def get_all_spectateur_avec_email(cnx, email):
