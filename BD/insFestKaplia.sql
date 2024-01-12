@@ -17,9 +17,8 @@ INSERT INTO JOURNEE (nomJournee, dateDebutJ, dateFinJ, idfestival)
 VALUES
     ('Opening Day', '2023-07-15', '2023-07-15', 1),
     ('Rock Day', '2023-07-16', '2023-07-16', 1),
-    ('Pop Day', '2023-07-17', '2023-07-17', 1),
-    ('Electronic Day', '2023-08-18', '2023-08-18', 2),
-    ('Closing Day', '2023-08-19', '2023-08-19', 2);
+    ('Pop Day', '2023-07-17', '2023-07-17', 1);
+
 
 
 INSERT INTO ACTIVITE (nomactivite, privatitation)
@@ -41,11 +40,10 @@ VALUES
 
 
 INSERT INTO EVENEMENT (dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert)
-VALUES ('2023-07-17 18:00:00', '2023-07-17 20:00:00', 3, 3, NULL, 2),
-        ('2023-08-18 22:00:00', '2023-08-18 23:00:00', 2, 4, NULL, 3),
-        ('2023-08-19 12:00:00', '2023-08-19 14:00:00', 1, 5, 1, NULL),
-        ('2023-07-15 19:00:00', '2023-07-15 20:00:00', 5, 1, NULL, 1),
-        ('2023-07-15 21:00:00', '2023-07-15 23:00:00', 5, 1, 2, NULL);
+VALUES ('2023-07-15 18:00:00', '2023-07-15 20:00:00', 3, 11, NULL, 2),
+        ('2023-07-15 19:00:00', '2023-07-15 20:00:00', 5, 11, NULL, 1),
+        ('2023-07-15 8:00:00', '2023-07-15 10:00:00', 4, 11, NULL, 4),
+        ('2023-07-15 21:00:00', '2023-07-15 23:00:00', 5, 11, 2, NULL);
 
 
 
@@ -58,28 +56,25 @@ VALUES
     ('Spectateur 5', '6494198848', 'spectateur5@example.com',"25406034841649");
 
 INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
-(1,'Les Rolling Stones', 'Un groupe de rock britannique formé à Londres en 1962.', 'twitter.com/rollingstones', NULL, 4);
+(1,'Les Rolling Stones', 'Un groupe de rock britannique formé à Londres en 1962.', 'twitter.com/rollingstones', "celtic_frost.png", 4);
 
 INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
-(2,'The Beatles', 'Un groupe de rock britannique formé à Liverpool en 1960.', 'twitter.com/thebeatles', NULL, 4);
+(2,'The Beatles', 'Un groupe de rock britannique formé à Liverpool en 1960.', 'twitter.com/thebeatles', "daft-punk-random-access-memories-Cover-Art.png", 4);
 
 INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
-(3,'AC/DC', 'Un groupe de hard rock australien formé à Sydney en 1973.', 'twitter.com/acdc', NULL, 4);
+(3,'AC/DC', 'Un groupe de hard rock australien formé à Sydney en 1973.', 'twitter.com/acdc', "david_guetta.png", 4);
 
 INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
-(4,'Metallica', 'Un groupe de thrash metal américain formé à Los Angeles en 1981.', 'twitter.com/metallica', NULL, 4);
+(4,'Metallica', 'Un groupe de thrash metal américain formé à Los Angeles en 1981.', 'twitter.com/metallica', "sabaton.png", 4);
 
-INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
-(5,'Pink Floyd', 'Un groupe de rock progressif britannique formé à Londres en 1965.', 'twitter.com/pinkfloyd', NULL, 4);
-
--- lancer le fichier python avant de continuer
 
 INSERT INTO PARTICIPE (idEvenement, idGroupe)
 VALUES
     (1, 1),
     (2, 1),
-    (3, 3),
-    (4, 4);
+    (34, 4),
+    (36, 4);
+    
 
 
 
@@ -247,10 +242,10 @@ INSERT INTO DORMIR(nbPersonneGroupe, dateArrivee, dateDepart, idgroupe, idheberg
 INSERT INTO PRESENT (idfestival, idgroupe, datearriver, datedepart) VALUES
     (1,1,'2023-07-15','2023-07-19'),
     (1,2,'2023-07-16','2023-07-19'),
-    (2,3,'2023-08-15','2023-08-19'),
-    (2,4,'2023-08-17','2023-08-19'),
+    (1,3,'2023-08-15','2023-08-19'),
+    (1,4,'2023-08-17','2023-08-19'),
     (1,5,'2023-07-15','2023-07-19'),
-    (2,5,'2023-08-18','2023-08-19');
+    (1,5,'2023-08-18','2023-08-19');
 
 
 
