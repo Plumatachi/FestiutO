@@ -41,6 +41,16 @@ class Spectateur:
             except:
                 print("Erreur lors de la récupération du mot de passe de l'utilisateur")
                 raise
+
+        def get_spectateur_with_id(cnx, id):
+            try:
+                result = cnx.execute(text("SELECT * FROM SPECTATEUR WHERE idSpectateur = '" + id + "';"))
+                for row in result:
+                    print(row)
+                    return row
+            except:
+                print("Erreur lors de la récupération du spectateur")
+                raise
     class Insert:
         def insert_spectateur(cnx, nom, telephone, email, password):
             try:
@@ -64,4 +74,85 @@ class Spectateur:
                 cnx.commit()
             except:
                 print( "Erreur lors de la mise à jour de l'email")
+                raise
+
+class FAVORIS:
+    class GET:
+        def get_favoris_with_idSpectateur(cnx, idSpectateur):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT nomDuGroupe,  reseausocial, photo, idgroupe  FROM FAVORIS natural join GROUPE WHERE idSpectateur = '" + idSpectateur + "';"))
+                for row in result:
+                    res1 = []
+                    for elem in row:
+                        if elem is None:
+                            res1.append("None")
+                        else:
+                            res1.append(elem)
+                    res.append(res1)
+                return res
+            except:
+                print("Erreur lors de la récupération des favoris")
+                raise
+        
+        def get_list_idgroupe_in_favoris_with_idSpectateur(cnx, idSpectateur):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT idgroupe FROM FAVORIS WHERE idSpectateur = '" + idSpectateur + "';"))
+                for row in result:
+                    res.append(row[0])
+                return res
+            except:
+                print("Erreur lors de la récupération des favoris")
+                raise
+    class Insert:
+        def insert_favoris(cnx, idSpectateur, idGroupe):
+            try:
+                cnx.execute(text("INSERT INTO FAVORIS(idSpectateur, idGroupe) VALUES ('" + idSpectateur + "', '" + idGroupe + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion du favoris")
+                raise
+    
+    class Delete:
+        def delete_favoris(cnx, idSpectateur, idGroupe):
+            try:
+                cnx.execute(text("DELETE FROM FAVORIS WHERE idSpectateur = '" + idSpectateur + "' AND idGroupe = '" + idGroupe + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du favoris")
+                raise
+
+class FONCTION:
+    def idGroupe_in_like_with_idSpectateur(cnx, idSpectateur, idGroupe):
+        try:
+            list = FAVORIS.GET.get_list_idgroupe_in_favoris_with_idSpectateur(cnx, idSpectateur)
+            print(list)
+            print(idGroupe)
+            if int(idGroupe) in list:
+                return True
+            else:
+                return False
+        except:
+            print("Erreur lors de la récupération des favoris")
+            raise
+
+
+class Groupe:
+    class Get: 
+        def get_groupe_with_idgroupe(cnx, idgroupe):
+            try:
+                result = cnx.execute(text("SELECT * FROM GROUPE WHERE idgroupe = '" + idgroupe + "';"))
+                for row in result:
+                    groupe = []
+                    for elem in row:
+                        print(elem)
+                        if elem is None:
+                            groupe.append("None")
+                        else:
+                            groupe.append(elem)
+                    
+                    return groupe
+            except:
+                print("Erreur lors de la récupération du groupe")
                 raise

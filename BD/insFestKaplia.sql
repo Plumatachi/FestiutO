@@ -57,20 +57,20 @@ VALUES
     ('Spectateur 4', '9461616160', 'spectateur4@example.com',"1019465031354"),
     ('Spectateur 5', '6494198848', 'spectateur5@example.com',"25406034841649");
 
--- INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
--- (1,'Les Rolling Stones', 'Un groupe de rock britannique formé à Londres en 1962.', 'twitter.com/rollingstones', NULL, 4);
+INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
+(1,'Les Rolling Stones', 'Un groupe de rock britannique formé à Londres en 1962.', 'twitter.com/rollingstones', NULL, 4);
 
--- INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
--- (2,'The Beatles', 'Un groupe de rock britannique formé à Liverpool en 1960.', 'twitter.com/thebeatles', NULL, 4);
+INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
+(2,'The Beatles', 'Un groupe de rock britannique formé à Liverpool en 1960.', 'twitter.com/thebeatles', NULL, 4);
 
--- INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
--- (3,'AC/DC', 'Un groupe de hard rock australien formé à Sydney en 1973.', 'twitter.com/acdc', NULL, 4);
+INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
+(3,'AC/DC', 'Un groupe de hard rock australien formé à Sydney en 1973.', 'twitter.com/acdc', NULL, 4);
 
--- INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
--- (4,'Metallica', 'Un groupe de thrash metal américain formé à Los Angeles en 1981.', 'twitter.com/metallica', NULL, 4);
+INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
+(4,'Metallica', 'Un groupe de thrash metal américain formé à Los Angeles en 1981.', 'twitter.com/metallica', NULL, 4);
 
--- INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
--- (5,'Pink Floyd', 'Un groupe de rock progressif britannique formé à Londres en 1965.', 'twitter.com/pinkfloyd', NULL, 4);
+INSERT INTO GROUPE (idgroupe, nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES
+(5,'Pink Floyd', 'Un groupe de rock progressif britannique formé à Londres en 1965.', 'twitter.com/pinkfloyd', NULL, 4);
 
 -- lancer le fichier python avant de continuer
 
