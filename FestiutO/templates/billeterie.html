@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="positionCalendrier" id="positionCalendrierID">
-            <div class="container" id="displaynoneCaldendrier" style="display:none;">
+            <div class="container">
                 <div class="calendar-assets">
                     <h1 id="currentDate"></h1>
                     <div class="field">
@@ -70,13 +70,7 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    var listeDate = {{ listeDate | tojson | safe }};
-    var listeMoisJour = [];
-</script>
-<script src="../static/js/jsBilleterie.js"></script>
+<script src="{{ url_for('static', filename='js/jsBilleterie.js') }}"></script>
 
 {% endif %}
 
