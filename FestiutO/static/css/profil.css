@@ -49,3 +49,11 @@ li a {
 .flex{
     display: flex;
 }
+
+.groupe{
+    margin: 30px;
+    background-color: aqua;
+    width: 700px;
+    height: 300px;
+    border-radius: 10px;
+}

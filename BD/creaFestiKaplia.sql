@@ -153,6 +153,13 @@ CREATE TABLE `APPARTIENT` (
     PRIMARY KEY (`idGroupe`, `idMusicien`)
 );
 
+CREATE TABLE `FAVORIS` (
+    `idFav` int auto_increment,
+    `idspectateur` int REFERENCES `SPECTATEUR` (`idspectateur`),
+    `idgroupe` int REFERENCES `GROUPE` (`idgroupe`),
+    PRIMARY KEY (`idFav`)
+);
+
 ALTER TABLE `JOURNEE` ADD FOREIGN KEY(`idfestival`) REFERENCES `FESTIVAL` (`idfestival`);
 ALTER TABLE `BILLETEVENEMENT` ADD FOREIGN KEY(`idEvenement`) REFERENCES `EVENEMENT` (`idEvenement`);
 ALTER TABLE `BILLETEVENEMENT` ADD FOREIGN KEY(`idspectateur`) REFERENCES `SPECTATEUR` (`idspectateur`);
@@ -321,3 +328,5 @@ begin
         signal SQLSTATE '45000' SET MESSAGE_TEXT = 'Un spectateur ne peut pas réserver deux fois la même journée.';
     END IF;
 end |
+
+

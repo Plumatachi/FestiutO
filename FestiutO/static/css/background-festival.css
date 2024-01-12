@@ -6,10 +6,6 @@ html {
     background-color: rgb(67, 50, 56);
 }
 
-main, header{
-    background-color: transparent;
-}
-
 main {
     margin-top: 8em;
 }
