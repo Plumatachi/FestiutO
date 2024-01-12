@@ -11,10 +11,12 @@ cnx = get_cnx()
 @app.route("/")
 def home():
     listeImageId = Groupe.Get.get_images_groupe()
+    user = session['utilisateur']
     return render_template(
     "acceuil.html",
     title="Home",
-    lireImage= listeImageId
+    lireImage= listeImageId,
+    user = user
     )
 
 
@@ -49,11 +51,13 @@ def billeterie_post():
 
 @app.route("/Programme/")
 def programme():
+    user = session['utilisateur']
     listeImageId = Groupe.Get.get_images_groupe()
     return render_template(
     "programme.html",
     title="Home",
-    lireImage= listeImageId
+    lireImage= listeImageId,
+    user = user
     )
 
 @app.route("/Login/", methods=("GET","POST",))
@@ -195,7 +199,7 @@ def favoris(idUser):
 
     return render_template('favoris.html', user=userInfo, groupFavorisList=groupFavorisList)
 
-@app.route('/Profil/favoris/<idUser>/<idGroupe>')
+@app.route('/Groupe_page/<idUser>/<idGroupe>')
 def groupe(idUser, idGroupe):
     groupInfo = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
     isInFavoris = FONCTION.idGroupe_in_like_with_idSpectateur(cnx, idUser, idGroupe)

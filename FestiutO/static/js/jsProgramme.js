@@ -1,17 +1,15 @@
 function changerImage(type){
     var maDiv = document.getElementById('divConteneurGroupe');
-    var enfants = maDiv.querySelectorAll('img');
+    var enfants = maDiv.querySelectorAll('a');
 
     if(type == -1 ){
         for (var i = 0; i < enfants.length; i++) {
-            console.log(enfants.length);
-    
             if(enfants[i].classList.contains('imageGroupe1') ){
                 enfants[i].className = ''
                 enfants[i].classList.add("imageGroupe2");
                 enfants[i].classList.add('imageGroupe');
                 changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
-                document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                document.getElementById("titreGroupeMusique").innerText = enfants[i].title
             }
             else if(enfants[i].classList.contains('imageGroupe2') ){
                 enfants[i].className = ''
@@ -48,7 +46,7 @@ function changerImage(type){
                     enfants[i].className = ''
                     enfants[i].classList.add("imageGroupe2");
                     enfants[i].classList.add('imageGroupe');
-                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                    document.getElementById("titreGroupeMusique").innerText = enfants[i].title
                     changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
                 }
             }
@@ -57,7 +55,6 @@ function changerImage(type){
     }
     else{
         for (var i = 0; i < enfants.length; i++) {
-            console.log("coucouc");
             if(enfants[i].classList.contains('imageGroupe1') ){
                 enfants[i].className = ''
                 enfants[i].classList.add("imageCacher");
@@ -72,7 +69,7 @@ function changerImage(type){
                 enfants[i].className = ''
                 enfants[i].classList.add("imageGroupe2");
                 enfants[i].classList.add('imageGroupe');
-                document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                document.getElementById("titreGroupeMusique").innerText = enfants[i].title
                 changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
             }
             else if(i != 0){
@@ -88,7 +85,7 @@ function changerImage(type){
                     enfants[i].className = ''
                     enfants[i].classList.add("imageGroupe2");
                     enfants[i].classList.add('imageGroupe');
-                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                    document.getElementById("titreGroupeMusique").innerText = enfants[i].title
                     changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
                 }
                 if(enfants[enfants.length-1].classList.contains('imageGroupe2')){

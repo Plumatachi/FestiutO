@@ -78,6 +78,7 @@ main{
 /* Calendar */
 
 .container {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -85,7 +86,8 @@ main{
     /* min-height: 100vh; */
     background-color: rgba(230, 204, 167, 0.95);
     border-radius: 20px;
-    margin-bottom: 5%;
+    margin-left: 12vw;
+    margin-bottom: 5vw;
 }
 
 input,

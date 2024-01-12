@@ -10,7 +10,7 @@ function changerImage(type){
                     enfants[i].className = ''
                     enfants[i].classList.add("imageGroupe2");
                     enfants[i].classList.add('imageGroupe');
-                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                    document.getElementById("titreGroupeMusique").innerText = enfants[i].title
                 }
                 else if(enfants[i].classList.contains('imageGroupe2') ){
                     enfants[i].className = ''
@@ -47,7 +47,7 @@ function changerImage(type){
                         enfants[i].className = ''
                         enfants[i].classList.add("imageGroupe2");
                         enfants[i].classList.add('imageGroupe');
-                        document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                        document.getElementById("titreGroupeMusique").innerText = enfants[i].title
                     }
                 }
                 
@@ -70,7 +70,7 @@ function changerImage(type){
                     enfants[i].className = ''
                     enfants[i].classList.add("imageGroupe2");
                     enfants[i].classList.add('imageGroupe');
-                    document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                    document.getElementById("titreGroupeMusique").innerText = enfants[i].title
                 }
                 else if(i != 0){
                     if(enfants[i-1].classList.contains('imageGroupe2')){
@@ -85,7 +85,7 @@ function changerImage(type){
                         enfants[i].className = ''
                         enfants[i].classList.add("imageGroupe2");
                         enfants[i].classList.add('imageGroupe');
-                        document.getElementById("titreGroupeMusique").innerText = enfants[i].alt
+                        document.getElementById("titreGroupeMusique").innerText = enfants[i].title
                     }
                     if(enfants[enfants.length-1].classList.contains('imageGroupe2')){
                         console.log("13")

@@ -26,13 +26,21 @@
                 <div class="conteneurGroupe" id ="divConteneurGroupe">
                 {% for image, id , nomGroupe in lireImage %}
                     {% if loop.index == 1 %}
-                        <img class="imageGroupe1 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    <a href="{{ url_for('groupe',idUser=user, idGroupe=id) }}" class="imageGroupe1 imageGroupe" id="choixImage{{ loop.index }}" title="{{ nomGroupe }}">
+                        <img class="imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    </a>    
                     {% elif loop.index == 2 %}
-                        <img class="imageGroupe2 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    <a href="{{ url_for('groupe',idUser=user, idGroupe=id) }}" class="imageGroupe2 imageGroupe" id="choixImage{{ loop.index }}" title="{{ nomGroupe }}">
+                        <img class="imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    </a>
                     {% elif loop.index == 3 %}
-                        <img class="imageGroupe3 imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    <a href="{{ url_for('groupe',idUser=user, idGroupe=id) }}" class="imageGroupe3 imageGroupe" id="choixImage{{ loop.index }}" title="{{ nomGroupe }}">
+                        <img class="imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    </a>
                     {% else %}
-                        <img class="imageGroupe imageCacher" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    <a href="{{ url_for('groupe',idUser=user, idGroupe=id) }}" class="imageCacher imageGroupe" id="choixImage{{ loop.index }}" title="{{ nomGroupe }}">
+                        <img class="imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
+                    </a>
                     {% endif %}
                 {% endfor %}
                 </div>

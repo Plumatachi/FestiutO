@@ -6,6 +6,16 @@ html {
     background-color: rgb(25, 22, 14);
 }
 
-main {
-    margin-top: 8em;
+
+.divCentral{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titreFestio{
+    font-size: 5vw;
+    opacity: 66%;
+    color: black;
+    transform: rotate(-10deg);
 }
