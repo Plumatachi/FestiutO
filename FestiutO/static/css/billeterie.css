@@ -307,3 +307,8 @@ textarea {
     right: 30vw;
     z-index: 1;
 }
+
+
+.texteInformationVente{
+    font-size: 1.2vw;
+}

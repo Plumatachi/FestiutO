@@ -2,8 +2,7 @@ from flask import render_template, url_for, redirect, request, session, jsonify,
 from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import get_cnx , Spectateur ,Groupe, Journee , Musicien
-from .requete import FAVORIS, FONCTION, get_cnx , Spectateur, Groupe
+from .requete import get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe
 
 
 cnx = get_cnx()
@@ -35,26 +34,26 @@ def billeterie():
     return render_template(
     "billeterie.html",
     title="Home",
-    form=form,
     listeDate = listeInfoDate
     )
     
     
 
 
-@app.route("/Billeterie/billeterie_post", methods=("GET","POST",))
-def billeterie_post():
-    form = CalendarForm()
-    if form.validate_on_submit():
-        selected_date = form.date.data
-        # Effectuez des actions avec la date sélectionnée
-        # Par exemple, imprimez-la dans la console
-        print(selected_date)
+@app.route("/Billeterie/acheterBillet", methods=(["GET"]))
+def acheterBillet():
+    idJournee = request.args.get('idJournee')
+    param2 = request.args.get('type')
+    param3 = request.args.get('nombre')
+    user = session['utilisateur']
+    Journee.Insert.insert_journee(idJournee,user)
+
     return render_template(
-    "billeterie.html",
-    title="Home",
-    form=form
+        "login.html",
+        title="Profil"
     )
+    
+    
 
 @app.route("/Programme/")
 def programme():
@@ -178,20 +177,20 @@ def modifier_email():
         form=f,
     )
 
-@app.route('/Billeterie/acheter_le_billet/', methods=['GET', 'POST'])
-def index():
-    form = CalendarForm()
-    if form.validate_on_submit():
-        selected_date = form.date.data
-        # Effectuez des actions avec la date sélectionnée
-        # Par exemple, imprimez-la dans la console
-        print(selected_date)
-    return render_template('index.html', form=form)
+# @app.route('/Billeterie/acheter_le_billet/', methods=['GET', 'POST'])
+# def index():
+#     form = CalendarForm()
+#     if form.validate_on_submit():
+#         selected_date = form.date.data
+#         # Effectuez des actions avec la date sélectionnée
+#         # Par exemple, imprimez-la dans la console
+#         print(selected_date)
+#     return render_template('index.html', form=form)
 
 
-@app.route('/Billeterie/acheter_le_billet/confirmation', methods=['GET', 'POST'])
-def confirmation():
-    return render_template('confirmation.html')
+# @app.route('/Billeterie/acheter_le_billet/confirmation', methods=['GET', 'POST'])
+# def confirmation():
+#     return render_template('confirmation.html')
 
 @app.route('/get_Info_journee_Groupe', methods=['GET'])
 def get_Info_journee_Groupe():

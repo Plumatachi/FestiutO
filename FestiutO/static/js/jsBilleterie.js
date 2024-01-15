@@ -1,8 +1,10 @@
+
+var listeMoisJour = [];
 for (let i = 0; i < listeDate.length; i++){
-    var dateObj = new Date(listeDate[i]);
+    var dateObj = new Date(listeDate[i][0]);
     var jour = dateObj.getDate();
     var mois = dateObj.getMonth() + 1;
-    listeMoisJour.push([mois,jour]);
+    listeMoisJour.push([mois,jour,listeDate[i][1]]);
 }
 var typebillet = 0;
 
@@ -11,6 +13,7 @@ function typeBillet(type) {
     div.innerHTML = ""
     typebillet = type;
     pBilletType = document.createElement("p");
+    pBilletType.className = "texteInformationVente";
     if(type == 1){
         pBilletType.textContent = "1 journee "
     }
@@ -43,10 +46,10 @@ const weekdays = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "
 
 
 
-let date = new Date(listeDate[0]);
+let date = new Date(listeDate[0][0]);
 let dateEnregistre = new Date();
 let verifierpremierchargement = false;
-
+let indexJournenregistre = 0;
 
 
 var valeur = 0;
@@ -140,24 +143,26 @@ function generateCalendar() {
     }
 
     // Vai percorrer do 1º até o ultimo dia do mês
+    console.log(listeMoisJour);
     for (let i = 1; i <= lastDay;) {
         // Enquanto o dia da semana for < 7, ele vai adicionar colunas na linha da semana
         while (week < 7) {
             td = document.createElement('td');
             let text = document.createTextNode(i);
             btn = document.createElement('button');
-            var estPresent = listeMoisJour.some(function (sousListe) {
+            var indexJournee = listeMoisJour.findIndex(function (sousListe) {
                 return sousListe[1] === i && sousListe[0] === date.getMonth()+1;
             });
-            if(estPresent){
+            if(indexJournee != -1){
                 btn.style = "color : white; background-color : green;"
                 btn.className = "btn-day dateJournee";
+                console.log(listeMoisJour[indexJournee][2])
+                btn.setAttribute('onclick', "changeDate('"+i+"','"+listeMoisJour[indexJournee][2]+"')");
             }
             else{
                 btn.disabled = true;
                 btn.className = "btn-day";
             }
-            btn.addEventListener('click', function () { changeDate(this) });
             week++;
 
 
@@ -234,8 +239,9 @@ function resetDate() {
 }
 
 // Muda a data pelo numero do botão clicado
-function changeDate(button) {
-    let newDay = parseInt(button.textContent);
+function changeDate(context,id) {
+    indexJournenregistre = id;
+    let newDay = context;
     date = new Date(date.getFullYear(), date.getMonth(), newDay);
     generateCalendar();
 }
@@ -261,8 +267,50 @@ function nextDay() {
     date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
     generateCalendar();
 }
+
+
 function sauvergarderDate(){
-    dateEnregistre = date;
+    dateEnregistre = document.getElementById("date").value;
+    div = document.getElementById("dateEnregistre");
+    div.innerHTML = ""
+    pDateEnregistre = document.createElement("p");
+    pDateEnregistre.className = "texteInformationVente";
+    pDateEnregistre.textContent = document.getElementById("date").value;
+    div.appendChild(pDateEnregistre);
 }
 document.onload = generateCalendar();
 
+
+
+
+
+
+
+function acheterBillet(){
+    if(document.getElementById("dateEnregistre").innerHTML == ""){
+        alert("Veuillez choisir une date");
+        return;
+    }
+    else if(document.getElementById("typeBillet").innerHTML == ""){
+        alert("Veuillez choisir un type de billet");
+        return;
+    }
+    else if(document.getElementById("valeur").value == 0){
+        alert("Veuillez choisir un nombre de billet");
+        return;
+    }
+    else{
+        $.ajax({
+            url: '/Billeterie/acheterBillet',
+            type: 'GET',
+            data:{
+                idJournee : indexJournenregistre ,
+                type : typebillet,
+                nombre : document.getElementById("valeur").value
+            },
+            success: function (data) {
+                print("lets go");
+            }
+        });
+    }
+}

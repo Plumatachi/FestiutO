@@ -42,6 +42,7 @@ CREATE TABLE `CONCERT` (
 CREATE TABLE `RESERVER` (
   `idspectateur` int,
   `idJournee` int,
+  `nombreDePlace' int,
   PRIMARY KEY (`idspectateur`, `idJournee`)
 )  ;
 

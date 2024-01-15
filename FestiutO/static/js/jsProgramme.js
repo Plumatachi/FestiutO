@@ -106,7 +106,7 @@ function changerImage(type){
     }
 }
 
-function changerInfoJournee(idgroupe){
+function changeidrInfoJournee(idgroupe){
     $.ajax({
         url: '/get_Info_journee_Groupe',
         type: 'GET',

@@ -26,15 +26,22 @@ class Journee:
         def get_journee_date():
             try:
                 res = []
-                result = cnx.execute(text("SELECT dateDebutJ FROM JOURNEE;"))
+                result = cnx.execute(text("SELECT dateDebutJ,idJournee FROM JOURNEE;"))
                 for row in result:
-                    res.append(row[0])
+                    res.append((row[0],row[1]))
                 return res
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
         
-        
+    class Insert :
+        def insert_journee(idJournee,idspectateur):
+            try:
+                cnx.execute(text("INSERT INTO RESERVER(idJournee,idspectateur) VALUES ('" + str(idJournee) + "','" + str(idspectateur) + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion du favoris")
+                raise
         
 class Musicien:
     class Get:
