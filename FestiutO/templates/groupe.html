@@ -30,5 +30,14 @@
     
 </div>
 </div>
+<div class="Musiciens">
+    <h1>Musicien : </h1>
+    {% for musicien in listeMucisien %}
+        <div class="divMusicien">
+            <h2>{{musicien[1]}}</h2>
+            <p>{{musicien[2]}}
+        </div>
+    {% endfor %}   
+</div>
 
 {% endblock %}

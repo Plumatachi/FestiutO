@@ -297,3 +297,13 @@ textarea {
     text-align: center;
     z-index: 99;
 }
+
+
+
+
+.positionInformationVente{
+    position: absolute;
+    top: 5vw;
+    right: 30vw;
+    z-index: 1;
+}

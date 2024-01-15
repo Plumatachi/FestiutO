@@ -23,6 +23,7 @@ main {
     margin-bottom: 20px;
     padding: 10px;
     background-color: #f0f0f0;
+    margin-top: 3vw;
 }
 
 /* Style pour la balise img affichant l'image du groupe */
@@ -38,6 +39,26 @@ main {
 .flex {
     display: flex;
     flex-wrap: nowrap;
+}
+
+
+.Musiciens{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.divMusicien{
+    display: flex;
+    flex-wrap: wrap;
+    width: min-content;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    margin: 40px;
+    background-color: rgb(14, 48, 48);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 

@@ -4,15 +4,23 @@ for (let i = 0; i < listeDate.length; i++){
     var mois = dateObj.getMonth() + 1;
     listeMoisJour.push([mois,jour]);
 }
+var typebillet = 0;
 
-function afficherCalendrier() {
-    let calendrier = document.getElementById("displaynoneCaldendrier");
-    if (calendrier.style.display === 'none') {
-        calendrier.style.display = 'flex';  // Afficher la div si elle est cachée
-    } else {
-        calendrier.style.display = 'none';   // Cacher la div si elle est affichée
+function typeBillet(type) {
+    div = document.getElementById("typeBillet");
+    div.innerHTML = ""
+    typebillet = type;
+    pBilletType = document.createElement("p");
+    if(type == 1){
+        pBilletType.textContent = "1 journee "
     }
-
+    else if(type == 2){
+        pBilletType.textContent = "2 journee "
+    }
+    else{
+        pBilletType.textContent = "tout les journee "
+    }
+    div.appendChild(pBilletType);
 }
 
 
@@ -35,8 +43,29 @@ const weekdays = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "
 
 
 
-let date = new Date();
+let date = new Date(listeDate[0]);
+let dateEnregistre = new Date();
 let verifierpremierchargement = false;
+
+
+
+var valeur = 0;
+                        
+function updateValue() {
+  document.getElementById('valeur').value = valeur;
+}
+
+function increment() {
+  valeur++;
+  updateValue();
+}
+
+function decrement() {
+  valeur--;
+  updateValue();
+}
+
+updateValue();
 
 function getCurrentDate(element, asString) {
     if (element) {
@@ -232,6 +261,8 @@ function nextDay() {
     date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
     generateCalendar();
 }
-
+function sauvergarderDate(){
+    dateEnregistre = date;
+}
 document.onload = generateCalendar();
 

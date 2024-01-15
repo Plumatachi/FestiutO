@@ -209,6 +209,7 @@ def favoris(idUser):
 @app.route('/Groupe_page/<idUser>/<idGroupe>')
 def groupe(idUser, idGroupe):
     groupInfo = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    listeMucisien = Musicien.Get.get_musicien_with_idgroupe(idGroupe)
     isInFavoris = FONCTION.idGroupe_in_like_with_idSpectateur(cnx, idUser, idGroupe)
     
     if isInFavoris:
@@ -217,7 +218,7 @@ def groupe(idUser, idGroupe):
         isInFavoris = 0
 
     print(isInFavoris)
-    return render_template('groupe.html', groupe=groupInfo, user=idUser, like=isInFavoris)
+    return render_template('groupe.html', groupe=groupInfo, user=idUser, like=isInFavoris, listeMucisien = listeMucisien )
 
 @app.route('/Profil/favoris/<idUser>/<idGroupe>/like')
 def like(idUser, idGroupe):

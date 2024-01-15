@@ -131,6 +131,7 @@ CREATE TABLE `MUSICIEN` (
   `nom` VARCHAR(42),
   `adresseMail` VARCHAR(42),
   `numeroTelMusicien` int,
+  `photo` string,
   PRIMARY KEY (`idMusicien`)
 ) ;
 

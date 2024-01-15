@@ -11,15 +11,15 @@
     <div class="divCentral">
         <div class="divPositionPageBoutonBillet">
             <div class="divParentBoutonBillet">
-                <button class="boutonBillet" onclick="afficherCalendrier()"><img class="imageBoutonbillet"
+                <button class="boutonBillet" onclick="typeBillet(1)"><img class="imageBoutonbillet"
                         src="../static/imagesHtml/ticket_icon.webp" alt="">
                     <p class="PBoutonBillet">Pour une jounée<br> </p>
                 </button>
-                <button class="boutonBillet" onclick="afficherCalendrier()"><img class="imageBoutonbillet"
+                <button class="boutonBillet" onclick="typeBillet(2)"><img class="imageBoutonbillet"
                         src="../static/imagesHtml/ticket_icon.webp" alt="">
                     <p class="PBoutonBillet"> Pour 2 jour<br> </p>
                 </button>
-                <button class="boutonBillet" onclick="afficherCalendrier()"><img class="imageBoutonbillet"
+                <button class="boutonBillet" onclick="typeBillet(3)"><img class="imageBoutonbillet"
                         src="../static/imagesHtml/ticket_icon.webp" alt="">
                     <p class="PBoutonBillet">Pour tout la duree <br>du festival </p>
                 </button>
@@ -30,17 +30,12 @@
                 <div class="calendar-assets">
                     <h1 id="currentDate"></h1>
                     <div class="field">
-                        {{ form.date.label }}
-                        <form method="post" action="billeterie_post" class="form-input">
-                            {{ form.hidden_tag() }}
                             <div>
-                                {{ form.date(size=20, class="text-field") }}
-                                {% for error in form.date.errors %}
-                                <span style="color: red;">{{ error }}</span>
-                                {% endfor %}
+                                <input id="date" class="text-field" name="date" required="" size="20" type= "date" readonly> 
                             </div>
                             <div>
-                                <input type="submit" class="btn-small btn" value="Enregister">
+                                <button type="btn" class="btn-small btn" value="Enregister" onclick="sauvergarderDate()">Enregister
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -62,6 +57,18 @@
                         <div class="buttons">
                             <button class="icon" onclick="prevMonth()" title="Mês anterior"><i class="fas fa-chevron-left"></i><</button>
                             <button class="icon" onclick="nextMonth()" title="Próximo mês"><i class="fas fa-chevron-right "></i>></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="positionInformationVente">
+                    <div class="informationVente" id="informationVente">
+                        <div id= "typeBillet">
+                            
+                        </div>
+                        <div class = "nbBillet">
+                            <input type="text" id="valeur" readonly>
+                            <button onclick="increment()">+</button>
+                            <button onclick="decrement()">-</button>
                         </div>
                     </div>
                 </div>

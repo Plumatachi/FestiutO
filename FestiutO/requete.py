@@ -167,7 +167,19 @@ class FONCTION:
             print("Erreur lors de la récupération des favoris")
             raise
 
-
+class Musicien:
+    class Get:
+        def get_musicien_with_idgroupe(idGroupe):
+            try:
+                result = cnx.execute(text("SELECT idMusicien,nom,nominstrupent,photo FROM MUSICIEN natural join GROUPE natural join JOUE natural join INSTRUMENT WHERE idgroupe = '" + idGroupe + "';"))
+                musiciens = []
+                for row in result:
+                    musiciens.append((row[0],row[1],row[2],row[3]))
+                return musiciens
+            except:
+                print("Erreur lors de la récupération du groupe")
+                raise
+            
 class Groupe:
     class Get: 
         def get_groupe_with_idgroupe(cnx, idgroupe):

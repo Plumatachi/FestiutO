@@ -119,45 +119,45 @@ INSERT INTO INSTRUMENT(nominstrupent) VALUES
     ("Batterie");
 
 INSERT INTO MUSICIEN (nom, adresseMail, numeroTelMusicien) VALUES
-    ('Mick Jagger', 'mick@rollingstones.com', 0612345678),
+    ('Mick Jagger', 'mick@rollingstones.com', 0612345678,NULL),
 
-    ('Keith Richards', 'keith@rollingstones.com', 0678901234),
+    ('Keith Richards', 'keith@rollingstones.com', 0678901234,NULL),
 
-    ('Charlie Watts', 'charlie@rollingstones.com', 0654321098),
+    ('Charlie Watts', 'charlie@rollingstones.com', 0654321098,NULL),
 
-    ('Ronnie Wood', 'ronnie@rollingstones.com', 0665432109),
+    ('Ronnie Wood', 'ronnie@rollingstones.com', 0665432109,NULL),
 
-    ('John Lennon', 'john@beatles.com', 0612345778),
+    ('John Lennon', 'john@beatles.com', 0612345778,Lennon.jpg),
 
-    ('Paul McCartney', 'paul@beatles.com', 0677901234),
+    ('Paul McCartney', 'paul@beatles.com', 0677901234,paul_McCartney.jpg),
 
-    ('George Harrison', 'george@beatles.com', 0654321099),
+    ('George Harrison', 'george@beatles.com', 0654321099,george_harris.jpg),
 
-    ('Ringo Starr', 'ringo@beatles.com', 0765432109),
+    ('Ringo Starr', 'ringo@beatles.com', 0765432109,Ringo_Starr.png),
 
-    ('Angus Young', 'angus@acdc.com', 0662345678),
+    ('Angus Young', 'angus@acdc.com', 0662345678,NULL),
 
-    ('Malcolm Young', 'malcolm@acdc.com', 0678911234),
+    ('Malcolm Young', 'malcolm@acdc.com', 0678911234,NULL),
 
-    ('Brian Johnson', 'brian@acdc.com', 0674321098),
+    ('Brian Johnson', 'brian@acdc.com', 0674321098,NULL),
 
-    ('Cliff Williams', 'cliff@acdc.com', 0666432109),
+    ('Cliff Williams', 'cliff@acdc.com', 0666432109,NULL),
 
-    ('James Hetfield', 'james@metallica.com', 0612345618),
+    ('James Hetfield', 'james@metallica.com', 0612345618,NULL),
 
-    ('Lars Ulrich', 'lars@metallica.com', 0678901334),
+    ('Lars Ulrich', 'lars@metallica.com', 0678901334,NULL),
 
-    ('Kirk Hammett', 'kirk@metallica.com', 0654331098),
+    ('Kirk Hammett', 'kirk@metallica.com', 0654331098,NULL),
 
-    ('Robert Trujillo', 'robert@metallica.com', 0667432109),
+    ('Robert Trujillo', 'robert@metallica.com', 0667432109,NULL),
 
-    ('Roger Waters', 'roger@pinkfloyd.com', 0712345678),
+    ('Roger Waters', 'roger@pinkfloyd.com', 0712345678,NULL),
 
-    ('David Gilmour', 'david@pinkfloyd.com', 0678901214),
+    ('David Gilmour', 'david@pinkfloyd.com', 0678901214,NULL),
 
-    ('Richard Wright', 'richard@pinkfloyd.com', 0654821098),
+    ('Richard Wright', 'richard@pinkfloyd.com', 0654821098,NULL),
 
-    ('Nick Mason', 'nick@pinkfloyd.com', 0765432110);
+    ('Nick Mason', 'nick@pinkfloyd.com', 0765432110,NULL);
 
 INSERT INTO APPARTIENT(idGroupe, idMusicien) VALUES
     (1,1),
