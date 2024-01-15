@@ -68,7 +68,11 @@
             </div>
         </div>
     </div>
-<script src="{{ url_for('static', filename='js/jsBilleterie.js') }}"></script>
+<script>
+    var listeDate = {{ listeDate | tojson | safe }};
+    var listeMoisJour = [];
+</script>
+<script src="../static/js/jsBilleterie.js"></script>
 
 {% endif %}
 
