@@ -9,6 +9,7 @@
 
 <main>
     <h1> Gestion des comptes </h1>
+    <a class="buttonAjout" href="{{ url_for('ajouterCompteOrganisateur') }}"> Ajouter un compte organisateur </a>
     <h2> Liste des utilisateurs </h2>
     <div class="listeUser">
 
@@ -17,7 +18,7 @@
         <p> Nom : {{ userUnique[2]}} </p>
         <p> Mail : {{ userUnique[4]}} </p>
         <p> Numéro : {{ userUnique[3]}} </p>
-        <a class="button" href="{{ url_for('gestionComptesUnique', idUser= userUnique[1]) }}"> Modifier le compte </a>
+        <a class="button" href="{{ url_for('gestionComptesUnique', idUser=userUnique[1]) }}"> Modifier le compte </a>
     </div>
     {% endfor %}
 </div>

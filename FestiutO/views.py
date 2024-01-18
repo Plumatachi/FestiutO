@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect, request, session, jsonify, send_file
-from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
+from .formulaire import *
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
 from .requete import get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
@@ -73,12 +73,14 @@ def login():
         f.next.data = request.args.get("next")
     elif f.validate_on_submit():
         user = f.get_authenticated_user()
-        if user != None:
+        if user != None:    
+
             session['utilisateur'] = user[0]
-            print("login : "+str(user))
-            next = f.next.data or url_for("home")
-            return redirect(next)
-        
+            if user[0] == 2:
+                return redirect(url_for("organisation"))
+            else:
+                next = f.next.data or url_for("home")
+                return redirect(next)
     return render_template(
         "login.html",
         title="Profil",
@@ -145,37 +147,7 @@ def modifier_mdp():
         form=f,
     )
 
-@app.route("/Profil/Modifier/Email/", methods=("GET","POST",))
-def modifier_email():
-    f = ModifierEmailForm()
-    if not f.is_submitted():
-        f.next.data = request.args.get("next")
-    elif f.validate_on_submit():
-        passwordancien = Spectateur.Get.get_password_with_email(cnx, f.ancienEmail.data)
-        if passwordancien != f.passwordActuel.data:
-            return render_template(
-                "modifier_email.html",
-                erreur = "Mot de passe incorrect",
-                form = f
-            )
-        user = Spectateur.Get.get_all_spectateur_avec_email(cnx, f.ancienEmail.data)
-        print(user)
-        print(f.ancienEmail.data)
-        if f.ancienEmail.data != user[3]:
-            return render_template(
-                "modifier_email.html",
-                title="Modifier Mots de passe",
-                form=f,
-            )
-        else:
-            f.change_email()
-            return redirect(url_for("logout"))
-    
-    return render_template(
-        "modifier_email.html",
-        title="Modifier Mots de passe",
-        form=f,
-    )
+
 
 # @app.route('/Billeterie/acheter_le_billet/', methods=['GET', 'POST'])
 # def index():
@@ -230,6 +202,40 @@ def dislike(idUser, idGroupe):
     return redirect(url_for('groupe', idUser=idUser, idGroupe=idGroupe))
 
 
+@app.route("/Profil/Modifier/Email/", methods=("GET","POST",))
+def modifier_email():
+    f = ModifierEmailForm()
+    if not f.is_submitted():
+        f.next.data = request.args.get("next")
+    elif f.validate_on_submit():
+        passwordancien = Spectateur.Get.get_password_with_email(cnx, f.ancienEmail.data)
+        if passwordancien != f.passwordActuel.data:
+            return render_template(
+                "modifier_email.html",
+                erreur = "Mot de passe incorrect",
+                form = f
+            )
+        user = Spectateur.Get.get_all_spectateur_avec_email(cnx, f.ancienEmail.data)
+        print(user)
+        print(f.ancienEmail.data)
+        if f.ancienEmail.data != user[3]:
+            return render_template(
+                "modifier_email.html",
+                title="Modifier Mots de passe",
+                form=f,
+            )
+        else:
+            f.change_email()
+            return redirect(url_for("logout"))
+    
+    return render_template(
+        "modifier_email.html",
+        title="Modifier Mots de passe",
+        form=f,
+    )
+    
+
+
 
 @app.route("/acheter_billet_evenement", methods=(["GET"]))
 def acheter_billet_evenement():
@@ -260,28 +266,85 @@ def gestionComptesUnique(idUser):
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
     return render_template('gestionComptesUnique.html', user=user)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier_email")
+@app.route("/espace-organisateur/gestion-comptes//modifier_email/<idUser>",methods=("GET","POST",))
 def modifierEmail(idUser):
+    form = ModifierEmailFormORG()
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierEmail.html', user=user)
+    if form.is_submitted():
+        res = form.change_email()
+        if res:
+            return redirect(url_for('modifierEmail', idUser=idUser, erreur="Email modifié", form=form))
+        else:
+            render_template('modifierEmail.html', user=user , erreur="Les emails ne correspondent pas", form=form)
+    return render_template('modifierEmail.html', user=user, form=form)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-mot-de-passe")
+@app.route("/espace-organisateur/gestion-comptes//modifier-mot-de-passe/<idUser>",methods=("GET","POST",))
 def modifierMdp(idUser):
+    form = ModifierPasswordFormORG()
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierEmail.html', user=user)
+    if form.is_submitted():
+        res = form.change_password()
+        if res:
+            return redirect(url_for('modifierMdp', user=user, erreur="Mot de passe modifié"))
+        else:
+            return render_template('modifierMDP.html', user=user, erreur="Les mots de passe ne correspondent pas")            
+    return render_template('modifierMDP.html', user=user, form=form)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-nom")
+@app.route("/espace-organisateur/gestion-comptes//modifier-nom/<idUser>" ,methods=("GET","POST",))
 def modifierNom(idUser):
+    form = ModifierNomFormORG()
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierNom.html', user=user)
+    if form.is_submitted():
+        res = form.change_nom()
+        if res:
+            return redirect(url_for('modifierNom', idUser=idUser, form=form, erreur="Nom modifié"))
+        else:
+            return render_template('modifierNom.html', user=user, form=form, erreur="Les nom ne correspondent pas")
+    return render_template('modifierNom.html', user=user, form=form)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-telephone")
+@app.route("/espace-organisateur/gestion-comptes//modifier-telephone/<idUser>", methods=("GET","POST",))
 def modifierTelephone(idUser):
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierTelephone.html', user=user)
+    form = ModifierNumeroTelephoneFormORG()
+    if form.is_submitted():
+        res = form.change_numeroTelephone()
+        if res:
+            return redirect(url_for('modifierTelephone', idUser=idUser, form=form, erreur="Numéro de téléphone modifié"))
+        else:
+            return render_template('modifierTelephone.html', user=user, form=form, erreur="Les numéros de téléphone ne correspondent pas")
+    return render_template('modifierTelephone.html', user=user, form=form)
 
 
 # @app.route("/espace-organisateur/gestion-comptes/<idUser>/delete")
 # def deleteCompte(idUser):
 #     Spectateur.Delete.delete_spectateur(cnx, idUser)
 #     return redirect(url_for('gestionComptes_avant'))
+
+
+@app.route("/espace-organisateur/gestion-comptes/ajouter-compte-organisateur", methods=("GET","POST",))
+def ajouterCompteOrganisateur():
+    form = AjouterCompteOrganisateurForm()
+    if form.validate_on_submit():
+        if form.password.data != form.confirm.data:
+            return render_template("ajouterCompteOrganisateur.html", form=form, erreur="Les mots de passe ne correspondent pas"
+            )
+        res = form.ajouter_compte()
+        if res:
+            return redirect(url_for("ajouterCompteOrganisateur", erreur="Compte ajouté", form=form))
+        else:
+            return render_template("ajouterCompteOrganisateur.html", form=form, erreur="L'email existe déjà")
+    return render_template(
+        "ajouterCompteOrganisateur.html",
+        title="Ajouter compte organisateur",
+        form=form,
+    )
+    
+@app.route("/espace-organisateur/gestion-comptes/<idUser>/delete")
+def supprimerCompte(idUser):
+    Spectateur.Delete.delete_spectateur(cnx, idUser)
+    return redirect(url_for('gestionComptes_avant'))
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/delete")
+def supprimerCompte(idUser):
+    Spectateur.Delete.delete_spectateur(cnx, idUser)
+    return redirect(url_for('gestionComptes_avant'))

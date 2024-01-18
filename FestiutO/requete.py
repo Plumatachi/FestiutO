@@ -112,28 +112,30 @@ class Spectateur:
     class Insert:
         def insert_spectateur(cnx, nom, telephone, email, password):
             try:
-                cnx.execute(text("INSERT INTO SPECTATEUR(nom,numerotel,mail,motsDePasse) VALUES ('" + nom + "', '" + telephone + "', '" + email + "', '" + password + "');"))
+                cnx.execute(text("INSERT INTO SPECTATEUR(nom,numerotel,mail,motsDePasse, idTypeCompte) VALUES ('" + nom + "', '" + telephone + "', '" + email + "', '" + password + "', 1);"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du spectateur")
                 raise
     class Update:
         
-        def update_numeroTelephone(cnx, id, numeroTelephone):
+        def update_numeroTelephone(cnx, email, numeroTelephone):
             try:
-                cnx.execute(text("UPDATE SPECTATEUR SET numerotel = '" + numeroTelephone + "' WHERE idSpectateur = '" + id + "';"))
+                cnx.execute(text("UPDATE SPECTATEUR SET numerotel = '" + numeroTelephone + "' WHERE mail = '" + email + "';"))
                 cnx.commit()
+                print(True)
             except:
                 print("Erreur lors de la mise à jour du numéro de téléphone")
                 raise
         
-        def update_nom(cnx, id, nom):
+        def update_nom(cnx, mail, nom):
             try:
-                cnx.execute(text("UPDATE SPECTATEUR SET nom = '" + nom + "' WHERE idSpectateur = '" + id + "';"))
+                cnx.execute(text("UPDATE SPECTATEUR SET nom = '" + nom + "' WHERE mail = '" + mail + "';"))
                 cnx.commit()
             except:
                 print("Erreur lors de la mise à jour du nom")
                 raise
+            
             
         def update_mdp(cnx, email, password):
             try:
@@ -144,11 +146,21 @@ class Spectateur:
                 raise
 
         def update_email(cnx, email, new_email):
+            user = Spectateur.Get.get_all_spectateur_avec_email(cnx, email)
+            idUser = user[1]
             try:
-                cnx.execute(text("UPDATE SPECTATEUR SET mail = '" + new_email + "' where mail = '" + email + "';"))
+                cnx.execute(text("UPDATE SPECTATEUR SET mail = '" + new_email + "' where idSpectateur = '" + str(idUser) + "';"))
                 cnx.commit()
             except:
                 print( "Erreur lors de la mise à jour de l'email")
+                raise
+    class Delete:
+        def delete_spectateur(cnx, id):
+            try:
+                cnx.execute(text("DELETE FROM SPECTATEUR WHERE idSpectateur = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du spectateur")
                 raise
 
 class FAVORIS:

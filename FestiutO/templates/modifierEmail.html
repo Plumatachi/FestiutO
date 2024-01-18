@@ -8,7 +8,39 @@
 {% block content %}
 
 <main>
-    <h1> Modification de l'email </h1>
+    <div class="container">
+        <div class="userInfo">
+            <h2> Information sur l'utilisateur </h2>
+            <p> Nom : {{ user[1]}} </p>
+            <p> Mail : {{ user[3]}} </p>
+            <p> Numéro : {{ user[2]}} </p>
+        </div>
+
+        <div class="form">
+            <h1> Modification de l'email </h1>
+            <form role="form" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="input">
+                    <div class="element">
+                        {{ form.ancienEmail(size=50, class_="form-control element", placeholder="Email actuel") }}
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="element">
+                        {{ form.email(size=50, class_="form-control element", placeholder="Nouvel email") }}
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="element">
+                        {{ form.emailVerif(size=50, class_="form-control element", placeholder="Confirmer l'email") }}
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <input type="submit" class="element elementSubmit" value="Changer l'email">
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
 
 

@@ -27,6 +27,8 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm = PasswordField('Password again', validators=[DataRequired()])
     next = HiddenField()
+    
+    
 
 class ModifierMdpForm(FlaskForm):
     email = EmailField('email', validators=[DataRequired()])
@@ -54,18 +56,59 @@ class CalendarForm(FlaskForm):
     date = DateField('Choisir une date', validators=[DataRequired()], format='%Y-%m-%d', default=datetime.date.today)
     next = HiddenField()
     
-class ModifierNomForm(FlaskForm):
-    identifiant = StringField('Identifiant', validators=[DataRequired()])
-    ancienNom = StringField('Nom actuel', validators=[DataRequired()])
-    nom = StringField('Nom', validators=[DataRequired()])
 
+# foorm Organisateur 
+class ModifierNomFormORG(FlaskForm):
+    email = EmailField('Email actuel', validators=[DataRequired()])
+    nom = StringField('Nouveau nom', validators=[DataRequired()])
+    nomVerif = StringField('Confirmer le nouveau nom', validators=[DataRequired()])
     def change_nom(self):
-        Spectateur.Update.update_nom(cnx, self.identifiant.data, self.nom.data)
+        if self.nom.data != self.nomVerif.data:
+            return False
+        Spectateur.Update.update_nom(cnx, self.email.data, self.nom.data)
+        return True
     
-class ModifierNumeroTelephoneForm(FlaskForm):
-    identifiant = StringField('Identifiant', validators=[DataRequired()])
-    ancienNumeroTelephone = StringField('Numéro de téléphone actuel', validators=[DataRequired()])
+class ModifierNumeroTelephoneFormORG(FlaskForm):
+    emailField = EmailField('Email actuel', validators=[DataRequired()])
     numeroTelephone = StringField('Numéro de téléphone', validators=[DataRequired()])
-
+    numeroTelephoneVerif = StringField('Confirmer le numéro de téléphone', validators=[DataRequired()])
     def change_numeroTelephone(self):
-        Spectateur.Update.update_numeroTelephone(cnx, self.identifiant.data, self.numeroTelephone.data)
+        if self.numeroTelephone.data != self.numeroTelephoneVerif.data:
+            return False
+        Spectateur.Update.update_numeroTelephone(cnx, self.emailField.data, self.numeroTelephone.data)
+        return True
+
+        
+class ModifierEmailFormORG(FlaskForm):
+    ancienEmail = EmailField('Email actuel', validators=[DataRequired()])
+    email = EmailField('Email', validators=[DataRequired()])
+    emailVerif = EmailField('Confirmer l\'email', validators=[DataRequired()])
+    
+    def change_email(self):
+        if self.email.data != self.emailVerif.data:
+            return False
+        Spectateur.Update.update_email(cnx, self.ancienEmail.data, self.email.data)
+        return True
+    
+class ModifierPasswordFormORG(FlaskForm):
+    email = StringField('Email actuel', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    confirm = PasswordField('Confirmer le mot de passe', validators=[DataRequired()])
+    
+    def change_password(self):
+        if self.password.data != self.confirm.data:
+            return False
+        Spectateur.Update.update_mdp(cnx, self.identifiant.data, self.password.data)
+        return True
+class AjouterCompteOrganisateurForm(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    numeroTelephone = StringField('Numéro de téléphone', validators=[DataRequired()])
+    email = EmailField('Email', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    confirm = PasswordField('Confirmer le mot de passe', validators=[DataRequired()])
+    
+    def ajouter_compte(self):
+        if self.password.data != self.confirm.data:
+            return False
+        Spectateur.Insert.insert_spectateur(cnx, self.nom.data, self.numeroTelephone.data, self.email.data, self.password.data)
+        return True
