@@ -86,9 +86,9 @@ class Musicien:
                 raise
 
     class Insert:
-        def insert_musicien(cnx, id_musicien, nom, adresse_mail, numero_tel, photo):
+        def insert_musicien(cnx, nom, adresse_mail, numero_tel, photo):
             try:
-                cnx.execute(text("INSERT INTO MUSICIEN(idMusicien, nom, adresseMail, numeroTelMusicien, photo) VALUES ('" + id_musicien + "', '" + nom + "', '" + adresse_mail + "', '" + numero_tel + "', '" + photo + "');"))
+                cnx.execute(text("INSERT INTO MUSICIEN(nom, adresseMail, numeroTelMusicien, photo) VALUES ('" + nom + "', '" + adresse_mail + "', '" + numero_tel + "', '" + photo + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du membre dans le groupe")
@@ -120,19 +120,13 @@ class Musicien:
     class Delete:
         def delete_musicien(cnx, idMusicien):
             try:
+                cnx.execute(text("DELETE FROM JOUE WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + Groupe.Get.get_idGroupe_musicien_avec_son_idMusicien(idMusicien) + "';")),
                 cnx.execute(text("DELETE FROM MUSICIEN WHERE idMusicien = '" + idMusicien + "';"))
                 cnx.commit()
             except:
                 print("Erreur lors de la suppression du musicien")
                 raise
-        def delete_musicien(cnx, idMusicien):
-            try:
-                cnx.execute(text("DELETE FROM MUSICIEN WHERE idMusicien = '" + idMusicien + "';"))
-                cnx.commit()
-            except:
-                print("Erreur lors de la suppression du musicien")
-                raise
-
+    
 class Spectateur:
     class Get:
         def get_all_spectateur(cnx):
@@ -307,6 +301,17 @@ class Groupe:
                             groupe.append(elem)
                     
                     return groupe
+            except:
+                print("Erreur lors de la récupération du groupe")
+                raise
+
+
+        def get_idGroupe_musicien_avec_son_idMusicien(cnx, idMusicien):
+            try:
+                result = cnx.execute(text("SELECT idGroupe FROM JOUE WHERE idMusicien = '" + idMusicien + "';"))
+                for row in result:
+                    print(row[0])
+                    return row[0]
             except:
                 print("Erreur lors de la récupération du groupe")
                 raise
