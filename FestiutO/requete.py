@@ -236,6 +236,14 @@ class Musicien:
             except:
                 print("Erreur lors de la récupération du groupe")
                 raise
+    class Insert:
+        def insert_musicien(cnx, id_membre, id_groupe, nom_membre, instrument):
+            try:
+                cnx.execute(text("INSERT INTO MembresDuGroupe(membre_id, groupe_id, nom, instrument) VALUES ('" + id_membre + "', '" + id_groupe + "', '" + nom_membre + "', '" + instrument + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion du membre dans le groupe")
+                raise
             
 class Groupe:
     class Get: 
@@ -291,4 +299,12 @@ class Groupe:
                 return res
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+    class Insert:
+        def insert_groupe(cnx, id_groupe, nom_groupe, description):
+            try:
+                cnx.execute(text("INSERT INTO Groupes(groupe_id, nom, description) VALUES ('" + id_groupe + "', '" + nom_groupe + "', '" + description+ "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion du groupe")
                 raise
