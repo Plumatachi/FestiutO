@@ -68,6 +68,18 @@ class Musicien:
                
 class Spectateur:
     class Get:
+        
+        def get_all_spectateur(cnx):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT * FROM SPECTATEUR natural join TYPECOMPTE;"))
+                for row in result:
+                    res.append(row)
+                return res
+            except:
+                print("erreur lors de la récupération des spectateurs")
+                raise
+                    
         def get_all_spectateur_avec_email(cnx, email):
             try:
                 result = cnx.execute(text("SELECT * FROM SPECTATEUR natural join TYPECOMPTE WHERE mail = '" + email + "';"))
@@ -106,6 +118,23 @@ class Spectateur:
                 print("Erreur lors de l'insertion du spectateur")
                 raise
     class Update:
+        
+        def update_numeroTelephone(cnx, id, numeroTelephone):
+            try:
+                cnx.execute(text("UPDATE SPECTATEUR SET numerotel = '" + numeroTelephone + "' WHERE idSpectateur = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du numéro de téléphone")
+                raise
+        
+        def update_nom(cnx, id, nom):
+            try:
+                cnx.execute(text("UPDATE SPECTATEUR SET nom = '" + nom + "' WHERE idSpectateur = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du nom")
+                raise
+            
         def update_mdp(cnx, email, password):
             try:
                 cnx.execute(text("UPDATE SPECTATEUR SET motsDePasse = '" + password + "' WHERE mail = '" + email + "';"))

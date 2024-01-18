@@ -243,3 +243,45 @@ def acheter_billet_evenement():
 @app.route("/achat_billet_evenement/<idEvenement>")
 def achat_billet_evenement(idEvenement):
     return render_template('achat_billet.html', idEvenement=idEvenement)
+
+
+# gestion organisateur
+@app.route("/espace-organisateur")
+def organisation():
+    return render_template('espaceOrganisateur.html')
+
+@app.route("/espace-organisateur/gestion-comptes")
+def gestionComptes_avant():
+    allUser = Spectateur.Get.get_all_spectateur(cnx)
+    return render_template('gestionComptes.html', allUser=allUser)
+
+@app.route("/espace-organisateur/gestion-comptes/<idUser>")
+def gestionComptesUnique(idUser):
+    user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
+    return render_template('gestionComptesUnique.html', user=user)
+
+@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier_email")
+def modifierEmail(idUser):
+    user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
+    return render_template('modifierEmail.html', user=user)
+
+@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-mot-de-passe")
+def modifierMdp(idUser):
+    user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
+    return render_template('modifierEmail.html', user=user)
+
+@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-nom")
+def modifierNom(idUser):
+    user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
+    return render_template('modifierNom.html', user=user)
+
+@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-telephone")
+def modifierTelephone(idUser):
+    user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
+    return render_template('modifierTelephone.html', user=user)
+
+
+# @app.route("/espace-organisateur/gestion-comptes/<idUser>/delete")
+# def deleteCompte(idUser):
+#     Spectateur.Delete.delete_spectateur(cnx, idUser)
+#     return redirect(url_for('gestionComptes_avant'))

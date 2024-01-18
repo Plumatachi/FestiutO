@@ -53,3 +53,19 @@ class ModifierEmailForm(FlaskForm):
 class CalendarForm(FlaskForm):
     date = DateField('Choisir une date', validators=[DataRequired()], format='%Y-%m-%d', default=datetime.date.today)
     next = HiddenField()
+    
+class ModifierNomForm(FlaskForm):
+    identifiant = StringField('Identifiant', validators=[DataRequired()])
+    ancienNom = StringField('Nom actuel', validators=[DataRequired()])
+    nom = StringField('Nom', validators=[DataRequired()])
+
+    def change_nom(self):
+        Spectateur.Update.update_nom(cnx, self.identifiant.data, self.nom.data)
+    
+class ModifierNumeroTelephoneForm(FlaskForm):
+    identifiant = StringField('Identifiant', validators=[DataRequired()])
+    ancienNumeroTelephone = StringField('Numéro de téléphone actuel', validators=[DataRequired()])
+    numeroTelephone = StringField('Numéro de téléphone', validators=[DataRequired()])
+
+    def change_numeroTelephone(self):
+        Spectateur.Update.update_numeroTelephone(cnx, self.identifiant.data, self.numeroTelephone.data)

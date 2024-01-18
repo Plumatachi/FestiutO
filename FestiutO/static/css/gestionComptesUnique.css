@@ -1,0 +1,20 @@
+
+.flex{
+    display: flex;
+}
+h1, h2 {
+    text-align: center;
+}
+
+.button{
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.button:hover{
+    background-color: #f1f1f1;
+}
