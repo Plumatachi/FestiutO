@@ -90,6 +90,12 @@ class ModifierEmailFormORG(FlaskForm):
         Spectateur.Update.update_email(cnx, self.ancienEmail.data, self.email.data)
         return True
     
+    def change_email_musicien(self):
+        if self.email.data!= self.emailVerif.data:
+            return False
+        Musicien.Update.update_email(cnx, self.ancienEmail.data, self.email.data)
+        return True
+    
 class ModifierPasswordFormORG(FlaskForm):
     email = StringField('Email actuel', validators=[DataRequired()])
     password = PasswordField('Mot de passe', validators=[DataRequired()])

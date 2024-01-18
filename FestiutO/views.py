@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, request, session, jsonify,
 from .formulaire import *
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
+from .requete import afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
 
 
 cnx = get_cnx()
@@ -344,7 +344,38 @@ def supprimerCompte(idUser):
     Spectateur.Delete.delete_spectateur(cnx, idUser)
     return redirect(url_for('gestionComptes_avant'))
 
-@app.route("/espace-organisateur/gestion-artiste/<idUser>/delete")
-def supprimerCompte(idUser):
-    Spectateur.Delete.delete_spectateur(cnx, idUser)
-    return redirect(url_for('gestionComptes_avant'))
+@app.route("/espace-organisateur/gestion-artiste/")
+def gestionArtiste():
+    allArtiste = afficher_table(cnx, "MUSICIEN")
+    return render_template('gestionArtiste.html', allArtiste=allArtiste)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>")
+def modifierArtiste(idUser):
+    musicien = Musicien.Get.get_musicien_with_idgroupe(cnx, idUser)
+    form = ModifierEmailFormORG()
+    if form.is_submitted():
+        res = form.change_email_musicien()
+        if res:
+            return redirect(url_for('gestionArtiste', erreur="Artiste modifié", form=form))
+        else:
+            return render_template('modifierArtiste.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierArtiste.html', form=form, user=musicien)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-email")
+def modifierEmailMusicien(idUser):
+    musicien = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    form = ModifierEmailFormORG()
+    if form.is_submitted():
+        res = form.change_email_musicien()
+        if res:
+            return redirect(url_for('gestionArtiste', erreur="Artiste modifié", form=form))
+        else:
+            return render_template('modifierArtiste.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierEmail.html', form=form, user=musicien)
+
+def gestionGroupe():
+    allGroupe = afficher_table(cnx, "GROUPE")
+    return render_template('gestionGroupe.html', allGroupe=allGroupe)
+
+
+
