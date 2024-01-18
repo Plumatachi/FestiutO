@@ -125,6 +125,13 @@ class Musicien:
             except:
                 print("Erreur lors de la suppression du musicien")
                 raise
+        def delete_musicien(cnx, idMusicien):
+            try:
+                cnx.execute(text("DELETE FROM MUSICIEN WHERE idMusicien = '" + idMusicien + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du musicien")
+                raise
 
 class Spectateur:
     class Get:
