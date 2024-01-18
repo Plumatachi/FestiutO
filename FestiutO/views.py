@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, request, session, jsonify,
 from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe
+from .requete import get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
 
 
 cnx = get_cnx()
@@ -228,3 +228,18 @@ def like(idUser, idGroupe):
 def dislike(idUser, idGroupe):
     FAVORIS.Delete.delete_favoris(cnx, idUser, idGroupe)
     return redirect(url_for('groupe', idUser=idUser, idGroupe=idGroupe))
+
+
+
+@app.route("/acheter_billet_evenement", methods=(["GET"]))
+def acheter_billet_evenement():
+    idEvenement = request.args.get('idEvenement')
+    user = session['utilisateur']
+    Evenement.Insert.insert_billet_evenement(user,idEvenement)
+    return redirect(url_for('achat_billet_evenement', idEvenement=idEvenement))
+
+
+
+@app.route("/achat_billet_evenement/<idEvenement>")
+def achat_billet_evenement(idEvenement):
+    return render_template('achat_billet.html', idEvenement=idEvenement)

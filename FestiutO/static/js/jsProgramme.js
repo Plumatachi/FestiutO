@@ -8,7 +8,7 @@ function changerImage(type){
                 enfants[i].className = ''
                 enfants[i].classList.add("imageGroupe2");
                 enfants[i].classList.add('imageGroupe');
-                changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
+                changeIdInfoJournee(enfants[i].id.match(/\d+/)[0]);
                 document.getElementById("titreGroupeMusique").innerText = enfants[i].title
             }
             else if(enfants[i].classList.contains('imageGroupe2') ){
@@ -47,7 +47,7 @@ function changerImage(type){
                     enfants[i].classList.add("imageGroupe2");
                     enfants[i].classList.add('imageGroupe');
                     document.getElementById("titreGroupeMusique").innerText = enfants[i].title
-                    changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
+                    changeIdInfoJournee(enfants[i].id.match(/\d+/)[0]);
                 }
             }
             
@@ -70,7 +70,7 @@ function changerImage(type){
                 enfants[i].classList.add("imageGroupe2");
                 enfants[i].classList.add('imageGroupe');
                 document.getElementById("titreGroupeMusique").innerText = enfants[i].title
-                changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
+                changeIdInfoJournee(enfants[i].id.match(/\d+/)[0]);
             }
             else if(i != 0){
                 if(enfants[i-1].classList.contains('imageGroupe2')){
@@ -86,7 +86,7 @@ function changerImage(type){
                     enfants[i].classList.add("imageGroupe2");
                     enfants[i].classList.add('imageGroupe');
                     document.getElementById("titreGroupeMusique").innerText = enfants[i].title
-                    changerInfoJournee(enfants[i].id.match(/\d+/)[0]);
+                    changeIdInfoJournee(enfants[i].id.match(/\d+/)[0]);
                 }
                 if(enfants[enfants.length-1].classList.contains('imageGroupe2')){
                     console.log("13")
@@ -106,7 +106,7 @@ function changerImage(type){
     }
 }
 
-function changeidrInfoJournee(idgroupe){
+function changeIdInfoJournee(idgroupe){
     $.ajax({
         url: '/get_Info_journee_Groupe',
         type: 'GET',
@@ -116,7 +116,7 @@ function changeidrInfoJournee(idgroupe){
         success: function (data) {
             var maDiv = document.getElementById('divCaseEvenements');
             maDiv.innerHTML = '';
-
+            console.log(data)
             for (var i = 0; i < data.length; i++){
                 var dateObj = new Date(data[i][0]);
                 var jour = dateObj.getDate();
@@ -143,22 +143,16 @@ function changeidrInfoJournee(idgroupe){
                     PEvenement.classList.add('texteEvenement');
                     PEvenement.textContent = data[i][2] + " : " +new Date(data[i][0]).toTimeString().split(' ')[0].slice(0, -3) + ": a "+data[i][3];
 
-
-                    var lien = document.createElement('a');
-                    // Définissez l'attribut 'href' avec l'URL souhaitée
-                    lien.href = "{{ url_for('Musicien', mon_parametre='1') }}";
-
-
                     buttonEvenement = document.createElement("button");
                     buttonEvenement.textContent = "S'inscrire";
-                    buttonEvenement.setAttribute('onclick', "afficherMusicien('"+i+"')");
+                    buttonEvenement.setAttribute('onclick', "inscrireEvenement('" + data[i][4] + "')");
                     buttonEvenement.classList.add('buttonInscription');
 
+                    
                     divDate.appendChild(h2Evenement);
                     divDate.appendChild(h3Consert);
                     divEvement.appendChild(PEvenement);
-                    lien.appendChild(buttonEvenement);
-                    divEvement.appendChild(lien);
+                    divEvement.appendChild(buttonEvenement);
                     divDate.appendChild(divEvement);
                     document.getElementById("divCaseEvenements").appendChild(divDate);
 
@@ -174,11 +168,12 @@ function changeidrInfoJournee(idgroupe){
 
                     buttonEvenement = document.createElement("button");
                     buttonEvenement.textContent = "S'inscrire";
-                    buttonEvenement.setAttribute('onclick', 'inscrireEvenement()');
                     buttonEvenement.classList.add('buttonInscription');
+                    buttonEvenement.setAttribute("onclick","inscrireEvenement('"+data[i][4]+"')");
 
                     divEvement.appendChild(PEvenement);
                     divEvement.appendChild(buttonEvenement);
+                    divEvement.appendChild(aInscrire);
                     divDate.appendChild(divEvement);
 
                 }
@@ -200,6 +195,17 @@ function changeidrInfoJournee(idgroupe){
 }
 
 
-function afficherMusicien(id){
-    {{ url_for('changer_page', mon_parametre='valeur_du_parametre') }}
+
+
+function inscrireEvenement(id){
+    $.ajax({
+        url: '/acheter_billet_evenement',
+        type: 'GET',
+        data:{
+            'idEvenement' : id
+        },
+        success: function (data) {
+            console.log("insert reussi");
+        }
+    })
 }

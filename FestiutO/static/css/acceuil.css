@@ -6,7 +6,9 @@
         background-position: top center;
         background-color: RGB(67, 50, 56);
 }
-
+.positionConnection{
+    margin-top:20% ;
+}
 
 .bodyAccueille {
     font-family: Arial, sans-serif;

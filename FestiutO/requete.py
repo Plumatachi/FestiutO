@@ -19,8 +19,17 @@ def afficher_table(cnx, table):
     except:
         print("Erreur lors de l'affichage de la table")
         raise
-    
-    
+class Evenement:
+    class Insert:
+        def insert_billet_evenement(idSpectateur,idEvenement):
+            try:
+                cnx.execute(text("INSERT INTO BILLETEVENEMENT(idspectateur,idEvenement) VALUES ('" + str(idSpectateur) + "','" + str(idEvenement) + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion du favoris")
+                raise
+        
+
 class Journee:
     class Get:
         def get_journee_date():
@@ -222,10 +231,10 @@ class Groupe:
         def get_consert_groupe(idGroupe):
             try:
                 res = []
-                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux,idEvenement from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
                 for row in result:
                     print(row)
-                    res.append((row[0],row[1],row[2],row[3]))
+                    res.append((row[0],row[1],row[2],row[3],row[4]))
                 return res
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")

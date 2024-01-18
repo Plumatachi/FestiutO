@@ -65,7 +65,7 @@
 {% endif %}
 
 {% if 'utilisateur' not in session %}
-<div> Vous devez vous connecté
+<div class ="positionConnection"> Vous devez vous connecté
     <a href="{{ url_for('login') }}">Se connecter</a>
 </div>
 {% endif %}

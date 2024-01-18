@@ -3,7 +3,6 @@
 {% block content %}
 <script  src="../static/js/jsProgramme.js">
     let listeImage = {{ lireImage | tojson | safe }};
-    
 </script>
 {% if 'utilisateur' in session %}
 {% block styles %}
@@ -30,7 +29,7 @@
                     <a href="{{ url_for('groupe',idUser=user, idGroupe=id) }}" class="imageGroupe2 imageGroupe" id="choixImage{{ loop.index }}" title="{{ nomGroupe }}">
                         <img class="imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
                     </a>
-                    <script>changerInfoJournee({{ id }})</script>
+                    <script>changeIdInfoJournee({{ id }})</script>
                     {% elif loop.index == 3 %}
                     <a href="{{ url_for('groupe',idUser=user, idGroupe=id) }}" class="imageGroupe3 imageGroupe" id="choixImage{{ loop.index }}" title="{{ nomGroupe }}">
                         <img class="imageGroupe" id="choixImage{{ loop.index }}" src="{{ url_for('static', filename='imagesHtml/' ~ image) }}" alt="{{ nomGroupe }}">
@@ -49,7 +48,6 @@
     <div class="positionEvenements">    
         <div class="divCaseEvenements" id="divCaseEvenements">
             
-
         </div>
     </div>
 </div>
