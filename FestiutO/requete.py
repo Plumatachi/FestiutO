@@ -239,7 +239,7 @@ class Musicien:
     class Insert:
         def insert_musicien(cnx, id_membre, id_groupe, nom_membre, instrument):
             try:
-                cnx.execute(text("INSERT INTO MembresDuGroupe(membre_id, groupe_id, nom, instrument) VALUES ('" + id_membre + "', '" + id_groupe + "', '" + nom_membre + "', '" + instrument + "');"))
+                cnx.execute(text("INSERT INTO MUSICIEN(membre_id, groupe_id, nom, instrument) VALUES ('" + id_membre + "', '" + id_groupe + "', '" + nom_membre + "', '" + instrument + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du membre dans le groupe")
@@ -303,7 +303,7 @@ class Groupe:
     class Insert:
         def insert_groupe(cnx, id_groupe, nom_groupe, description):
             try:
-                cnx.execute(text("INSERT INTO Groupes(groupe_id, nom, description) VALUES ('" + id_groupe + "', '" + nom_groupe + "', '" + description+ "');"))
+                cnx.execute(text("INSERT INTO GROUPE(groupe_id, nom, description) VALUES ('" + id_groupe + "', '" + nom_groupe + "', '" + description+ "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du groupe")
