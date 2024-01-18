@@ -94,7 +94,7 @@ class Musicien:
                 print("Erreur lors de l'insertion du membre dans le groupe")
                 raise
     class Update:
-        def update_numeroTelephone_musicien(cnx, adresseMail, numeroTelephone):
+        def update_email_musicien(cnx, adresseMail, numeroTelephone):
             try:
                 cnx.execute(text("UPDATE MUSICIEN SET numeroTelMusicien = '" + numeroTelephone + "' WHERE adresseMail = '" + adresseMail + "';"))
                 cnx.commit()
