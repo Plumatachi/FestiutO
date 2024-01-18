@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modifier.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% for artiste in allArtiste %}
+<div>
+    <p>Nom : {{artiste[1]}} </p>
+    <a href="{{url_for('modifierArtiste', idUser=artiste[0])}}">Modifier</a>
+</div>
+{% endfor %}
+
+{% endblock %}

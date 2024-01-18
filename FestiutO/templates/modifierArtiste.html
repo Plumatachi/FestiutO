@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gestionComptes.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1> Gestion du compte  {{ user[4]}} </h1>
+    <h2> Liste des fonctionnalités </h2>
+    <ul>
+        <li> <a href="{{ url_for('modifierEmailMusicien', idUser=user[0]) }}"> Modifier l'email </a> </li>
+        <li> <a href="{{ url_for('modifierEmailMusicien', idUser=user[0]) }}"> Modifier le mot de passe </a> </li>
+        <li> <a href="{{ url_for('modifierEmailMusicien', idUser=user[0]) }}"> Modifier le nom </a> </li>
+        <li> <a href="{{ url_for('modifierEmailMusicien', idUser=user[0]) }}"> Modifier le numéro de téléphone </a> </li>
+        <li> <a href="{{ url_for('modifierEmailMusicien', idUser=user[0]) }}"> Supprimer le compte </a> </li>
+    </ul>
+</div>
+</main>
+    
+{% endblock %}
+    

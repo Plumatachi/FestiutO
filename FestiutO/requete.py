@@ -226,7 +226,7 @@ class FONCTION:
 
 class Musicien:
     class Get:
-        def get_musicien_with_idgroupe(idGroupe):
+        def get_musicien_with_idgroupe(cnx, idGroupe):
             try:
                 result = cnx.execute(text("SELECT idMusicien,nom,nominstrupent,photo FROM MUSICIEN natural join GROUPE natural join JOUE natural join INSTRUMENT WHERE idgroupe = '" + idGroupe + "';"))
                 musiciens = []
@@ -235,6 +235,15 @@ class Musicien:
                 return musiciens
             except:
                 print("Erreur lors de la récupération du groupe")
+                raise
+        def get_musicien_with_id(cnx, id):
+            try:
+                result = cnx.execute(text("SELECT * FROM MUSICIEN WHERE idMusicien = '" + id + "';"))
+                for row in result:
+                    print(row)
+                    return row
+            except:
+                print("Erreur lors de la récupération du musicien")
                 raise
     class Insert:
         def insert_musicien(cnx, id_membre, id_groupe, nom_membre, instrument):
