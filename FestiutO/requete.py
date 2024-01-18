@@ -70,7 +70,7 @@ class Spectateur:
     class Get:
         def get_all_spectateur_avec_email(cnx, email):
             try:
-                result = cnx.execute(text("SELECT * FROM SPECTATEUR WHERE mail = '" + email + "';"))
+                result = cnx.execute(text("SELECT * FROM SPECTATEUR natural join TYPECOMPTE WHERE mail = '" + email + "';"))
                 for row in result:
                     print (row)
                     return row

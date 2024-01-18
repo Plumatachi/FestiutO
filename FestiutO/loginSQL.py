@@ -1,7 +1,7 @@
 login = "blandeau" # pip install pymysql
 passwd = "Loulou34230."
 serveur= "mysql-blandeau.alwaysdata.net"
-bd = "blandeau_festival2"
+bd = "blandeau_festival7"
 
 # login = "noblesse" # pip install pymysql
 # passwd = "noblesse"
