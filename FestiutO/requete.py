@@ -86,13 +86,50 @@ class Musicien:
                 raise
 
     class Insert:
-        def insert_musicien(cnx, id_musicien, nom, adresse_mail, numero_tel, photo):
+        def insert_musicien(cnx, nom, adresse_mail, numero_tel, photo):
             try:
-                cnx.execute(text("INSERT INTO MUSICIEN(idMusicien, nom, adresseMail, numeroTelMusicien, photo) VALUES ('" + id_musicien + "', '" + nom + "', '" + adresse_mail + "', '" + numero_tel + "', '" + photo + "');"))
+                cnx.execute(text("INSERT INTO MUSICIEN( nom, adresseMail, numeroTelMusicien, photo) VALUES ('" + nom + "', '" + adresse_mail + "', '" + numero_tel + "', '" + photo + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du membre dans le groupe")
                 raise
+    
+    class Update:
+        def update_email_musicien(cnx, adresseMail, newAdresseMail):
+            try:
+                cnx.execute(text("UPDATE MUSICIEN SET adresseMail = '" + newAdresseMail + "' WHERE adresseMail = '" + adresseMail + "';"))
+                cnx.commit()
+                print(True)
+            except:
+                print("Erreur lors de la mise à jour du numéro de téléphone")
+                raise
+        def update_numeroTelephone_musicien(cnx, adresseMail, numeroTelephone):
+            try:
+                cnx.execute(text("UPDATE MUSICIEN SET numeroTelMusicien = '" + numeroTelephone + "' WHERE adresseMail = '" + adresseMail + "';"))
+                cnx.commit()
+                print(True)
+            except:
+                print("Erreur lors de la mise à jour du numéro de téléphone")
+                raise   
+        def update_nom_musicien(cnx, adresseMail, nom):
+            try:
+                cnx.execute(text("UPDATE MUSICIEN SET nom = '" + nom + "' WHERE adresseMail = '" + adresseMail + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du nom")
+                raise       
+            
+    class Delete:
+        def delete_musicien(cnx, idMusicien):
+            try:
+                cnx.execute(text("DELETE FROM APPARTIENT WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + str(Groupe.Get.get_idGroupe_musicien_avec_son_idMusicien(cnx, idMusicien)) + "';")),
+                Joue.Delete.delete_instru_musicien(cnx, idMusicien)
+                cnx.execute(text("DELETE FROM MUSICIEN WHERE idMusicien = '" + idMusicien + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du musicien")
+                raise
+            
                
 class Spectateur:
     class Get:
@@ -307,6 +344,16 @@ class Groupe:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
+            
+        def get_idGroupe_musicien_avec_son_idMusicien(cnx, idMusicien):
+            try:
+                result = cnx.execute(text("SELECT idGroupe FROM JOUE WHERE idMusicien = '" + idMusicien + "';"))
+                for row in result:
+                    print(row[0])
+                    return row[0]
+            except:
+                print("Erreur lors de la récupération du groupe")
+                raise
 
     class Insert:
         def insert_groupe(cnx, id_groupe, nom_groupe, description, reseausocial, photo, nb_personne):
@@ -331,7 +378,7 @@ class Joue:
                 raise
 
     class Delete:
-        def delete_instru_musicien(idMusicien):
+        def delete_instru_musicien(cnx, idMusicien):
             try:
                 cnx.execute(text("DELETE FROM JOUE WHERE idMusicien = '" + idMusicien + "';"))
                 cnx.commit()

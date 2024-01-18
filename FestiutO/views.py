@@ -399,19 +399,14 @@ def supprimerMusicien(idUser):
 def ajouterArtiste():
     form = AjouterArtisteForm()
     if form.validate_on_submit():
-        if form.password.data != form.confirm.data:
-            return render_template("ajouterArtiste.html", form=form, erreur="Les mots de passe ne correspondent pas"
-            )
         res = form.ajouter_artiste()
         if res:
-            return redirect(url_for("ajouterArtiste", erreur="Artiste ajouté", form=form))
+            return redirect(url_for("gestionArtiste"))
         else:
-            return render_template("ajouterArtiste.html", form=form, erreur="L'email existe déjà")
-    return render_template(
-        "ajouterArtiste.html",
-        title="Ajouter compte organisateur",
-        form=form,
-    )
+            return render_template("ajouterArtiste.html", form=form, erreur="Erreur lors de l'ajout de l'artiste")
+    return render_template("ajouterArtiste.html", form=form)
+
+     
     
 @app.route("/espace-organisateur/gestion-lieu")
 def gestionLieu():

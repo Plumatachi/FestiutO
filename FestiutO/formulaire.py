@@ -135,10 +135,12 @@ class AjouterArtisteForm(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
     email = EmailField('Email', validators=[DataRequired()])
     numeroTelephone = StringField('Numéro de téléphone', validators=[DataRequired()])
-    photo = FileField('Photo', validators=[DataRequired()])
+    photo = FileField('Photo')
     
     def ajouter_artiste(self):
-        if self.password.data != self.confirm.data:
+        try:
+            Musicien.Insert.insert_musicien(cnx, self.nom.data,self.email.data, self.numeroTelephone.data, "NULL")
+            return True
+        except: 
             return False
-        Musicien.Insert.insert_musicien(cnx, self.nom.data, self.numeroTelephone.data, self.email.data, self.password.data, self.instrument.data)
-        return True
+        
