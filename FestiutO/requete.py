@@ -338,3 +338,13 @@ class Joue:
             except:
                 print("Erreur lors de la suppression du favoris")
                 raise
+
+class Scene:
+    class Insert:
+        def insert_scene(cnx, id_scene, nom_scene, lieux):
+            try:
+                cnx.execute(text("INSERT INTO SCENE(idScene, nomScene, lieux) VALUES ('" + id_scene + "', '" + nom_scene + "', '" + lieux + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion de la scène")
+                raise
