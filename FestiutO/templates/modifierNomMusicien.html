@@ -8,6 +8,7 @@
 {% block content %}
 
 <main>
+
     <div class="container">
         <div class="userInfo">
             <h2> Information sur le musicien </h2>
@@ -17,26 +18,26 @@
         </div>
 
         <div class="form">
-            <h1> Modification de l'email </h1>
+            <h1> Modification du nom </h1>
             <form role="form" method="POST">
                 {{ form.hidden_tag() }}
                 <div class="input">
                     <div class="element">
-                        {{ form.ancienEmail(size=50, class_="form-control element", placeholder="Email actuel") }}
+                        {{ form.email(size=50, class_="form-control element", placeholder="Email actuel") }}
                     </div>
                 </div>
                 <div class="input">
                     <div class="element">
-                        {{ form.email(size=50, class_="form-control element", placeholder="Nouvel email") }}
+                        {{ form.nom(size=50, class_="form-control element", placeholder="Nouveau nom") }}
                     </div>
                 </div>
                 <div class="input">
                     <div class="element">
-                        {{ form.emailVerif(size=50, class_="form-control element", placeholder="Confirmer l'email") }}
+                        {{ form.nomVerif(size=50, class_="form-control element", placeholder="Confirmer le nouveau nom") }}
                     </div>
                 </div>
                 <div class="btn-container">
-                    <input type="submit" class="element elementSubmit" value="Changer l'email">
+                    <input type="submit" class="element elementSubmit" value="Changer le nom">
                 </div>
             </form>
         </div>

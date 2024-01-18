@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import get_cnx , Spectateur
+from .requete import Musicien, get_cnx , Spectateur
 
 cnx = get_cnx()
 
@@ -68,6 +68,12 @@ class ModifierNomFormORG(FlaskForm):
         Spectateur.Update.update_nom(cnx, self.email.data, self.nom.data)
         return True
     
+    def change_nom_musicien(self):
+        if self.nom.data!= self.nomVerif.data:
+            return False
+        Musicien.Update.update_nom_musicien(cnx, self.email.data, self.nom.data)
+        return True
+    
 class ModifierNumeroTelephoneFormORG(FlaskForm):
     emailField = EmailField('Email actuel', validators=[DataRequired()])
     numeroTelephone = StringField('Numéro de téléphone', validators=[DataRequired()])
@@ -77,7 +83,12 @@ class ModifierNumeroTelephoneFormORG(FlaskForm):
             return False
         Spectateur.Update.update_numeroTelephone(cnx, self.emailField.data, self.numeroTelephone.data)
         return True
-
+    
+    def change_numeroTelephone_musicien(self):
+        if self.numeroTelephone.data!= self.numeroTelephoneVerif.data:
+            return False
+        Musicien.Update.update_numeroTelephone_musicien(cnx, self.emailField.data, self.numeroTelephone.data)
+        return True
         
 class ModifierEmailFormORG(FlaskForm):
     ancienEmail = EmailField('Email actuel', validators=[DataRequired()])
@@ -93,7 +104,7 @@ class ModifierEmailFormORG(FlaskForm):
     def change_email_musicien(self):
         if self.email.data!= self.emailVerif.data:
             return False
-        Musicien.Update.update_email(cnx, self.ancienEmail.data, self.email.data)
+        Musicien.Update.update_email_musicien(cnx, self.ancienEmail.data, self.email.data)
         return True
     
 class ModifierPasswordFormORG(FlaskForm):
@@ -117,4 +128,17 @@ class AjouterCompteOrganisateurForm(FlaskForm):
         if self.password.data != self.confirm.data:
             return False
         Spectateur.Insert.insert_spectateur(cnx, self.nom.data, self.numeroTelephone.data, self.email.data, self.password.data)
+        return True
+    
+    
+class AjouterArtisteForm(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    email = EmailField('Email', validators=[DataRequired()])
+    numeroTelephone = StringField('Numéro de téléphone', validators=[DataRequired()])
+    photo = FileField('Photo', validators=[DataRequired()])
+    
+    def ajouter_artiste(self):
+        if self.password.data != self.confirm.data:
+            return False
+        Musicien.Insert.insert_musicien(cnx, self.nom.data, self.numeroTelephone.data, self.email.data, self.password.data, self.instrument.data)
         return True

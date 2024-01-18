@@ -1,0 +1,38 @@
+.listArtiste{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.listArtiste > div{
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 150px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: bisque;
+
+}
+
+p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+main a {
+    text-align: center;
+}
+
+.listArtiste  a:hover{
+    text-decoration: none;
+    color: red;
+    text-decoration: underline red;
+}

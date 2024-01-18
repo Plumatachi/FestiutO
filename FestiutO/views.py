@@ -351,31 +351,85 @@ def gestionArtiste():
 
 @app.route("/espace-organisateur/gestion-artiste/<idUser>")
 def modifierArtiste(idUser):
-    musicien = Musicien.Get.get_musicien_with_idgroupe(cnx, idUser)
-    form = ModifierEmailFormORG()
-    if form.is_submitted():
-        res = form.change_email_musicien()
-        if res:
-            return redirect(url_for('gestionArtiste', erreur="Artiste modifié", form=form))
-        else:
-            return render_template('modifierArtiste.html', form=form, erreur="Les informations ne sont pas valides")
-    return render_template('modifierArtiste.html', form=form, user=musicien)
+    user = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    return render_template('modifierArtiste.html', user=user)
 
-@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-email")
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-email", methods=("GET","POST",))
 def modifierEmailMusicien(idUser):
     musicien = Musicien.Get.get_musicien_with_id(cnx, idUser)
     form = ModifierEmailFormORG()
     if form.is_submitted():
         res = form.change_email_musicien()
         if res:
-            return redirect(url_for('gestionArtiste', erreur="Artiste modifié", form=form))
+            return redirect(url_for('modifierEmailMusicien', erreur="Artiste modifié", form=form, idUser=idUser))
         else:
-            return render_template('modifierArtiste.html', form=form, erreur="Les informations ne sont pas valides")
-    return render_template('modifierEmail.html', form=form, user=musicien)
+            return render_template('modifierEmailMusicien.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierEmailMusicien.html', form=form, user=musicien)
 
-def gestionGroupe():
-    allGroupe = afficher_table(cnx, "GROUPE")
-    return render_template('gestionGroupe.html', allGroupe=allGroupe)
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-nom", methods=("GET","POST",))
+def modifierNomMusicien(idUser):
+    musicien = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    form = ModifierNomFormORG()
+    if form.is_submitted():
+        res = form.change_nom_musicien()
+        if res:
+            return redirect(url_for('modifierNomMusicien', erreur="Artiste modifié", form=form, idUser=idUser))
+        else:
+            return render_template('modifierNomMusicien.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomMusicien.html', form=form, user=musicien)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-telephone", methods=("GET","POST",))
+def modifierTelephoneMusicien(idUser):
+    musicien = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    form = ModifierNumeroTelephoneFormORG()
+    if form.is_submitted():
+        res = form.change_numeroTelephone_musicien()
+        if res:
+            return redirect(url_for('modifierTelephoneMusicien', erreur="Artiste modifié", form=form, idUser=idUser))
+        else:
+            return render_template('modifierTelephoneMusicien.html', form=form, erreur="Les informations ne sont pas valides", user=musicien)
+    return render_template('modifierTelephoneMusicien.html', form=form, user=musicien)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/delete", methods=("GET","POST",))
+def supprimerMusicien(idUser):
+    Musicien.Delete.delete_musicien(cnx, idUser)
+    return redirect(url_for('gestionArtiste'))
+
+@app.route("/espace-organisateur/gestion-artiste/ajouter-artiste", methods=("GET","POST",))
+def ajouterArtiste():
+    form = AjouterArtisteForm()
+    if form.validate_on_submit():
+        if form.password.data != form.confirm.data:
+            return render_template("ajouterArtiste.html", form=form, erreur="Les mots de passe ne correspondent pas"
+            )
+        res = form.ajouter_artiste()
+        if res:
+            return redirect(url_for("ajouterArtiste", erreur="Artiste ajouté", form=form))
+        else:
+            return render_template("ajouterArtiste.html", form=form, erreur="L'email existe déjà")
+    return render_template(
+        "ajouterArtiste.html",
+        title="Ajouter compte organisateur",
+        form=form,
+    )
+    
+@app.route("/espace-organisateur/gestion-lieu")
+def gestionLieu():
+    allLieu = afficher_table(cnx, "LIEU")
+    return render_template('gestionLieu.html', allLieu=allLieu)
+
+
+
+
+
+# def gestionLieu():
+#     allLieu = afficher_table(cnx, "LIEU")
+#     return render_template('gestionLieu.html', allLieu=allLieu)
+
+
+# def gestionGroupe():
+#     allGroupe = afficher_table(cnx, "GROUPE")
+#     return render_template('gestionGroupe.html', allGroupe=allGroupe)
 
 
 

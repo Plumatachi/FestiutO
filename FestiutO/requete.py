@@ -120,7 +120,7 @@ class Musicien:
     class Delete:
         def delete_musicien(cnx, idMusicien):
             try:
-                cnx.execute(text("DELETE FROM APPARTIENT WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + Groupe.Get.get_idGroupe_musicien_avec_son_idMusicien(idMusicien) + "';")),
+                cnx.execute(text("DELETE FROM APPARTIENT WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + str(Groupe.Get.get_idGroupe_musicien_avec_son_idMusicien(cnx, idMusicien)) + "';")),
                 cnx.execute(text("DELETE FROM MUSICIEN WHERE idMusicien = '" + idMusicien + "';"))
                 cnx.commit()
             except:
