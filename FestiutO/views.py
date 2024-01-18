@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, request, session, jsonify,
 from .formulaire import *
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
+from .requete import Scene, afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
 
 
 cnx = get_cnx()
@@ -410,11 +410,25 @@ def ajouterArtiste():
     
 @app.route("/espace-organisateur/gestion-lieu")
 def gestionLieu():
-    allLieu = afficher_table(cnx, "LIEU")
+    allLieu = afficher_table(cnx, "SCENE")
     return render_template('gestionLieu.html', allLieu=allLieu)
 
 
+@app.route("/espace-organisateur/gestion-lieu/<idLieu>")
+def gestionLieuUnique(idLieu):
+    lieu = Scene.Get.get_scene_with_id(cnx, idLieu)
+    return render_template('gestionLieuUnique.html', lieu=lieu)
 
+@app.route("/espace-organisateur/gestion-lieu/ajoute-lieu", methods=("GET","POST",))
+def ajouterScene():
+    form = AjouterSceneForm()
+    if form.validate_on_submit():
+        res = form.ajouter_scene()
+        if res:
+            return redirect(url_for("gestionLieu"))
+        else:
+            return render_template("ajouterScene.html", form=form, erreur="Erreur lors de l'ajout de la scene")
+    return render_template("ajouterScene.html", form=form)
 
 
 # def gestionLieu():

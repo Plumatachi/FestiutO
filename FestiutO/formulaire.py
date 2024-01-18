@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import Musicien, get_cnx , Spectateur
+from .requete import Musicien, Scene, get_cnx , Spectateur
 
 cnx = get_cnx()
 
@@ -143,4 +143,14 @@ class AjouterArtisteForm(FlaskForm):
             return True
         except: 
             return False
-        
+
+class AjouterSceneForm(FlaskForm):
+    nomScene = StringField('Nom de la scene', validators=[DataRequired()])
+    lieu = StringField('Nom du lieux', validators=[DataRequired()])
+    
+    def ajouter_scene(self):
+        try:
+            Scene.Insert.insert_scene(cnx, self.nomScene.data, self.lieu.data)
+            return True
+        except:
+            return False

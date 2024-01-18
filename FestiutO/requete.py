@@ -388,10 +388,21 @@ class Joue:
 
 class Scene:
     class Insert:
-        def insert_scene(cnx, id_scene, nom_scene, lieux):
+        def insert_scene(cnx, nom_scene, lieux):
             try:
-                cnx.execute(text("INSERT INTO SCENE(idScene, nomScene, lieux) VALUES ('" + id_scene + "', '" + nom_scene + "', '" + lieux + "');"))
+                cnx.execute(text("INSERT INTO SCENE(nomScene, lieux) VALUES ('" + nom_scene + "', '" + lieux + "');"))
                 cnx.commit()
             except:
-                print("Erreur lors de l'insertion de la scène")
+                print("Erreur lors de l'insertion de la scene")
+                raise
+            
+    class Get:
+        def get_scene_with_id(cnx, idScene):
+            try:
+                result = cnx.execute(text("SELECT * FROM SCENE WHERE idScene = '" + idScene + "';"))
+                for row in result:
+                    print(row)
+                    return row
+            except:
+                print("Erreur lors de la récupération de la scène")
                 raise

@@ -1,0 +1,46 @@
+.listLieu div{
+    background-color: bisque!important;
+    padding: 1em;
+    margin: 0.5em;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    color: #ff0000;
+    text-decoration: underline #ff0000;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.buttonAjout{
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    justify-content: space-around;
+
+}
+
+.listLieu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center ;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
