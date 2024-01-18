@@ -86,9 +86,9 @@ class Musicien:
                 raise
 
     class Insert:
-        def insert_musicien(cnx, id_membre, id_groupe, nom_membre, instrument):
+        def insert_musicien(cnx, id_musicien, nom, adresse_mail, numero_tel, photo):
             try:
-                cnx.execute(text("INSERT INTO MUSICIEN(membre_id, groupe_id, nom, instrument) VALUES ('" + id_membre + "', '" + id_groupe + "', '" + nom_membre + "', '" + instrument + "');"))
+                cnx.execute(text("INSERT INTO MUSICIEN(idMusicien, nom, adresseMail, numeroTelMusicien, photo) VALUES ('" + id_musicien + "', '" + nom + "', '" + adresse_mail + "', '" + numero_tel + "', '" + photo + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du membre dans le groupe")
