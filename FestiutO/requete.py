@@ -93,7 +93,31 @@ class Musicien:
             except:
                 print("Erreur lors de l'insertion du membre dans le groupe")
                 raise
-               
+    class Update:
+        def update_numeroTelephone_musicien(cnx, adresseMail, numeroTelephone):
+            try:
+                cnx.execute(text("UPDATE MUSICIEN SET numeroTelMusicien = '" + numeroTelephone + "' WHERE adresseMail = '" + adresseMail + "';"))
+                cnx.commit()
+                print(True)
+            except:
+                print("Erreur lors de la mise à jour du numéro de téléphone")
+                raise
+        def update_nom_musicien(cnx, adresseMail, nom):
+            try:
+                cnx.execute(text("UPDATE MUSICIEN SET nom = '" + nom + "' WHERE adresseMail = '" + adresseMail + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du nom")
+                raise           
+    class Delete:
+        def delete_musicien(cnx, idMusicien):
+            try:
+                cnx.execute(text("DELETE FROM MUSICIEN WHERE idMusicien = '" + idMusicien + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du musicien")
+                raise
+
 class Spectateur:
     class Get:
         def get_all_spectateur(cnx):
