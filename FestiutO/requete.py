@@ -1,12 +1,10 @@
 from sqlalchemy import text
 from .connexionPythonSQL import ouvrir_connexion
 
-
 cnx = ouvrir_connexion()
 
 def get_cnx():
     return cnx
-
 
 def afficher_table(cnx, table):
     try:
@@ -19,6 +17,7 @@ def afficher_table(cnx, table):
     except:
         print("Erreur lors de l'affichage de la table")
         raise
+
 class Evenement:
     class Insert:
         def insert_billet_evenement(idSpectateur,idEvenement):
@@ -28,7 +27,6 @@ class Evenement:
             except:
                 print("Erreur lors de l'insertion du favoris")
                 raise
-        
 
 class Journee:
     class Get:
@@ -42,7 +40,7 @@ class Journee:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
-        
+
     class Insert :
         def insert_journee(idJournee,idspectateur):
             try:
@@ -51,7 +49,7 @@ class Journee:
             except:
                 print("Erreur lors de l'insertion du favoris")
                 raise
-        
+
 class Musicien:
     class Get:
         def get_info_Musicien(id):
@@ -65,10 +63,39 @@ class Musicien:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
+
+        def get_musicien_with_idgroupe(cnx, idGroupe):
+            try:
+                result = cnx.execute(text("SELECT idMusicien,nom,nominstrupent,photo FROM MUSICIEN natural join GROUPE natural join JOUE natural join INSTRUMENT WHERE idgroupe = '" + idGroupe + "';"))
+                musiciens = []
+                for row in result:
+                    musiciens.append((row[0],row[1],row[2],row[3]))
+                return musiciens
+            except:
+                print("Erreur lors de la récupération du groupe")
+                raise
+
+        def get_musicien_with_id(cnx, id):
+            try:
+                result = cnx.execute(text("SELECT * FROM MUSICIEN WHERE idMusicien = '" + id + "';"))
+                for row in result:
+                    print(row)
+                    return row
+            except:
+                print("Erreur lors de la récupération du musicien")
+                raise
+
+    class Insert:
+        def insert_musicien(cnx, id_membre, id_groupe, nom_membre, instrument):
+            try:
+                cnx.execute(text("INSERT INTO MUSICIEN(membre_id, groupe_id, nom, instrument) VALUES ('" + id_membre + "', '" + id_groupe + "', '" + nom_membre + "', '" + instrument + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion du membre dans le groupe")
+                raise
                
 class Spectateur:
     class Get:
-        
         def get_all_spectateur(cnx):
             try:
                 res = []
@@ -109,6 +136,7 @@ class Spectateur:
             except:
                 print("Erreur lors de la récupération du spectateur")
                 raise
+
     class Insert:
         def insert_spectateur(cnx, nom, telephone, email, password):
             try:
@@ -117,8 +145,8 @@ class Spectateur:
             except:
                 print("Erreur lors de l'insertion du spectateur")
                 raise
+
     class Update:
-        
         def update_numeroTelephone(cnx, email, numeroTelephone):
             try:
                 cnx.execute(text("UPDATE SPECTATEUR SET numerotel = '" + numeroTelephone + "' WHERE mail = '" + email + "';"))
@@ -135,7 +163,6 @@ class Spectateur:
             except:
                 print("Erreur lors de la mise à jour du nom")
                 raise
-            
             
         def update_mdp(cnx, email, password):
             try:
@@ -154,6 +181,7 @@ class Spectateur:
             except:
                 print( "Erreur lors de la mise à jour de l'email")
                 raise
+
     class Delete:
         def delete_spectateur(cnx, id):
             try:
@@ -192,6 +220,7 @@ class FAVORIS:
             except:
                 print("Erreur lors de la récupération des favoris")
                 raise
+
     class Insert:
         def insert_favoris(cnx, idSpectateur, idGroupe):
             try:
@@ -200,7 +229,7 @@ class FAVORIS:
             except:
                 print("Erreur lors de l'insertion du favoris")
                 raise
-    
+
     class Delete:
         def delete_favoris(cnx, idSpectateur, idGroupe):
             try:
@@ -224,36 +253,6 @@ class FONCTION:
             print("Erreur lors de la récupération des favoris")
             raise
 
-class Musicien:
-    class Get:
-        def get_musicien_with_idgroupe(cnx, idGroupe):
-            try:
-                result = cnx.execute(text("SELECT idMusicien,nom,nominstrupent,photo FROM MUSICIEN natural join GROUPE natural join JOUE natural join INSTRUMENT WHERE idgroupe = '" + idGroupe + "';"))
-                musiciens = []
-                for row in result:
-                    musiciens.append((row[0],row[1],row[2],row[3]))
-                return musiciens
-            except:
-                print("Erreur lors de la récupération du groupe")
-                raise
-        def get_musicien_with_id(cnx, id):
-            try:
-                result = cnx.execute(text("SELECT * FROM MUSICIEN WHERE idMusicien = '" + id + "';"))
-                for row in result:
-                    print(row)
-                    return row
-            except:
-                print("Erreur lors de la récupération du musicien")
-                raise
-    class Insert:
-        def insert_musicien(cnx, id_membre, id_groupe, nom_membre, instrument):
-            try:
-                cnx.execute(text("INSERT INTO MUSICIEN(membre_id, groupe_id, nom, instrument) VALUES ('" + id_membre + "', '" + id_groupe + "', '" + nom_membre + "', '" + instrument + "');"))
-                cnx.commit()
-            except:
-                print("Erreur lors de l'insertion du membre dans le groupe")
-                raise
-            
 class Groupe:
     class Get: 
         def get_groupe_with_idgroupe(cnx, idgroupe):
@@ -284,8 +283,7 @@ class Groupe:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
-            
-            
+
         def get_consert_groupe(idGroupe):
             try:
                 res = []
@@ -297,7 +295,7 @@ class Groupe:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
-            
+
         def get_activite_groupe(idGroupe):
             try:
                 res = []
@@ -309,10 +307,11 @@ class Groupe:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
+
     class Insert:
-        def insert_groupe(cnx, id_groupe, nom_groupe, description):
+        def insert_groupe(cnx, id_groupe, nom_groupe, description, reseausocial, photo, nb_personne):
             try:
-                cnx.execute(text("INSERT INTO GROUPE(groupe_id, nom, description) VALUES ('" + id_groupe + "', '" + nom_groupe + "', '" + description+ "');"))
+                cnx.execute(text("INSERT INTO GROUPE(groupe_id, nom, description) VALUES ('" + id_groupe + "', '" + nom_groupe + "', '" + description + "', '" + reseausocial + "', '" + photo + "', '" + nb_personne + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du groupe")
