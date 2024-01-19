@@ -526,6 +526,37 @@ def ajouterGroupe():
             return render_template("ajouterGroupe.html", form=form, erreur="Erreur lors de l'ajout du groupe")
     return render_template("ajouterGroupe.html", form=form)
 
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>", methods=("GET","POST",))
+def gestionGroupeUnique(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    return render_template('gestionGroupeUnique.html', groupe=groupe)
+
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>/modifier-nom", methods=("GET","POST",))
+def modifierNomGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    form = ModifierNomGroupeForm()
+    if form.is_submitted():
+        res = form.change_nom_groupe(idGroupe)
+        if res:
+            return redirect(url_for('modifierNomGroupe', erreur="Groupe modifié", form=form, idGroupe=idGroupe))
+        else:
+            return render_template('modifierNomGroupe.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomGroupe.html', form=form, groupe=groupe)
+
+@app.route("/espace-organisateur/gestion-groupes/voir-membre/<idGroupe>")
+def voirMembreGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    return render_template('voirMembreGroupe.html', groupe=groupe)
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>/delete")
+def supprimerGroupe(idGroupe):
+    Groupe.Delete.delete_groupe(cnx, idGroupe)
+    return redirect(url_for('gestionGroupe'))
+
+
+
 # def gestionLieu():
 #     allLieu = afficher_table(cnx, "LIEU")
 #     return render_template('gestionLieu.html', allLieu=allLieu)

@@ -349,6 +349,17 @@ class Groupe:
             except:
                 print("Erreur lors de la récupération du groupe")
                 raise
+
+        def get_membre_groupe(cnx, idGroupe):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT nom FROM MUSICIEN natural join APPARTIENT natural join GROUPE WHERE idGroupe = '" + idGroupe + "';"))
+                for row in result:
+                    res.append(row[0])
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
             
         def get_images_groupe():
             try:
