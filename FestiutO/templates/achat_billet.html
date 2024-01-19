@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-{%if type == "evenement"%}
+{% if type == "'evenement'"%}
 <div class="divCentral">
     <div class="positionRecapitulatif">
         <div class="recapitulatif">
@@ -32,19 +32,46 @@
                 <textarea id="verificationInput" rows="1" cols="50" placeholder="Saisissez votre numero..."></textarea>
             </div>
             <div class="conteneurTextArea">
-                <button onclick="acheterBillet({{idEvenement}})">payer</button>
+                <button onclick="acheterBillet({{id}},{{type}},' ',' ',' ')">payer</button>
             </div>
         </div>
     </div>
 </div>
-<script>var types = {{ type | tojson | safe }}</script>
-<script src="../static/js/jsAchat_billet.js"></script>  
+<script>
+    
+    function acheterBillet(id,types,typeBillet,nombrePlace){
+    if(document.getElementById("carteInput").value != "" && document.getElementById("dateInput").value != "" && document.getElementById("verificationInput").value != ""){
+        if(types == "evenement"){
+            $.ajax({
+                url: '/acheter_vrai_billet_evenement',
+                type: 'GET',
+                data: {
+                    "idEvenement" : id
+                },
+                success: function (data) {
+                        alert(data);
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: '/acheter_Billet_journee',
+                type: 'GET',
+                data: {
+                    "idJournee" : id,
+                    "nombrePlace" : nombrePlace,
+                    "type" : typeBillet,
+                },
+                success: function (data) {
+                        alert(data);
+                }
+            });
+        }
+    }
+}
+</script>  
 {%else%}
-    <script>
-        var nombreJournee = {{nombre}};
-        var type = {{type}};
-        var idJournees = {{ idJournee | tojson | safe }};
-    </script>
+
 <div class="divCentral">
     <div class="positionRecapitulatif">
         <div class="recapitulatif">
@@ -67,24 +94,22 @@
                 <textarea id="verificationInput" rows="1" cols="50" placeholder="Saisissez votre numero..."></textarea>
             </div>
             <div class="conteneurTextArea">
-                <button onclick="acheterBillet({{idJournee}})">payer</button>
+                <button onclick="acheterBillet({{id}},{{type}},{{typeBillet}},{{nombrePlace}})">payer</button>
             </div>
         </div>
     </div>
 </div>
 
-<script>var types = {{ type | tojson | safe }};
-    var typeBillet = {{ typeBillet | tojson | safe }};
+<script>
     
-    function acheterBillet(idEvenement){
+    function acheterBillet(id,types,typeBillet,nombrePlace){
     if(document.getElementById("carteInput").value != "" && document.getElementById("dateInput").value != "" && document.getElementById("verificationInput").value != ""){
-        console.log(types+" a");
         if(types == "evenement"){
             $.ajax({
-                url: '/achat_billet',
+                url: '/acheter_vrai_billet_evenement',
                 type: 'GET',
                 data: {
-                    "idEvenement" : idEvenement
+                    "idEvenement" : id
                 },
                 success: function (data) {
                         alert(data);
@@ -93,11 +118,11 @@
         }
         else{
             $.ajax({
-                url: '/achat_billet',
+                url: '/acheter_Billet_journee',
                 type: 'GET',
                 data: {
-                    "idJournee" : idJournees,
-                    "nombre" : nombreJournee,
+                    "idJournee" : id,
+                    "nombrePlace" : nombrePlace,
                     "type" : typeBillet,
                 },
                 success: function (data) {

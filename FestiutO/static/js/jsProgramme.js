@@ -157,7 +157,7 @@ function changeIdInfoJournee(idgroupe){
 
 
                         h3Consert = document.createElement("h3");
-                        h3Consert.textContent = "Consert";
+                        h3Consert.textContent = "Concert";
                         h3Consert.classList.add('h2Evenement');
 
                         divConcert.appendChild(h3Consert);
@@ -165,7 +165,7 @@ function changeIdInfoJournee(idgroupe){
                         divDate.appendChild(divConcert);
                     }
                     else{
-                        divActivite= document.createElement("div");
+                        divActivite= document.createElement("div"); 
                         divActivite.id  = "activiter";
 
 
@@ -248,7 +248,6 @@ function changeIdInfoJournee(idgroupe){
 
 
     function inscrireEvenement(id){
-        console.log(id)
         lien = document.getElementById("lienAcheterBillet");
         var hrefActuel = lien.getAttribute("href");
         var nouveauHref1 = hrefActuel.replace(remplaceLien, id);

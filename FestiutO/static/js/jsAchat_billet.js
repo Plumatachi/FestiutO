@@ -1,9 +1,9 @@
-function acheterBillet(idEvenement){
+function acheterBillet(idEvenement,types){
+    print("heello");
     if(document.getElementById("carteInput").value != "" && document.getElementById("dateInput").value != "" && document.getElementById("verificationInput").value != ""){
-        console.log(types+" a");
         if(types == "evenement"){
             $.ajax({
-                url: '/achat_billet',
+                url: '/acheter_vrai_billet_evenement',
                 type: 'GET',
                 data: {
                     "idEvenement" : idEvenement
@@ -15,7 +15,7 @@ function acheterBillet(idEvenement){
         }
         else{
             $.ajax({
-                url: '/achat_billet',
+                url: '/acheter_Billet_journee',
                 type: 'GET',
                 data: {
                     "idJournee" : idJournee,

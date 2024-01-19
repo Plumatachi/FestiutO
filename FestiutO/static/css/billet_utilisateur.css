@@ -1,0 +1,10 @@
+.groupeList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: antiquewhite;
+}
+
+.billet{
+    width: 100%;
+}

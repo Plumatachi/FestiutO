@@ -41,32 +41,31 @@ def billeterie():
     
     
 
-@app.route("/achat_billet_journee/<idJournee>/<nombre>/<type>")
-def achat_billet_journee(idJournee,nombre,type):
-    return render_template('achat_billet.html', idJournee=idJournee ,nombre=nombre,type="journee",typeBillet=type)
+@app.route("/achat_billet_journee/<idJournee>/<nombrePlace>/<types>/")
+def achat_billet_journee(idJournee,nombrePlace,types):
+    return render_template('achat_billet.html', id=idJournee ,nombrePlace=nombrePlace,type="'journee'",typeBillet=types)
 
 
 @app.route("/acheter_Billet_journee", methods=(["GET"]))
 def acheter_Billet_journee():
     idJournee = request.args.get('idJournee')
-    param3 = request.args.get('nombre')
+    param3 = request.args.get('nombrePlace')
     param4 = request.args.get('type')
     user = session['utilisateur']
     try:
         Journee.Insert.insert_journee(idJournee,user,param3,param4)
-        return "billet acheter"
+        return "le billet a bien etait acheter"
     except:
-        return "deja acheter"
+        return "le billet a deja etait acheter"
 
 
 @app.route("/Billeterie/acheterBillet", methods=(["GET"]))
 def acheterBillet():
     idJournee = request.args.get('idJournee')
-    param2 = request.args.get('type')
-    param3 = request.args.get('nombre')
-    param4 = request.args.get('nombre')
+    param3 = request.args.get('nombrePlace')
+    param4 = request.args.get('type')
 
-    return redirect(url_for('achat_billet_journee', idJournee=idJournee,nombre=param3,type=param4))
+    return redirect(url_for('achat_billet_journee', idJournee=idJournee,nombrePlace=param3,types=param4))
     
     
 
@@ -221,6 +220,13 @@ def favoris(idUser):
 
     return render_template('favoris.html', user=userInfo, groupFavorisList=groupFavorisList)
 
+@app.route('/Profil/billet/<idUser>')
+def billet(idUser):
+    userInfo = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
+    billetsJournee = Evenement.Get.get_evenement_with_idSpectateur_journee(idUser)
+    billetsEvenement = Evenement.Get.get_evenement_with_idSpectateur_Evenement(idUser)
+    return render_template('billet_utilisateur.html', user=idUser, billetsJournee=billetsJournee,billetsEvenement=billetsEvenement)
+
 @app.route('/Groupe_page/<idUser>/<idGroupe>')
 def groupe(idUser, idGroupe):
     groupInfo = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
@@ -256,8 +262,8 @@ def acheter_billet_evenement():
     idEvenement = request.args.get('idEvenement')
     return redirect(url_for('achat_billet_evenement', idEvenement=idEvenement))
 
-@app.route("/achat_billet", methods=(["GET"]))
-def achat_billet():
+@app.route("/acheter_vrai_billet_evenement", methods=(["GET"]))
+def acheter_vrai_billet_evenement():
     idEvenement = request.args.get('idEvenement')
     user = session['utilisateur']
     try:
@@ -276,8 +282,8 @@ def achat_billet_evenement(idEvenement):
 
     # Formater la date selon le format souhaité
     resultat_string = "{} {} {} {} H {} minute".format(evenement[0][0].day, mois[evenement[0][0].month - 1], evenement[0][0].year, evenement[0][0].hour, evenement[0][0].minute)
-
-    return render_template('achat_billet.html', idEvenement=idEvenement , date=resultat_string,nomScene=evenement[0][1],lieux=evenement[0][2],type="evenement")
+    print(idEvenement)
+    return render_template('achat_billet.html', id=idEvenement , date=resultat_string,nomScene=evenement[0][1],lieux=evenement[0][2],type="'evenement'")
 
 
 # gestion organisateur
