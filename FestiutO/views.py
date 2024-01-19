@@ -211,7 +211,8 @@ def modifier_email():
 def get_Info_journee_Groupe():
      param1 = request.args.get('idgroupe')
      listeInfo = Groupe.Get.get_consert_groupe(param1)
-     return jsonify(listeInfo)
+     listeInfo1 = Groupe.Get.get_activite_groupe(param1)
+     return jsonify(listeInfo+listeInfo1)
  
 @app.route('/Profil/favoris/<idUser>')
 def favoris(idUser):

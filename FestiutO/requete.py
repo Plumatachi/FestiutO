@@ -284,10 +284,10 @@ class Groupe:
         def get_consert_groupe(idGroupe):
             try:
                 res = []
-                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux,idEvenement from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux,idEvenement,idConcert from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idConcert IS NOT NULL;"))
                 for row in result:
                     print(row)
-                    res.append((row[0],row[1],row[2],row[3],row[4]))
+                    res.append((row[0],row[1],row[2],row[3],row[4],row[5]))
                 return res
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
@@ -296,10 +296,10 @@ class Groupe:
         def get_activite_groupe(idGroupe):
             try:
                 res = []
-                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idActivite IS NOT NULL;"))
+                result = cnx.execute(text("select dateDebutE,dateFinE,nomScene,lieux,idEvenement,idConcert from GROUPE natural join PARTICIPE natural join EVENEMENT natural join SCENE where idgroupe = '" + idGroupe + "' AND idActivite IS NOT NULL;"))
                 for row in result:
                     print(row)
-                    res.append((row[0],row[1],row[2],row[3]))
+                    res.append((row[0],row[1],row[2],row[3],row[4],row[5]))
                 return res
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
