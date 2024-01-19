@@ -1,3 +1,5 @@
+var remplaceLien="changerValeur"
+
 function changerImage(type){
     var maDiv = document.getElementById('divConteneurGroupe');
     var enfants = maDiv.querySelectorAll('a');
@@ -197,15 +199,14 @@ function changeIdInfoJournee(idgroupe){
 
 
 
-function inscrireEvenement(id){
-    $.ajax({
-        url: '/acheter_billet_evenement',
-        type: 'GET',
-        data:{
-            'idEvenement' : id
-        },
-        success: function (data) {
-            console.log("insert reussi");
-        }
-    })
-}
+    function inscrireEvenement(id){
+        console.log(id)
+        lien = document.getElementById("lienAcheterBillet");
+        var hrefActuel = lien.getAttribute("href");
+        var nouveauHref1 = hrefActuel.replace(remplaceLien, id);
+        console.log(nouveauHref1);
+        remplaceLien = id;
+        lien.setAttribute("href", nouveauHref1);
+        document.getElementById("lienAcheterBillet").click();
+
+    }

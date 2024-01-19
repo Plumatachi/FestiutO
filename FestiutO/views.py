@@ -1,5 +1,7 @@
+from click import DateTime
 from flask import render_template, url_for, redirect, request, session, jsonify, send_file
 from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
+from datetime import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
 from .requete import get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
@@ -39,19 +41,32 @@ def billeterie():
     
     
 
+@app.route("/achat_billet_journee/<idJournee>/<nombre>/<type>")
+def achat_billet_journee(idJournee,nombre,type):
+    return render_template('achat_billet.html', idJournee=idJournee ,nombre=nombre,type="journee",typeBillet=type)
+
+
+@app.route("/acheter_Billet_journee", methods=(["GET"]))
+def acheter_Billet_journee():
+    idJournee = request.args.get('idJournee')
+    param3 = request.args.get('nombre')
+    param4 = request.args.get('type')
+    user = session['utilisateur']
+    try:
+        Journee.Insert.insert_journee(idJournee,user,param3,param4)
+        return "billet acheter"
+    except:
+        return "deja acheter"
+
 
 @app.route("/Billeterie/acheterBillet", methods=(["GET"]))
 def acheterBillet():
     idJournee = request.args.get('idJournee')
     param2 = request.args.get('type')
     param3 = request.args.get('nombre')
-    user = session['utilisateur']
-    Journee.Insert.insert_journee(idJournee,user)
+    param4 = request.args.get('nombre')
 
-    return render_template(
-        "login.html",
-        title="Profil"
-    )
+    return redirect(url_for('achat_billet_journee', idJournee=idJournee,nombre=param3,type=param4))
     
     
 
@@ -231,18 +246,37 @@ def dislike(idUser, idGroupe):
 
 
 
+
+
+
+
 @app.route("/acheter_billet_evenement", methods=(["GET"]))
 def acheter_billet_evenement():
     idEvenement = request.args.get('idEvenement')
-    user = session['utilisateur']
-    Evenement.Insert.insert_billet_evenement(user,idEvenement)
     return redirect(url_for('achat_billet_evenement', idEvenement=idEvenement))
 
+@app.route("/achat_billet", methods=(["GET"]))
+def achat_billet():
+    idEvenement = request.args.get('idEvenement')
+    user = session['utilisateur']
+    try:
+        Evenement.Insert.insert_billet_evenement(user,idEvenement)
+        return "billet acheter"
+    except:
+          return "deja acheter"
 
 
 @app.route("/achat_billet_evenement/<idEvenement>")
 def achat_billet_evenement(idEvenement):
-    return render_template('achat_billet.html', idEvenement=idEvenement)
+    evenement= Evenement.Get.get_evenement_with_id(idEvenement)
+
+    # Tableau de noms de mois
+    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+
+    # Formater la date selon le format souhaité
+    resultat_string = "{} {} {} {} H {} minute".format(evenement[0][0].day, mois[evenement[0][0].month - 1], evenement[0][0].year, evenement[0][0].hour, evenement[0][0].minute)
+
+    return render_template('achat_billet.html', idEvenement=idEvenement , date=resultat_string,nomScene=evenement[0][1],lieux=evenement[0][2],type="evenement")
 
 
 # gestion organisateur
