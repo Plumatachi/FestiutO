@@ -175,9 +175,9 @@ class Spectateur:
                 raise
 
     class Insert:
-        def insert_spectateur(cnx, nom, telephone, email, password):
+        def insert_spectateur(cnx, nom, telephone, email, password, idTypeCompte):
             try:
-                cnx.execute(text("INSERT INTO SPECTATEUR(nom,numerotel,mail,motsDePasse, idTypeCompte) VALUES ('" + nom + "', '" + telephone + "', '" + email + "', '" + password + "', 1);"))
+                cnx.execute(text("INSERT INTO SPECTATEUR(nom,numerotel,mail,motsDePasse, idTypeCompte) VALUES ('" + nom + "', '" + telephone + "', '" + email + "', '" + password + "', '" + idTypeCompte + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du spectateur")

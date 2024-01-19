@@ -127,7 +127,7 @@ class AjouterCompteOrganisateurForm(FlaskForm):
     def ajouter_compte(self):
         if self.password.data != self.confirm.data:
             return False
-        Spectateur.Insert.insert_spectateur(cnx, self.nom.data, self.numeroTelephone.data, self.email.data, self.password.data)
+        Spectateur.Insert.insert_spectateur(cnx, self.nom.data, self.numeroTelephone.data, self.email.data, self.password.data, 1)
         return True
     
     

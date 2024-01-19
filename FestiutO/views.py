@@ -10,7 +10,7 @@ cnx = get_cnx()
 @app.route("/")
 def home():
     try:
-        user = session['utilisateur']
+        user = session['utilisateur'][0]
         listeImageId = Groupe.Get.get_images_groupe()
         return render_template(
         "acceuil.html",
@@ -45,7 +45,7 @@ def acheterBillet():
     idJournee = request.args.get('idJournee')
     param2 = request.args.get('type')
     param3 = request.args.get('nombre')
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     Journee.Insert.insert_journee(idJournee,user)
 
     return render_template(
@@ -57,7 +57,7 @@ def acheterBillet():
 
 @app.route("/Programme/")
 def programme():
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     listeImageId = Groupe.Get.get_images_groupe()
     return render_template(
     "programme.html",
@@ -75,8 +75,9 @@ def login():
         user = f.get_authenticated_user()
         if user != None:    
 
-            session['utilisateur'] = user[0]
-            if user[0] == 2:
+            session['utilisateur'] = (user[0],user[6])
+            print("login : "+str(user))
+            if user[6] != "Spectateur":
                 return redirect(url_for("organisation"))
             else:
                 next = f.next.data or url_for("home")
@@ -105,7 +106,7 @@ def register():
                 title="register",
                 form=f,
             )
-        Spectateur.Insert.insert_spectateur(cnx, f.nom.data, f.numerotelephone.data, f.email.data, f.password.data)
+        Spectateur.Insert.insert_spectateur(cnx, f.nom.data, f.numerotelephone.data, f.email.data, f.password.data, 0)
         return render_template("login.html",title="login",form=LoginForm())
     return render_template(
         "register.html",
@@ -115,7 +116,7 @@ def register():
 
 @app.route("/Profil/")
 def profil():
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     print("profil : "+str(user))
     return render_template( "profil.html", title="Profil", user=user)
 
@@ -240,7 +241,7 @@ def modifier_email():
 @app.route("/acheter_billet_evenement", methods=(["GET"]))
 def acheter_billet_evenement():
     idEvenement = request.args.get('idEvenement')
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     Evenement.Insert.insert_billet_evenement(user,idEvenement)
     return redirect(url_for('achat_billet_evenement', idEvenement=idEvenement))
 

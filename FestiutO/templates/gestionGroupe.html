@@ -7,9 +7,9 @@
 
 {% block content %}
 <main>
-    <h1> Gestion des artiste </h1>
+    <h1> Gestion des groupes </h1>
     <a class="buttonAjout" href="{{ url_for('ajouterGroupe') }}"> Ajouter un groupe </a>
-    <h2> Liste des artistes </h2>
+    <h2> Liste des groupes </h2>
     <div class="listArtiste">
         {% for groupe in allGroupe %}
             <div>
