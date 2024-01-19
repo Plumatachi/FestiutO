@@ -4,6 +4,7 @@
     margin: 0.5em;
     border-radius: 10px;
     border: 1px solid black;
+    text-align: center;
 }
 
 a{
@@ -43,4 +44,6 @@ main{
     justify-content: center;
     align-items: center;
 }
+
+
 

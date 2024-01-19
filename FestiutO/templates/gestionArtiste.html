@@ -8,7 +8,7 @@
 {% block content %}
 <main>
     <h1> Gestion des artiste </h1>
-    <a class="buttonAjout" href="{{ url_for('ajouterArtiste') }}"> Ajouter un compte un musicien </a>
+    <a class="buttonAjout" href="{{ url_for('ajouterArtiste') }}"> Ajouter un musicien </a>
     <h2> Liste des artistes </h2>
     <div class="listArtiste">
         {% for artiste in allArtiste %}

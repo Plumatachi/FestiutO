@@ -411,6 +411,15 @@ class Scene:
             except:
                 print("Erreur lors de la mise à jour de la scene")
                 raise
+
+    class Delete:
+        def delete_scene(cnx, id):
+            try:
+                cnx.execute(text("DELETE FROM SCENE WHERE idScene = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression de la scene")
+                raise
     
     
             
