@@ -10,12 +10,12 @@
 
 {% block content %}
 
-<h1>Mes Billet</h1>
-<h3>Billet journee</h3>
+<h1>Mes Billets</h1>
+<h3>Billet journée</h3>
 <div class="groupeList">
 {% for billet in billetsJournee %}
     <div class="billet">
-        <p>{{ billet[1]}} commence a {{billet[2]}} vous avez {{billet[3]}} billet pour cette journee</p>
+        <p>{{ billet[1]}} commence à {{billet[2]}} vous avez {{billet[3]}} billet(s) pour cette journée</p>
     </div>
     {% endfor %}
 </div>
@@ -24,10 +24,8 @@
 <div class="groupeList">
 {% for billet in billetsEvenement %}
     <div class="billet">
-        <p>{{ billet[1]}} commence a {{billet[2]}} est situer a {{billet[3]}} billet pour cette evenement</p>
-    
+        <p>{{ billet[1]}} commence à {{billet[2]}} est situé à {{billet[3]}} billet(s) pour cet évènement</p>
     </div>
-
 {% endfor %}
 </div>
 {% endblock %}

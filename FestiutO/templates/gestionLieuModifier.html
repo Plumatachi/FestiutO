@@ -6,19 +6,14 @@
 {% endblock %}
 
 {% block content %}
-
 <main>
-    <h1> Gestion de la scene  {{ scene[1] }} </h1>
+    <h1> Gestion de la scène  {{ scene[1] }} </h1>
     <h2> Liste des fonctionnalités </h2>
     <ul>
-        <li> <a href="{{ url_for('modifierNomScene', idLieu=scene[0]) }}"> Modifier le nom de scene </a> </li>
-        <li> <a href="{{ url_for('modifierNomLieu', idLieu=scene[0]) }}"> Modifier le lieu de la scene </a> </li>
-        <li> <a href="{{ url_for('supprimerScene', idLieu=scene[0]) }}"> Supprimer la scene </a> </li>
+        <li> <a href="{{ url_for('modifierNomScene', idLieu=scene[0]) }}"> Modifier le nom de la scène </a> </li>
+        <li> <a href="{{ url_for('modifierNomLieu', idLieu=scene[0]) }}"> Modifier le lieu de la scène </a> </li>
+        <li> <a href="{{ url_for('supprimerScene', idLieu=scene[0]) }}"> Supprimer la scène </a> </li>
     </ul>
 </div>
 </main>
-
-
-
-
 {% endblock %}
