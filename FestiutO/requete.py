@@ -161,6 +161,7 @@ class Musicien:
                 raise       
             
     class Delete:
+        
         def delete_musicien(cnx, idMusicien):
             try:
                 cnx.execute(text("DELETE FROM APPARTIENT WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + str(Groupe.Get.get_idGroupe_musicien_avec_son_idMusicien(cnx, idMusicien)) + "';")),
@@ -170,7 +171,6 @@ class Musicien:
             except:
                 print("Erreur lors de la suppression du musicien")
                 raise
-            
                
 class Spectateur:
     class Get:
@@ -187,7 +187,7 @@ class Spectateur:
                     
         def get_all_spectateur_avec_email(cnx, email):
             try:
-                result = cnx.execute(text("SELECT idSpectateur,nom,numerotel,mail,motsDePasse,idTypeCompte FROM SPECTATEUR natural join TYPECOMPTE WHERE mail = '" + email + "';"))
+                result = cnx.execute(text("SELECT idSpectateur,nom,numerotel,mail,motsDePasse,idTypeCompte, nomTypeCompte  FROM SPECTATEUR natural join TYPECOMPTE WHERE mail = '" + email + "';"))
                 for row in result:
                     print (row)
                     return row
