@@ -50,6 +50,7 @@ let date = new Date(listeDate[0][0]);
 let dateEnregistre = new Date();
 let verifierpremierchargement = false;
 let indexJournenregistre = 0;
+let nombreJournee = 0;
 
 
 var valeur = 0;
@@ -270,24 +271,29 @@ function nextDay() {
 
 
 function sauvergarderDate(){
-    dateEnregistre = document.getElementById("date").value;
-    div = document.getElementById("dateEnregistre");
-    div.innerHTML = ""
-    pDateEnregistre = document.createElement("p");
-    pDateEnregistre.className = "texteInformationVente";
-    pDateEnregistre.textContent = document.getElementById("date").value;
-    div.appendChild(pDateEnregistre);
+    if(typebillet != 3 && typebillet != 0 && typebillet > nombreJournee){
+        nombreJournee++;
+        dateEnregistre = document.getElementById("date").value;
+        div = document.getElementById("dateEnregistre");
+        pDateEnregistre = document.createElement("p");
+        pDateEnregistre.className = "texteInformationVente";
+        pDateEnregistre.id = indexJournenregistre;
+        pDateEnregistre.textContent = document.getElementById("date").value;
+        div.appendChild(pDateEnregistre);
+    }
 }
 document.onload = generateCalendar();
 
 
 
 
-
+var remplaceLienIdJournee = "changerValeurJournee";
+var remplaceLienNombre = "nombreJournee";
+var remplaceLienType = "typeJournee";
 
 
 function acheterBillet(){
-    if(document.getElementById("dateEnregistre").innerHTML == ""){
+    if(document.getElementById("dateEnregistre").innerHTML == "" && typebillet != 3){
         alert("Veuillez choisir une date");
         return;
     }
@@ -299,18 +305,34 @@ function acheterBillet(){
         alert("Veuillez choisir un nombre de billet");
         return;
     }
+    else if(typebillet == 1 && nombreJournee != 1){
+        alert("Veuillez choisir un 1 de date");
+        return;
+    }
+    else if(typebillet == 2 && nombreJournee != 2){
+        alert("Veuillez choisir un 2 de date");
+        return;
+    }
     else{
-        $.ajax({
-            url: '/Billeterie/acheterBillet',
-            type: 'GET',
-            data:{
-                idJournee : indexJournenregistre ,
-                type : typebillet,
-                nombre : document.getElementById("valeur").value
-            },
-            success: function (data) {
-                print("lets go");
-            }
-        });
+        div = document.getElementById("dateEnregistre");
+        var enfants = div.childNodes;
+        var listeJournee = "'";
+        for (var i = 1; i < enfants.length; i++) {
+            listeJournee += enfants[i].id+" ";
+        }
+        listeJournee+="'";
+        lien = document.getElementById("lienAcheterBillet");
+        var hrefActuel = lien.getAttribute("href");
+        console.log(document.getElementById("valeur").value);
+        var nouveauHref1 = hrefActuel.replace(remplaceLienIdJournee, listeJournee);
+        var nouveauHref1 = nouveauHref1.replace(remplaceLienNombre, document.getElementById("valeur").value);
+        var nouveauHref1 = nouveauHref1.replace(remplaceLienType, typebillet);
+        remplaceLienIdJournee = "idJournee="+listeJournee;
+        remplaceLienIdJournee = "nombre="+document.getElementById("valeur").value;
+        remplaceLienIdJournee = "type="+typebillet;
+        lien.setAttribute("href", nouveauHref1);
+        document.getElementById("lienAcheterBillet").click();
+
+
     }
 }

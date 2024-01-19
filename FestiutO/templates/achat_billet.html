@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/favoris.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/achat_billet.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival-ete.css') }}">
 {% endblock %}
 
@@ -9,20 +9,131 @@
 {% endblock %}
 
 {% block content %}
+{% if type == "'evenement'"%}
+<div class="divCentral">
+    <div class="positionRecapitulatif">
+        <div class="recapitulatif">
+            <h1>{{lieux}} : {{date}} a {{lieux}}</h1>
+            <h1>prix :</h1>
+        </div>
+    </div>
+    <div class="positionFicheDePayement">
+        <div class="ficheDePayement">
+            <div class="conteneurTextArea">
+                <label for="userInput">Numero de carte</label>
+                <textarea id="carteInput" rows="1" cols="50" placeholder="Saisissez votre numero..."></textarea>
+            </div>
+            <div class="conteneurTextArea">
+                <label for="userInput">date de peremption</label>
+                <textarea id="dateInput" rows="1" cols="50" placeholder="Saisissez la date..."></textarea>
+            </div>
+            <div class="conteneurTextArea">
+                <label for="userInput">Numero de verification</label>
+                <textarea id="verificationInput" rows="1" cols="50" placeholder="Saisissez votre numero..."></textarea>
+            </div>
+            <div class="conteneurTextArea">
+                <button onclick="acheterBillet({{id}},{{type}},' ',' ',' ')">payer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    
+    function acheterBillet(id,types,typeBillet,nombrePlace){
+    if(document.getElementById("carteInput").value != "" && document.getElementById("dateInput").value != "" && document.getElementById("verificationInput").value != ""){
+        if(types == "evenement"){
+            $.ajax({
+                url: '/acheter_vrai_billet_evenement',
+                type: 'GET',
+                data: {
+                    "idEvenement" : id
+                },
+                success: function (data) {
+                        alert(data);
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: '/acheter_Billet_journee',
+                type: 'GET',
+                data: {
+                    "idJournee" : id,
+                    "nombrePlace" : nombrePlace,
+                    "type" : typeBillet,
+                },
+                success: function (data) {
+                        alert(data);
+                }
+            });
+        }
+    }
+}
+</script>  
+{%else%}
 
 <div class="divCentral">
-<p>coucou</p>
-
+    <div class="positionRecapitulatif">
+        <div class="recapitulatif">
+            <h1></h1>
+            <h1>prix :</h1>
+        </div>
+    </div>
+    <div class="positionFicheDePayement">
+        <div class="ficheDePayement">
+            <div class="conteneurTextArea">
+                <label for="userInput">Numero de carte</label>
+                <textarea id="carteInput" rows="1" cols="50" placeholder="Saisissez votre numero..."></textarea>
+            </div>
+            <div class="conteneurTextArea">
+                <label for="userInput">date de peremption</label>
+                <textarea id="dateInput" rows="1" cols="50" placeholder="Saisissez la date..."></textarea>
+            </div>
+            <div class="conteneurTextArea">
+                <label for="userInput">Numero de verification</label>
+                <textarea id="verificationInput" rows="1" cols="50" placeholder="Saisissez votre numero..."></textarea>
+            </div>
+            <div class="conteneurTextArea">
+                <button onclick="acheterBillet({{id}},{{type}},{{typeBillet}},{{nombrePlace}})">payer</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- <div class="groupeList">
-{% for groupe in groupFavorisList %}
-<div class="groupe flex">
-    <h2>{{ groupe[0] }}</h2>
-    <img class="groupeImage" src="{{ url_for('static', filename='imagesHtml/' + groupe[2]) }}" alt="Photo du groupe {{ groupe[0] }}">
-    <a href="{{ url_for('groupe',idUser=user[0], idGroupe=groupe[3]) }}">Voir le groupe</a>
-</div>
+<script>
+    
+    function acheterBillet(id,types,typeBillet,nombrePlace){
+    if(document.getElementById("carteInput").value != "" && document.getElementById("dateInput").value != "" && document.getElementById("verificationInput").value != ""){
+        if(types == "evenement"){
+            $.ajax({
+                url: '/acheter_vrai_billet_evenement',
+                type: 'GET',
+                data: {
+                    "idEvenement" : id
+                },
+                success: function (data) {
+                        alert(data);
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: '/acheter_Billet_journee',
+                type: 'GET',
+                data: {
+                    "idJournee" : id,
+                    "nombrePlace" : nombrePlace,
+                    "type" : typeBillet,
+                },
+                success: function (data) {
+                        alert(data);
+                }
+            });
+        }
+    }
+}
+    </script>
 
-{% endfor %}
-</div> -->
+{%endif%}
+        
 {% endblock %}
