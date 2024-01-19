@@ -356,9 +356,9 @@ class Groupe:
                 raise
 
     class Insert:
-        def insert_groupe(cnx, id_groupe, nom_groupe, description, reseausocial, photo, nb_personne):
+        def insert_groupe(cnx, nom_groupe, description, reseausocial, photo, nb_personne):
             try:
-                cnx.execute(text("INSERT INTO GROUPE(groupe_id, nom, description) VALUES ('" + id_groupe + "', '" + nom_groupe + "', '" + description + "', '" + reseausocial + "', '" + photo + "', '" + nb_personne + "');"))
+                cnx.execute(text("INSERT INTO GROUPE(nomDuGroupe, description, reseausocial, photo, nbpersonne) VALUES ('" + nom_groupe + "', '" + description + "', '" + reseausocial + "', '" + photo + "', '" + str(nb_personne) + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du groupe")
@@ -395,6 +395,24 @@ class Scene:
             except:
                 print("Erreur lors de l'insertion de la scene")
                 raise
+    class Update:
+        def update_scene(cnx,id, new_nom):
+            try:
+                cnx.execute(text("UPDATE SCENE SET nomScene = '" + new_nom + "' WHERE idScene = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour de la scene")
+                raise
+
+        def update_lieu(cnx, id, new_nom):
+            try:
+                cnx.execute(text("UPDATE SCENE SET lieux = '" + new_nom + "' WHERE idScene = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour de la scene")
+                raise
+    
+    
             
     class Get:
         def get_scene_with_id(cnx, idScene):

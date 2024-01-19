@@ -19,12 +19,22 @@
                     {{ form.hidden_tag() }}
                     <div class="input">
                         <div class="element">
-                            {{ form.nomScene(size=50, class_="form-control element", placeholder="Nom de la scene") }}
+                            {{ form.nomGroupe(size=50, class_="form-control element", placeholder="Nom de la scene") }}
                         </div>
                     </div>
                     <div class="input">
                         <div class="element">
-                            {{ form.lieu(size=50, class_="form-control element", placeholder="Nom du lieu") }}
+                            {{ form.description(size=50, height=200, class_="form-control element", placeholder="Nom du lieu") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.reseau(size=50, class_="form-control element", placeholder="Nom du lieu") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.photo(size=auto, class_="form-control element", placeholder="Nom du lieu") }}
                         </div>
                     </div>
                     <div class="btn-container">

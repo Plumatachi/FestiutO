@@ -416,8 +416,8 @@ def gestionLieu():
 
 @app.route("/espace-organisateur/gestion-lieu/<idLieu>")
 def gestionLieuUnique(idLieu):
-    lieu = Scene.Get.get_scene_with_id(cnx, idLieu)
-    return render_template('gestionLieuUnique.html', lieu=lieu)
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    return render_template('gestionLieuUnique.html', scene=scene)
 
 @app.route("/espace-organisateur/gestion-lieu/ajoute-lieu", methods=("GET","POST",))
 def ajouterScene():
@@ -430,6 +430,60 @@ def ajouterScene():
             return render_template("ajouterScene.html", form=form, erreur="Erreur lors de l'ajout de la scene")
     return render_template("ajouterScene.html", form=form)
 
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>", methods=("GET","POST",))
+def gestionLieuModifier(idLieu):
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    return render_template('gestionLieuModifier.html', scene=scene)
+
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>/modifier-nom", methods=("GET","POST",))
+def modifierNomScene(idLieu):
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    form = ModifierNomSceneForm()
+    if form.is_submitted():
+        res = form.change_nom_scene(idLieu)
+        if res:
+            return redirect(url_for('modifierNomScene', erreur="Scene modifié", form=form, idLieu=idLieu))
+        else:
+            return render_template('modifierNomScene.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomScene.html', form=form, scene=scene)
+
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>/modifier-lieu", methods=("GET","POST",))
+def modifierNomLieu(idLieu):
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    form = ModifierNomLieuForm()
+    if form.is_submitted():
+        res = form.change_nom_lieu(idLieu)
+        if res:
+            return redirect(url_for('modifierNomLieu', erreur="Scene modifié", form=form, idLieu=idLieu))
+        else:
+            return render_template('modifierNomLieu.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomLieu.html', form=form, scene=scene)
+
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>/delete", methods=("GET","POST",))
+def supprimerScene(idLieu):
+    Scene.Delete.delete_scene(cnx, idLieu)
+    return redirect(url_for('gestionLieu'))
+
+@app.route("/espace-organisateur/gestion-groupes")
+def gestionGroupe():
+    allGroupe = afficher_table(cnx, "GROUPE")
+    return render_template('gestionGroupe.html', allGroupe=allGroupe)
+
+@app.route("/espace-organisateur/gestion-groupes/<idGroupe>")
+def modifierGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    return render_template('gestionGroupeUnique.html', groupe=groupe)
+
+@app.route("/espace-organisateur/gestion-groupes/ajouter-groupe", methods=("GET","POST",))
+def ajouterGroupe():
+    form = AjouterGroupeForm()
+    if form.validate_on_submit():
+        res = form.ajouter_groupe()
+        if res:
+            return redirect(url_for("gestionGroupe"))
+        else:
+            return render_template("ajouterGroupe.html", form=form, erreur="Erreur lors de l'ajout du groupe")
+    return render_template("ajouterGroupe.html", form=form)
 
 # def gestionLieu():
 #     allLieu = afficher_table(cnx, "LIEU")

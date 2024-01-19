@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gestionComptesUnique.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1> Gestion de la scene  {{ scene[1] }} </h1>
+    <h2> Liste des fonctionnalités </h2>
+    <ul>
+        <li> <a href="{{ url_for('modifierNomScene', idLieu=scene[0]) }}"> Modifier le nom de scene </a> </li>
+        <li> <a href="{{ url_for('modifierNomLieu', idLieu=scene[0]) }}"> Modifier le lieu de la scene </a> </li>
+        <li> <a href="{{ url_for('supprimerScene', idLieu=scene[0]) }}"> Supprimer le compte </a> </li>
+    </ul>
+</div>
+</main>
+
+
+
+
+{% endblock %}

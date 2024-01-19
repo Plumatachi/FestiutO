@@ -17,7 +17,7 @@
         <div>
             <p> Nom scene : {{ lieu[1] }} </p>
             <p> Nom lieu : {{ lieu[2] }} </p>
-            <a href="{{ url_for('gestionLieuUnique', idLieu=lieu[0]) }}"> Modifier </a>
+            <a href="{{ url_for('gestionLieuModifier', idLieu=lieu[0]) }}"> Modifier </a>
         </div>
     {% endfor %}
     </div>

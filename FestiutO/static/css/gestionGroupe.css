@@ -11,7 +11,7 @@
     border: 1px solid black;
     border-radius: 5px;
     width: 150px;
-    height: 80px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -59,4 +59,10 @@ main {
     cursor: pointer;
     justify-content: space-around;
 
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

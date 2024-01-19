@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import Musicien, Scene, get_cnx , Spectateur
+from .requete import Groupe, Musicien, Scene, get_cnx , Spectateur
 
 cnx = get_cnx()
 
@@ -153,4 +153,46 @@ class AjouterSceneForm(FlaskForm):
             Scene.Insert.insert_scene(cnx, self.nomScene.data, self.lieu.data)
             return True
         except:
+            return False
+        
+class ModifierNomSceneForm(FlaskForm):
+    nomScene = StringField('Nom de la scene', validators=[DataRequired()])
+    nouveauNomScene = StringField('Nouveau nom de la scene', validators=[DataRequired()])
+    nouveauNomSceneVerif = StringField('Confirmer le nouveau nom de la scene', validators=[DataRequired()])
+    
+    def change_nom_scene(self, idScene):
+        try:
+            if self.nouveauNomScene.data != self.nouveauNomSceneVerif.data:
+                return False
+            Scene.Update.update_scene(cnx, idScene, self.nouveauNomScene.data)
+            return True
+        except:
+            return False
+        
+class ModifierNomLieuForm(FlaskForm):
+    nomLieu = StringField('Nom du lieu', validators=[DataRequired()])
+    nouveauNomLieu = StringField('Nouveau nom du lieu', validators=[DataRequired()])
+    nouveauNomLieuVerif = StringField('Confirmer le nouveau nom du lieu', validators=[DataRequired()])
+    
+    def change_nom_lieu(self, idScene):
+        try:
+            if self.nouveauNomLieu.data != self.nouveauNomLieuVerif.data:
+                return False
+            Scene.Update.update_lieu(cnx, idScene, self.nouveauNomLieu.data)
+            return True
+        except:
+            return False
+        
+    
+class AjouterGroupeForm(FlaskForm):
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    description = StringField('Email', validators=[DataRequired()])
+    reseau = StringField('Numéro de téléphone', validators=[DataRequired()])
+    photo = FileField('Photo')
+
+    def ajouter_groupe(self):
+        try:
+            Groupe.Insert.insert_groupe(cnx, self.nomGroupe.data,self.description.data, self.reseau.data, "NULL",0)
+            return True
+        except: 
             return False
