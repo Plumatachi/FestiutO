@@ -51,7 +51,7 @@ def acheter_Billet_journee():
     idJournee = request.args.get('idJournee')
     param3 = request.args.get('nombrePlace')
     param4 = request.args.get('type')
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     try:
         Journee.Insert.insert_journee(idJournee,user,param3,param4)
         return "le billet a bien etait acheter"
@@ -271,7 +271,7 @@ def acheter_billet_evenement():
 @app.route("/acheter_vrai_billet_evenement", methods=(["GET"]))
 def acheter_vrai_billet_evenement():
     idEvenement = request.args.get('idEvenement')
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     try:
         Evenement.Insert.insert_billet_evenement(user,idEvenement)
         return "billet acheter"

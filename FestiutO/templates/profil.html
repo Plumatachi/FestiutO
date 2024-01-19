@@ -11,7 +11,7 @@
 {% block content %}
 <main>
 <div>
-    {% if session['utilisateur'][6] == Organisateur %}
+    {% if session['utilisateur'][1] == "Organisateur" %}
     <ul class="a-container flex">
         <li><a href="{{ url_for('modifier_mdp') }}">Changer le mots de passe</a></li>
         <li><a href="{{ url_for('modifier_email') }}">Changer l'email</a></li>
