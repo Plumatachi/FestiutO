@@ -88,6 +88,7 @@
 }
 .imageGroupe{
     width: 100%;
+    height: 100%;
 }
 
 .imageGroupe1{
@@ -95,13 +96,15 @@
     left: -68%;
     top: 7%;
     z-index: -1;
-    width: 18vw;
+    width: 18vw;    
+    height: 18vw;
     display: inline-block;
 }
 
 .imageGroupe2{
     display: inline-block;
-    width: 20vw
+    width: 20vw;
+    height: 20vw;
 }
 
 .imageGroupe3{
@@ -110,6 +113,7 @@
     top: 5%;
     z-index: -1;
     width: 18vw;
+    height: 18vw;
     display: inline-block;
 }
 

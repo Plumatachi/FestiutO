@@ -20,6 +20,19 @@ def afficher_table(cnx, table):
         print("Erreur lors de l'affichage de la table")
         raise
 class Evenement:
+    class Get:
+        def get_evenement_with_id(id):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT dateDebutE,lieux,nomScene FROM EVENEMENT natural join SCENE WHERE idEvenement = '" + id + "';"))
+                for row in result:
+                    res.append((row[0],row[1],row[2]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+
+
     class Insert:
         def insert_billet_evenement(idSpectateur,idEvenement):
             try:
@@ -44,13 +57,24 @@ class Journee:
                 raise
         
     class Insert :
-        def insert_journee(idJournee,idspectateur):
-            try:
-                cnx.execute(text("INSERT INTO RESERVER(idJournee,idspectateur) VALUES ('" + str(idJournee) + "','" + str(idspectateur) + "');"))
-                cnx.commit()
-            except:
-                print("Erreur lors de l'insertion du favoris")
-                raise
+        def insert_journee(idJournee,idspectateur,nombrePlace,type):
+            if(type == "3"):
+                result = cnx.execute(text("SELECT idJournee FROM JOURNEE ;"))
+                for id in result:
+                    try:
+                        cnx.execute(text("INSERT INTO RESERVER(idJournee,idspectateur,nombreDePlace) VALUES ('" + str(id) + "','" + str(idspectateur) + "','" + str(nombrePlace) + "');"))
+                        cnx.commit()
+                    except:
+                        print("Erreur lors de l'insertion du favoris")
+                        raise
+            else:
+                for id in idJournee.split(" "):
+                    try:
+                        cnx.execute(text("INSERT INTO RESERVER(idJournee,idspectateur,nombreDePlace) VALUES ('" + str(id) + "','" + str(idspectateur) + "','" + str(nombrePlace) + "');"))
+                        cnx.commit()
+                    except:
+                        print("Erreur lors de l'insertion du favoris")
+                        raise
         
 class Musicien:
     class Get:
