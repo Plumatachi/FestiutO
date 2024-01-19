@@ -21,6 +21,22 @@ def afficher_table(cnx, table):
         raise
 class Evenement:
     class Get:
+        def get_evenement_with_idSpectateur_journee(id):
+            res = []
+            result = cnx.execute(text("SELECT idJournee,nomJournee,dateDebutJ,nombreDePlace FROM JOURNEE natural join RESERVER WHERE idSpectateur = '" + id + "';"))
+            for row in result:
+                res.append((row[0],row[1],row[2],row[3]))
+            
+            return res
+        
+        def get_evenement_with_idSpectateur_Evenement(id):
+            res = []
+            result = cnx.execute(text("SELECT idEvenement,nomScene,dateDebutE,lieux,idConcert FROM EVENEMENT natural join SCENE natural join BILLETEVENEMENT WHERE idSpectateur = '" + id + "';"))
+            for row in result:
+                res.append((row[0],row[1],row[2],row[4]))
+            
+            return res
+
         def get_evenement_with_id(id):
             try:
                 res = []
@@ -36,10 +52,11 @@ class Evenement:
     class Insert:
         def insert_billet_evenement(idSpectateur,idEvenement):
             try:
+                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 cnx.execute(text("INSERT INTO BILLETEVENEMENT(idspectateur,idEvenement) VALUES ('" + str(idSpectateur) + "','" + str(idEvenement) + "');"))
                 cnx.commit()
             except:
-                print("Erreur lors de l'insertion du favoris")
+                print("Erreur lors de l'insertion du favoris1")
                 raise
         
 
@@ -64,16 +81,16 @@ class Journee:
                     try:
                         cnx.execute(text("INSERT INTO RESERVER(idJournee,idspectateur,nombreDePlace) VALUES ('" + str(id) + "','" + str(idspectateur) + "','" + str(nombrePlace) + "');"))
                         cnx.commit()
-                    except:
-                        print("Erreur lors de l'insertion du favoris")
+                    except Exception as e:
+                        print(e)
                         raise
             else:
-                for id in idJournee.split(" "):
+                for id in idJournee.split(" ")[:-1]:    
                     try:
                         cnx.execute(text("INSERT INTO RESERVER(idJournee,idspectateur,nombreDePlace) VALUES ('" + str(id) + "','" + str(idspectateur) + "','" + str(nombrePlace) + "');"))
                         cnx.commit()
-                    except:
-                        print("Erreur lors de l'insertion du favoris")
+                    except Exception as e:
+                        print(e)
                         raise
         
 class Musicien:
@@ -106,7 +123,7 @@ class Spectateur:
                     
         def get_all_spectateur_avec_email(cnx, email):
             try:
-                result = cnx.execute(text("SELECT * FROM SPECTATEUR natural join TYPECOMPTE WHERE mail = '" + email + "';"))
+                result = cnx.execute(text("SELECT idSpectateur,nom,numerotel,mail,motsDePasse,idTypeCompte FROM SPECTATEUR natural join TYPECOMPTE WHERE mail = '" + email + "';"))
                 for row in result:
                     print (row)
                     return row
@@ -210,7 +227,7 @@ class FAVORIS:
                 cnx.execute(text("INSERT INTO FAVORIS(idSpectateur, idGroupe) VALUES ('" + idSpectateur + "', '" + idGroupe + "');"))
                 cnx.commit()
             except:
-                print("Erreur lors de l'insertion du favoris")
+                print("Erreur lors de l'insertion du favoris2")
                 raise
     
     class Delete:

@@ -289,7 +289,7 @@ document.onload = generateCalendar();
 
 var remplaceLienIdJournee = "changerValeurJournee";
 var remplaceLienNombre = "nombreJournee";
-var remplaceLienType = typeJournee
+var remplaceLienType = "typeJournee";
 
 
 function acheterBillet(){
