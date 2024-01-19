@@ -88,20 +88,20 @@ function getCurrentDate(element, asString) {
 }
 
 
-// Função principal que gera o calendário
+
 function generateCalendar() {
 
-    // Pega um calendário e se já existir o remove
+ 
     const calendar = document.getElementById('calendar');
     if (calendar) {
         calendar.remove();
     }
 
-    // Cria a tabela que será armazenada as datas
+    
     const table = document.createElement("table");
     table.id = "calendar";
 
-    // Cria os headers referentes aos dias da semana
+    
     const trHeader = document.createElement('tr');
     trHeader.className = 'weekends';
     weekdays.map(week => {
@@ -111,17 +111,16 @@ function generateCalendar() {
         trHeader.appendChild(th);
     });
 
-    // Adiciona os headers na tabela
+    
     table.appendChild(trHeader);
 
-    //Pega o dia da semana do primeiro dia do mês
+    
     const weekDay = new Date(
         date.getFullYear(),
         date.getMonth(),
         1
     ).getDay();
 
-    //Pega o ultimo dia do mês
     const lastDay = new Date(
         date.getFullYear(),
         date.getMonth() + 1,
@@ -134,7 +133,7 @@ function generateCalendar() {
     let btn = document.createElement('button');
     let week = 0;
 
-    // Se o dia da semana do primeiro dia do mês for maior que 0(primeiro dia da semana);
+ 
     while (week < weekDay) {
         td = document.createElement("td");
         empty = document.createTextNode(' ');
@@ -143,10 +142,10 @@ function generateCalendar() {
         week++;
     }
 
-    // Vai percorrer do 1º até o ultimo dia do mês
+   
     console.log(listeMoisJour);
     for (let i = 1; i <= lastDay;) {
-        // Enquanto o dia da semana for < 7, ele vai adicionar colunas na linha da semana
+        
         while (week < 7) {
             td = document.createElement('td');
             let text = document.createTextNode(i);
@@ -168,7 +167,7 @@ function generateCalendar() {
 
 
 
-            // Controle para ele parar exatamente no ultimo dia
+           
             if (i <= lastDay) {
                 i++;
                 btn.appendChild(text);
@@ -179,16 +178,14 @@ function generateCalendar() {
             }
             tr.appendChild(td);
         }
-        // Adiciona a linha na tabela
+        
         table.appendChild(tr);
 
-        // Cria uma nova linha para ser usada
         tr = document.createElement("tr");
 
-        // Reseta o contador de dias da semana
         week = 0;
     }
-    // Adiciona a tabela a div que ela deve pertencer
+
     const content = document.getElementById('table');
     content.appendChild(table);
     changeActive();
@@ -198,7 +195,7 @@ function generateCalendar() {
     getCurrentDate(document.getElementById("date"), false);
 }
 
-// Altera a data atráves do formulário
+
 function setDate(form) {
     let newDate = new Date(form.date.value);
     date = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate() + 1);
@@ -206,7 +203,7 @@ function setDate(form) {
     return false;
 }
 
-// Método Muda o mês e o ano do topo do calendário
+
 function changeHeader(dateHeader) {
     const month = document.getElementById("month-header");
     if (month.childNodes[0]) {
@@ -218,7 +215,7 @@ function changeHeader(dateHeader) {
     month.appendChild(headerMonth);
 }
 
-// Função para mudar a cor do botão do dia que está ativo
+
 function changeActive() {
     let btnList = document.querySelectorAll('button.active');
     btnList.forEach(btn => {
@@ -233,13 +230,12 @@ function changeActive() {
     }
 }
 
-// Função que pega a data atual
+
 function resetDate() {
     date = new Date();
     generateCalendar();
 }
 
-// Muda a data pelo numero do botão clicado
 function changeDate(context,id) {
     indexJournenregistre = id;
     let newDay = context;
@@ -247,7 +243,7 @@ function changeDate(context,id) {
     generateCalendar();
 }
 
-// Funções de avançar e retroceder mês e dia
+
 function nextMonth() {
     date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
     generateCalendar();

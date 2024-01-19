@@ -139,7 +139,7 @@ class AjouterArtisteForm(FlaskForm):
     
     def ajouter_artiste(self):
         try:
-            Musicien.Insert.insert_musicien(cnx, self.nom.data,self.email.data, self.numeroTelephone.data, "",0)
+            Musicien.Insert.insert_musicien(cnx, self.nom.data,self.email.data, self.numeroTelephone.data, "imaginedragons.jpeg",0)
             return True
         except: 
             return False

@@ -161,7 +161,7 @@ class Musicien:
                 raise       
             
     class Delete:
-        
+
         def delete_musicien(cnx, idMusicien):
             try:
                 cnx.execute(text("DELETE FROM APPARTIENT WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + str(Groupe.Get.get_idGroupe_musicien_avec_son_idMusicien(cnx, idMusicien)) + "';")),
@@ -218,7 +218,7 @@ class Spectateur:
     class Insert:
         def insert_spectateur(cnx, nom, telephone, email, password, idTypeCompte):
             try:
-                cnx.execute(text("INSERT INTO SPECTATEUR(nom,numerotel,mail,motsDePasse, idTypeCompte) VALUES ('" + nom + "', '" + telephone + "', '" + email + "', '" + password + "', '" + idTypeCompte + "');"))
+                cnx.execute(text("INSERT INTO SPECTATEUR(nom,numerotel,mail,motsDePasse, idTypeCompte) VALUES ('" + nom + "', '" + telephone + "', '" + email + "', '" + password + "', '" + str(idTypeCompte) + "');"))
                 cnx.commit()
             except:
                 print("Erreur lors de l'insertion du spectateur")

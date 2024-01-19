@@ -22,9 +22,9 @@
 <div class="touch flex">
     <div class="like">
             {% if like == 0 %}
-            <a href="{{ url_for('like', idUser=user[0], idGroupe=groupe[0]) }}"><img src="{{ url_for('static', filename='imagesHtml/like_down.png') }}" alt="une image non likée"></a>
+            <a href="{{ url_for('like', idUser=session['utilisateur'][0], idGroupe=groupe[0]) }}"><img src="{{ url_for('static', filename='imagesHtml/like_down.png') }}" alt="une image non likée"></a>
             {% else %}
-            <a href="{{ url_for('dislike',  idUser=user[0], idGroupe=groupe[0]) }}"><img src="{{ url_for('static', filename='imagesHtml/like_up.png') }}" alt="une image likée"></a>
+            <a href="{{ url_for('dislike',  idUser=session['utilisateur'][0], idGroupe=groupe[0]) }}"><img src="{{ url_for('static', filename='imagesHtml/like_up.png') }}" alt="une image likée"></a>
             {% endif %}
     </div>
     

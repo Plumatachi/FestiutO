@@ -168,7 +168,7 @@
 
 .texteEvenement{
     color: aliceblue;
-    font-size: 2vw;
+    font-size: 1.5vw;
     margin-left: 5%;
     margin-right: 2%;
 }
@@ -178,7 +178,7 @@
     background-color: aqua;
     color: green;
     border-radius: 30px;
-    height: 4vw;
+    height: 3vw;
     margin-top: 1vw;
     width: 6vw;
 
@@ -186,7 +186,7 @@
 
 .h2Evenement{
     color: aliceblue;
-    font-size: 4vw;
+    font-size: 2.2vw;
     margin-bottom: 2%;
 }
 

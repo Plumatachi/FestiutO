@@ -189,7 +189,7 @@ def get_Info_journee_Groupe():
 def favoris(idUser):
     userInfo = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
     groupFavorisList = FAVORIS.GET.get_favoris_with_idSpectateur(cnx, idUser)
-
+    
     return render_template('favoris.html', user=userInfo, groupFavorisList=groupFavorisList)
 
 @app.route('/Profil/billet/<idUser>')
@@ -202,7 +202,7 @@ def billet(idUser):
 @app.route('/Groupe_page/<idUser>/<idGroupe>')
 def groupe(idUser, idGroupe):
     groupInfo = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
-    listeMucisien = Musicien.Get.get_musicien_with_idgroupe(idGroupe)
+    listeMucisien = Musicien.Get.get_musicien_with_idgroupe(cnx, idGroupe)
     isInFavoris = FONCTION.idGroupe_in_like_with_idSpectateur(cnx, idUser, idGroupe)
     
     if isInFavoris:
