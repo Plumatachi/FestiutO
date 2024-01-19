@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gestionLieu.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+ 
+
+    <h1> Gestion des scene </h1>
+    <a class="buttonAjout" href="{{ url_for('ajouterScene') }}"> Ajouter une scene </a>
+    <h2> Liste des scene </h2>
+    <div class="listLieu">
+    {% for lieu in allLieu %}
+        <div>
+            <p> Nom scene : {{ lieu[1] }} </p>
+            <p> Nom lieu : {{ lieu[2] }} </p>
+            <a href="{{ url_for('gestionLieuModifier', idLieu=lieu[0]) }}"> Modifier </a>
+        </div>
+    {% endfor %}
+    </div>
+</main>
+{% endblock %}

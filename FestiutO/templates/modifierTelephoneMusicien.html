@@ -13,35 +13,36 @@
         <div class="userInfo">
             <h2> Information sur l'utilisateur </h2>
             <p> Nom : {{ user[1]}} </p>
-            <p> Mail : {{ user[3]}} </p>
-            <p> Numéro : {{ user[2]}} </p>
+            <p> Mail : {{ user[2]}} </p>
+            <p> Numéro : {{ user[3]}} </p>
         </div>
 
         <div class="form">
-            <h1> Modification du nom </h1>
+            <h1> Modification du numéro de téléphone </h1>
             <form role="form" method="POST">
                 {{ form.hidden_tag() }}
                 <div class="input">
                     <div class="element">
-                        {{ form.email(size=50, class_="form-control element", placeholder="Email actuel") }}
+                        {{ form.emailField(size=50, class_="form-control element", placeholder="Email actuel") }}
                     </div>
                 </div>
                 <div class="input">
                     <div class="element">
-                        {{ form.nom(size=50, class_="form-control element", placeholder="Nouveau nom") }}
+                        {{ form.numeroTelephone(size=50, class_="form-control element", placeholder="Nouveau numéro de téléphone") }}
                     </div>
                 </div>
                 <div class="input">
                     <div class="element">
-                        {{ form.nomVerif(size=50, class_="form-control element", placeholder="Confirmer le nouveau nom") }}
+                        {{ form.numeroTelephoneVerif(size=50, class_="form-control element", placeholder="Vérification du nouveau numéro de téléphone") }}
                     </div>
                 </div>
                 <div class="btn-container">
-                    <input type="submit" class="element elementSubmit" value="Changer le nom">
+                    <input type="submit" class="element elementSubmit" value="Changer le numéro de téléphone" />
                 </div>
             </form>
         </div>
     </div>
+        
 </main>
 
 

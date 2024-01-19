@@ -1,10 +1,10 @@
 from click import DateTime
 from flask import render_template, url_for, redirect, request, session, jsonify, send_file
-from .formulaire import CalendarForm, LoginForm, ModifierEmailForm, ModifierMdpForm,RegisterForm
+from .formulaire import *
 from datetime import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
+from .requete import Scene, afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
 
 
 cnx = get_cnx()
@@ -12,7 +12,7 @@ cnx = get_cnx()
 @app.route("/")
 def home():
     try:
-        user = session['utilisateur']
+        user = session['utilisateur'][0]
         listeImageId = Groupe.Get.get_images_groupe()
         return render_template(
         "acceuil.html",
@@ -64,14 +64,13 @@ def acheterBillet():
     idJournee = request.args.get('idJournee')
     param3 = request.args.get('nombrePlace')
     param4 = request.args.get('type')
-
     return redirect(url_for('achat_billet_journee', idJournee=idJournee,nombrePlace=param3,types=param4))
     
     
 
 @app.route("/Programme/")
 def programme():
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     listeImageId = Groupe.Get.get_images_groupe()
     return render_template(
     "programme.html",
@@ -87,12 +86,15 @@ def login():
         f.next.data = request.args.get("next")
     elif f.validate_on_submit():
         user = f.get_authenticated_user()
-        if user != None:
-            session['utilisateur'] = user[0]
+        if user != None:    
+
+            session['utilisateur'] = (user[0],user[6])
             print("login : "+str(user))
-            next = f.next.data or url_for("home")
-            return redirect(next)
-        
+            if user[6] != "Spectateur":
+                return redirect(url_for("organisation"))
+            else:
+                next = f.next.data or url_for("home")
+                return redirect(next)
     return render_template(
         "login.html",
         title="Profil",
@@ -117,7 +119,7 @@ def register():
                 title="register",
                 form=f,
             )
-        Spectateur.Insert.insert_spectateur(cnx, f.nom.data, f.numerotelephone.data, f.email.data, f.password.data)
+        Spectateur.Insert.insert_spectateur(cnx, f.nom.data, f.numerotelephone.data, f.email.data, f.password.data, 0)
         return render_template("login.html",title="login",form=LoginForm())
     return render_template(
         "register.html",
@@ -127,7 +129,7 @@ def register():
 
 @app.route("/Profil/")
 def profil():
-    user = session['utilisateur']
+    user = session['utilisateur'][0]
     print("profil : "+str(user))
     return render_template( "profil.html", title="Profil", user=user)
 
@@ -159,37 +161,7 @@ def modifier_mdp():
         form=f,
     )
 
-@app.route("/Profil/Modifier/Email/", methods=("GET","POST",))
-def modifier_email():
-    f = ModifierEmailForm()
-    if not f.is_submitted():
-        f.next.data = request.args.get("next")
-    elif f.validate_on_submit():
-        passwordancien = Spectateur.Get.get_password_with_email(cnx, f.ancienEmail.data)
-        if passwordancien != f.passwordActuel.data:
-            return render_template(
-                "modifier_email.html",
-                erreur = "Mot de passe incorrect",
-                form = f
-            )
-        user = Spectateur.Get.get_all_spectateur_avec_email(cnx, f.ancienEmail.data)
-        print(user)
-        print(f.ancienEmail.data)
-        if f.ancienEmail.data != user[3]:
-            return render_template(
-                "modifier_email.html",
-                title="Modifier Mots de passe",
-                form=f,
-            )
-        else:
-            f.change_email()
-            return redirect(url_for("logout"))
-    
-    return render_template(
-        "modifier_email.html",
-        title="Modifier Mots de passe",
-        form=f,
-    )
+
 
 # @app.route('/Billeterie/acheter_le_billet/', methods=['GET', 'POST'])
 # def index():
@@ -252,6 +224,40 @@ def dislike(idUser, idGroupe):
     return redirect(url_for('groupe', idUser=idUser, idGroupe=idGroupe))
 
 
+@app.route("/Profil/Modifier/Email/", methods=("GET","POST",))
+def modifier_email():
+    f = ModifierEmailForm()
+    if not f.is_submitted():
+        f.next.data = request.args.get("next")
+    elif f.validate_on_submit():
+        passwordancien = Spectateur.Get.get_password_with_email(cnx, f.ancienEmail.data)
+        if passwordancien != f.passwordActuel.data:
+            return render_template(
+                "modifier_email.html",
+                erreur = "Mot de passe incorrect",
+                form = f
+            )
+        user = Spectateur.Get.get_all_spectateur_avec_email(cnx, f.ancienEmail.data)
+        print(user)
+        print(f.ancienEmail.data)
+        if f.ancienEmail.data != user[3]:
+            return render_template(
+                "modifier_email.html",
+                title="Modifier Mots de passe",
+                form=f,
+            )
+        else:
+            f.change_email()
+            return redirect(url_for("logout"))
+    
+    return render_template(
+        "modifier_email.html",
+        title="Modifier Mots de passe",
+        form=f,
+    )
+    
+
+
 
 
 
@@ -301,28 +307,233 @@ def gestionComptesUnique(idUser):
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
     return render_template('gestionComptesUnique.html', user=user)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier_email")
+@app.route("/espace-organisateur/gestion-comptes//modifier_email/<idUser>",methods=("GET","POST",))
 def modifierEmail(idUser):
+    form = ModifierEmailFormORG()
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierEmail.html', user=user)
+    if form.is_submitted():
+        res = form.change_email()
+        if res:
+            return redirect(url_for('modifierEmail', idUser=idUser, erreur="Email modifié", form=form))
+        else:
+            render_template('modifierEmail.html', user=user , erreur="Les emails ne correspondent pas", form=form)
+    return render_template('modifierEmail.html', user=user, form=form)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-mot-de-passe")
+@app.route("/espace-organisateur/gestion-comptes//modifier-mot-de-passe/<idUser>",methods=("GET","POST",))
 def modifierMdp(idUser):
+    form = ModifierPasswordFormORG()
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierEmail.html', user=user)
+    if form.is_submitted():
+        res = form.change_password()
+        if res:
+            return redirect(url_for('modifierMdp', user=user, erreur="Mot de passe modifié"))
+        else:
+            return render_template('modifierMDP.html', user=user, erreur="Les mots de passe ne correspondent pas")            
+    return render_template('modifierMDP.html', user=user, form=form)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-nom")
+@app.route("/espace-organisateur/gestion-comptes//modifier-nom/<idUser>" ,methods=("GET","POST",))
 def modifierNom(idUser):
+    form = ModifierNomFormORG()
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierNom.html', user=user)
+    if form.is_submitted():
+        res = form.change_nom()
+        if res:
+            return redirect(url_for('modifierNom', idUser=idUser, form=form, erreur="Nom modifié"))
+        else:
+            return render_template('modifierNom.html', user=user, form=form, erreur="Les nom ne correspondent pas")
+    return render_template('modifierNom.html', user=user, form=form)
 
-@app.route("/espace-organisateur/gestion-comptes/<idUser>/modifier-telephone")
+@app.route("/espace-organisateur/gestion-comptes//modifier-telephone/<idUser>", methods=("GET","POST",))
 def modifierTelephone(idUser):
     user = Spectateur.Get.get_spectateur_with_id(cnx, idUser)
-    return render_template('modifierTelephone.html', user=user)
+    form = ModifierNumeroTelephoneFormORG()
+    if form.is_submitted():
+        res = form.change_numeroTelephone()
+        if res:
+            return redirect(url_for('modifierTelephone', idUser=idUser, form=form, erreur="Numéro de téléphone modifié"))
+        else:
+            return render_template('modifierTelephone.html', user=user, form=form, erreur="Les numéros de téléphone ne correspondent pas")
+    return render_template('modifierTelephone.html', user=user, form=form)
 
 
 # @app.route("/espace-organisateur/gestion-comptes/<idUser>/delete")
 # def deleteCompte(idUser):
 #     Spectateur.Delete.delete_spectateur(cnx, idUser)
 #     return redirect(url_for('gestionComptes_avant'))
+
+
+@app.route("/espace-organisateur/gestion-comptes/ajouter-compte-organisateur", methods=("GET","POST",))
+def ajouterCompteOrganisateur():
+    form = AjouterCompteOrganisateurForm()
+    if form.validate_on_submit():
+        if form.password.data != form.confirm.data:
+            return render_template("ajouterCompteOrganisateur.html", form=form, erreur="Les mots de passe ne correspondent pas"
+            )
+        res = form.ajouter_compte()
+        if res:
+            return redirect(url_for("ajouterCompteOrganisateur", erreur="Compte ajouté", form=form))
+        else:
+            return render_template("ajouterCompteOrganisateur.html", form=form, erreur="L'email existe déjà")
+    return render_template(
+        "ajouterCompteOrganisateur.html",
+        title="Ajouter compte organisateur",
+        form=form,
+    )
+    
+@app.route("/espace-organisateur/gestion-comptes/<idUser>/delete")
+def supprimerCompte(idUser):
+    Spectateur.Delete.delete_spectateur(cnx, idUser)
+    return redirect(url_for('gestionComptes_avant'))
+
+@app.route("/espace-organisateur/gestion-artiste/")
+def gestionArtiste():
+    allArtiste = afficher_table(cnx, "MUSICIEN")
+    return render_template('gestionArtiste.html', allArtiste=allArtiste)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>")
+def modifierArtiste(idUser):
+    user = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    return render_template('modifierArtiste.html', user=user)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-email", methods=("GET","POST",))
+def modifierEmailMusicien(idUser):
+    musicien = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    form = ModifierEmailFormORG()
+    if form.is_submitted():
+        res = form.change_email_musicien()
+        if res:
+            return redirect(url_for('modifierEmailMusicien', erreur="Artiste modifié", form=form, idUser=idUser))
+        else:
+            return render_template('modifierEmailMusicien.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierEmailMusicien.html', form=form, user=musicien)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-nom", methods=("GET","POST",))
+def modifierNomMusicien(idUser):
+    musicien = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    form = ModifierNomFormORG()
+    if form.is_submitted():
+        res = form.change_nom_musicien()
+        if res:
+            return redirect(url_for('modifierNomMusicien', erreur="Artiste modifié", form=form, idUser=idUser))
+        else:
+            return render_template('modifierNomMusicien.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomMusicien.html', form=form, user=musicien)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/modifier-telephone", methods=("GET","POST",))
+def modifierTelephoneMusicien(idUser):
+    musicien = Musicien.Get.get_musicien_with_id(cnx, idUser)
+    form = ModifierNumeroTelephoneFormORG()
+    if form.is_submitted():
+        res = form.change_numeroTelephone_musicien()
+        if res:
+            return redirect(url_for('modifierTelephoneMusicien', erreur="Artiste modifié", form=form, idUser=idUser))
+        else:
+            return render_template('modifierTelephoneMusicien.html', form=form, erreur="Les informations ne sont pas valides", user=musicien)
+    return render_template('modifierTelephoneMusicien.html', form=form, user=musicien)
+
+@app.route("/espace-organisateur/gestion-artiste/<idUser>/delete", methods=("GET","POST",))
+def supprimerMusicien(idUser):
+    Musicien.Delete.delete_musicien(cnx, idUser)
+    return redirect(url_for('gestionArtiste'))
+
+@app.route("/espace-organisateur/gestion-artiste/ajouter-artiste", methods=("GET","POST",))
+def ajouterArtiste():
+    form = AjouterArtisteForm()
+    if form.validate_on_submit():
+        res = form.ajouter_artiste()
+        if res:
+            return redirect(url_for("gestionArtiste"))
+        else:
+            return render_template("ajouterArtiste.html", form=form, erreur="Erreur lors de l'ajout de l'artiste")
+    return render_template("ajouterArtiste.html", form=form)
+
+     
+    
+@app.route("/espace-organisateur/gestion-lieu")
+def gestionLieu():
+    allLieu = afficher_table(cnx, "SCENE")
+    return render_template('gestionLieu.html', allLieu=allLieu)
+
+
+@app.route("/espace-organisateur/gestion-lieu/<idLieu>")
+def gestionLieuUnique(idLieu):
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    return render_template('gestionLieuUnique.html', scene=scene)
+
+@app.route("/espace-organisateur/gestion-lieu/ajoute-lieu", methods=("GET","POST",))
+def ajouterScene():
+    form = AjouterSceneForm()
+    if form.validate_on_submit():
+        res = form.ajouter_scene()
+        if res:
+            return redirect(url_for("gestionLieu"))
+        else:
+            return render_template("ajouterScene.html", form=form, erreur="Erreur lors de l'ajout de la scene")
+    return render_template("ajouterScene.html", form=form)
+
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>", methods=("GET","POST",))
+def gestionLieuModifier(idLieu):
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    return render_template('gestionLieuModifier.html', scene=scene)
+
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>/modifier-nom", methods=("GET","POST",))
+def modifierNomScene(idLieu):
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    form = ModifierNomSceneForm()
+    if form.is_submitted():
+        res = form.change_nom_scene(idLieu)
+        if res:
+            return redirect(url_for('modifierNomScene', erreur="Scene modifié", form=form, idLieu=idLieu))
+        else:
+            return render_template('modifierNomScene.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomScene.html', form=form, scene=scene)
+
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>/modifier-lieu", methods=("GET","POST",))
+def modifierNomLieu(idLieu):
+    scene = Scene.Get.get_scene_with_id(cnx, idLieu)
+    form = ModifierNomLieuForm()
+    if form.is_submitted():
+        res = form.change_nom_lieu(idLieu)
+        if res:
+            return redirect(url_for('modifierNomLieu', erreur="Scene modifié", form=form, idLieu=idLieu))
+        else:
+            return render_template('modifierNomLieu.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomLieu.html', form=form, scene=scene)
+
+@app.route("/espace-organisateur/gestion-lieu/modifier/<idLieu>/delete", methods=("GET","POST",))
+def supprimerScene(idLieu):
+    Scene.Delete.delete_scene(cnx, idLieu)
+    return redirect(url_for('gestionLieu'))
+
+@app.route("/espace-organisateur/gestion-groupes")
+def gestionGroupe():
+    allGroupe = afficher_table(cnx, "GROUPE")
+    return render_template('gestionGroupe.html', allGroupe=allGroupe)
+
+@app.route("/espace-organisateur/gestion-groupes/<idGroupe>")
+def modifierGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    return render_template('gestionGroupeUnique.html', groupe=groupe)
+
+@app.route("/espace-organisateur/gestion-groupes/ajouter-groupe", methods=("GET","POST",))
+def ajouterGroupe():
+    form = AjouterGroupeForm()
+    if form.validate_on_submit():
+        res = form.ajouter_groupe()
+        if res:
+            return redirect(url_for("gestionGroupe"))
+        else:
+            return render_template("ajouterGroupe.html", form=form, erreur="Erreur lors de l'ajout du groupe")
+    return render_template("ajouterGroupe.html", form=form)
+
+# def gestionLieu():
+#     allLieu = afficher_table(cnx, "LIEU")
+#     return render_template('gestionLieu.html', allLieu=allLieu)
+
+
+# def gestionGroupe():
+#     allGroupe = afficher_table(cnx, "GROUPE")
+#     return render_template('gestionGroupe.html', allGroupe=allGroupe)
+
+
+

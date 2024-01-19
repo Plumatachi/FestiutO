@@ -11,29 +11,28 @@
 
     <div class="container">
         <div class="userInfo">
-            <h2> Information sur l'utilisateur </h2>
-            <p> Nom : {{ user[1]}} </p>
-            <p> Mail : {{ user[3]}} </p>
-            <p> Numéro : {{ user[2]}} </p>
+            <h2> Information sur la scene </h2>
+            <p> Nom de la scene : {{ scene[1]}} </p>
+            <p> Nom du lieu : {{ scene[2]}} </p>
         </div>
 
         <div class="form">
-            <h1> Modification du nom </h1>
+            <h1> Modification du nom de la scene </h1>
             <form role="form" method="POST">
                 {{ form.hidden_tag() }}
                 <div class="input">
                     <div class="element">
-                        {{ form.email(size=50, class_="form-control element", placeholder="Email actuel") }}
+                        {{ form.nomLieu(size=50, class_="form-control element", placeholder="Nom du lieu actuel") }}
                     </div>
                 </div>
                 <div class="input">
                     <div class="element">
-                        {{ form.nom(size=50, class_="form-control element", placeholder="Nouveau nom") }}
+                        {{ form.nouveauNomLieu(size=50, class_="form-control element", placeholder="Nouveau nom du lieu") }}
                     </div>
                 </div>
                 <div class="input">
                     <div class="element">
-                        {{ form.nomVerif(size=50, class_="form-control element", placeholder="Confirmer le nouveau nom") }}
+                        {{ form.nouveauNomLieuVerif(size=50, class_="form-control element", placeholder="Confirmer le nouveau nom du lieu") }}
                     </div>
                 </div>
                 <div class="btn-container">

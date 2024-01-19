@@ -1,5 +1,7 @@
 .listeUser{
     display: flex;
+    flex-wrap: wrap;
+
 }
 
 .listeUser > div{
@@ -31,3 +33,21 @@ h1, h2 {
 .button:hover{
     background-color: #f1f1f1;
 }
+
+.buttonAjout{
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    justify-content: space-around;
+
+}
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

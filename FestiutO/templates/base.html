@@ -8,15 +8,14 @@
         {% endblock %}
     </head>
     {% if 'utilisateur' in session %}
-    {% if session['utilisateur'][6] == Organisateur %}
+
+    {% if session['utilisateur'][1] == Organisateur %}
+
     <header class="header">
         <h1 class="titreFestio">Festiut'O.</h1>
         <nav class="nav">
             <ul class="flex">.
-                <li><a href="{{ url_for('home') }}">Accueil</a></li>
-                <li><a href="{{ url_for('billeterie') }}">Billeterie</a></li>
-                <li><a href="{{ url_for('programme') }}">Programme</a></li>
-                <li><a href="{{ url_for('gestionComptes_avant') }}">Organisation</a></li>
+                <li><a href="{{ url_for('organisation') }}">Accueil</a></li>
                 <li><a href="{{ url_for('profil') }}">Profil</a></li>
                 <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
             </ul>

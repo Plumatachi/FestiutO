@@ -1,0 +1,65 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.container > div, .divForm {
+    margin: 20px;
+    padding-left: 3em;
+    padding-right: 3em;
+    background-color: bisque;
+    height: auto;
+    width: auto;
+    border-radius: 20px;
+}
+
+.container > div > h2 {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+form, .userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 20px;
+}
+
+input,
+select,
+button {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.elementSubmit {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+.elementSubmit:hover {
+    background-color: #555;
+}
+
+#choices-container input {
+    margin-bottom: 5px;
+}
+
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
