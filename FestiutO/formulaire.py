@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import Appartient, Groupe, Musicien, Scene, get_cnx , Spectateur
+from .requete import Appartient, Groupe, Hebergement, Musicien, Scene, get_cnx , Spectateur
 
 cnx = get_cnx()
 
@@ -239,4 +239,43 @@ class AjouterMembreGroupeForm(FlaskForm):
             Appartient.Insert.insert_membre(cnx, idMusicien ,groupe[0])
             return True
         except: 
+            return False
+
+class AjouterHebergementForm(FlaskForm):
+    nomHebergement = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+    nombreDePlace = IntegerField('Nombre de place', validators=[DataRequired()])
+    
+    def ajouter_hebergement(self):
+        try:
+            Hebergement.Insert.insert_hebergement(cnx,  self.nombreDePlace.data, self.nomHebergement.data)
+            return True
+        except: 
+            return False
+        
+class ModifierPlaceHebergementForm(FlaskForm):
+    nomHebergement = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+    nombreDePlace = IntegerField('Nombre de place', validators=[DataRequired()])
+    nombreDePlaceVerif = IntegerField('Confirmer le nombre de place', validators=[DataRequired()])
+    
+    def change_place_hebergement(self, idHebergement):
+        try:
+            if self.nombreDePlace.data != self.nombreDePlaceVerif.data:
+                return False
+            Hebergement.Update.update_place_hebergement(cnx, idHebergement, self.nombreDePlace.data)
+            return True
+        except: 
+            return False
+        
+class ModifierNomHebergementForm(FlaskForm):
+    nomHebergement = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+    nouveauNomHebergement = StringField('Nouveau nom de l\'hebergement', validators=[DataRequired()])
+    nouveauNomHebergementVerif = StringField('Confirmer le nouveau nom de l\'hebergement', validators=[DataRequired()])
+    
+    def change_nom_hebergement(self, idHebergement):
+        try:
+            if self.nouveauNomHebergement.data != self.nouveauNomHebergementVerif.data:
+                return False
+            Hebergement.Update.update_nom_hebergement(cnx, idHebergement, self.nouveauNomHebergement.data)
+            return True
+        except:
             return False

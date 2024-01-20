@@ -193,7 +193,53 @@ class Musicien:
             except:
                 print("Erreur lors de la suppression du musicien")
                 raise
-               
+class Hebergement:
+    class Get:
+        def get_hebergement_with_id(cnx, id):
+            try:
+                result = cnx.execute(text("SELECT * FROM HEBERGEMENT WHERE idHebergement = '" + id + "';"))
+                for row in result:
+                    print(row)
+                    return row
+            except:
+                print("Erreur lors de la récupération de l'hebergement")
+                raise
+    class Insert:
+        def insert_hebergement(cnx, nbplace, nom):
+            try:
+                cnx.execute(text("INSERT INTO HEBERGEMENT(nbplace, lieux) VALUES ('" + str(nbplace) + "', '" + nom + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion de l'hebergement")
+                raise
+    class Update:
+
+        def update_nom_hebergement(cnx,id, new_nom):
+            try:
+                cnx.execute(text("UPDATE HEBERGEMENT SET lieux = '" + new_nom + "' WHERE idHebergement = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour de l'hebergement")
+                raise
+
+        def update_place_hebergement(cnx,id, new_place):
+            try:
+                cnx.execute(text("UPDATE HEBERGEMENT SET nbplace = '" + str(new_place) + "' WHERE idHebergement = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour de l'hebergement")
+                raise
+    class Delete:
+        def delete_hebergement(cnx, id):
+            try:
+                cnx.execute(text("DELETE FROM DORMIR WHERE idHebergement = '" + id + "';"))
+                cnx.execute(text("DELETE FROM HEBERGEMENT WHERE idHebergement = '" + id + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression de l'hebergement")
+                raise   
+        
+                
 class Spectateur:
     class Get:
         def get_all_spectateur(cnx):
