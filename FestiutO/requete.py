@@ -195,6 +195,28 @@ class Musicien:
                 raise
 class Hebergement:
     class Get:
+
+        def get_bool_hebergement_groupe(cnx, idGroupe):
+            try:
+                result = cnx.execute(text("SELECT idHebergement FROM DORMIR WHERE idGroupe = '" + idGroupe + "';"))
+                for row in result:
+                    return True
+                return False
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+
+        def get_all_hebergement(cnx):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT * FROM HEBERGEMENT;"))
+                for row in result:
+                    res.append(row)
+                return res
+            except:
+                print("Erreur lors de la récupération des hebergements")
+                raise
+
         def get_hebergement_with_id(cnx, id):
             try:
                 result = cnx.execute(text("SELECT * FROM HEBERGEMENT WHERE idHebergement = '" + id + "';"))

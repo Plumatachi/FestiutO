@@ -635,10 +635,8 @@ def modifierNomHebergement(idHebergement):
 
 @app.route("/espace-organisateur/gestion-hebergement/modifier/<idHebergement>/delete", methods=("GET","POST",))
 def supprimerHebergement(idHebergement):
-    
     Hebergement.Delete.delete_hebergement(cnx, idHebergement)
     return redirect(url_for('gestionhebergement'))
-
 
 # def gestionLieu():
 #     allLieu = afficher_table(cnx, "LIEU")
