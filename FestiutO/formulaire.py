@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import Groupe, Musicien, Scene, get_cnx , Spectateur
+from .requete import Appartient, Groupe, Musicien, Scene, get_cnx , Spectateur
 
 cnx = get_cnx()
 
@@ -139,7 +139,7 @@ class AjouterArtisteForm(FlaskForm):
     
     def ajouter_artiste(self):
         try:
-            Musicien.Insert.insert_musicien(cnx, self.nom.data,self.email.data, self.numeroTelephone.data, "imaginedragons.jpeg",0)
+            Musicien.Insert.insert_musicien(cnx, self.nom.data,self.email.data, self.numeroTelephone.data, "NULL")
             return True
         except: 
             return False
@@ -193,6 +193,50 @@ class AjouterGroupeForm(FlaskForm):
     def ajouter_groupe(self):
         try:
             Groupe.Insert.insert_groupe(cnx, self.nomGroupe.data,self.description.data, self.reseau.data, "NULL",0)
+            return True
+        except: 
+            return False
+        
+class ModifierNomGroupeForm(FlaskForm):
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    nouveauNomGroupe = StringField('Nouveau nom du groupe', validators=[DataRequired()])
+    nouveauNomGroupeVerif = StringField('Confirmer le nouveau nom du groupe', validators=[DataRequired()])
+    
+    def change_nom_groupe(self, idGroupe):
+        try:
+            if self.nouveauNomGroupe.data != self.nouveauNomGroupeVerif.data:
+                return False
+            Groupe.Update.update_nom_groupe(cnx, idGroupe, self.nouveauNomGroupe.data)
+            return True
+        except:
+            return False
+        
+
+class ModifierDescriptionGroupeForm(FlaskForm):
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    nouvelleDescriptionGroupe = StringField('Nouvelle description du groupe', validators=[DataRequired()])
+    nouvelleDescriptionGroupeVerif = StringField('Confirmer la nouvelle description du groupe', validators=[DataRequired()])
+    
+    def change_description_groupe(self, idGroupe):
+        try:
+            if self.nouvelleDescriptionGroupe.data != self.nouvelleDescriptionGroupeVerif.data:
+                return False
+            Groupe.Update.update_description(cnx, idGroupe, self.nouvelleDescriptionGroupe.data)
+            return True
+        except:
+            return False
+        
+class AjouterMembreGroupeForm(FlaskForm):
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    nomMembre = StringField('Nom du membre', validators=[DataRequired()])
+
+    def ajouter_membre_groupe(self):
+        try:
+            groupe = Groupe.Get.get_groupe_with_nom(cnx, self.nomGroupe.data)
+            print(groupe)
+            idMusicien = Musicien.Get.get_id_musicien_with_nom(cnx, self.nomMembre.data)
+            print(idMusicien)
+            Appartient.Insert.insert_membre(cnx, idMusicien ,groupe[0])
             return True
         except: 
             return False

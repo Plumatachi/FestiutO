@@ -93,6 +93,17 @@ class Journee:
         
 class Musicien:
     class Get:
+        def get_all_musicien_not_in_groupe(cnx, idGroupe):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT idMusicien,nom FROM MUSICIEN WHERE idMusicien NOT IN (SELECT idMusicien FROM APPARTIENT WHERE idGroupe = '" + idGroupe + "');"))
+                for row in result:
+                    res.append((row[0],row[1]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+
         def get_info_Musicien(id):
             try:
                 res = []
@@ -101,6 +112,15 @@ class Musicien:
                     print(row)
                     res.append((row[0],row[1],row[2],row[3]))
                 return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+
+        def get_id_musicien_with_nom(cnx, nom):
+            try:
+                result = cnx.execute(text("SELECT idMusicien FROM MUSICIEN  WHERE nom = '" + nom + "';"))
+                for row in result:
+                    return row[0]
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
@@ -164,7 +184,9 @@ class Musicien:
 
         def delete_musicien(cnx, idMusicien):
             try:
-                cnx.execute(text("DELETE FROM APPARTIENT WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + str(Groupe.Get.get_idGroupe_musicien_avec_son_idMusicien(cnx, idMusicien)) + "';")),
+                liste_groupe = Groupe.Get.get_groupe_with_idMusicien(cnx, idMusicien)
+                for groupe in liste_groupe:
+                    cnx.execute(text("DELETE FROM APPARTIENT WHERE idMusicien = '" + idMusicien + "' AND idGroupe = '" + str(groupe[0]) + "';")),
                 Joue.Delete.delete_instru_musicien(cnx, idMusicien)
                 cnx.execute(text("DELETE FROM MUSICIEN WHERE idMusicien = '" + idMusicien + "';"))
                 cnx.commit()
@@ -263,6 +285,8 @@ class Spectateur:
     class Delete:
         def delete_spectateur(cnx, id):
             try:
+                cnx.execute(text("DELETE FROM RESERVER WHERE idSpectateur = '" + id + "';"))
+                cnx.execute(text("DELETE FROM BILLETEVENEMENT WHERE idSpectateur = '" + id + "';"))
                 cnx.execute(text("DELETE FROM SPECTATEUR WHERE idSpectateur = '" + id + "';"))
                 cnx.commit()
             except:
@@ -333,6 +357,15 @@ class FONCTION:
 
 class Groupe:
     class Get: 
+        def get_groupe_with_nom(cnx, nom):
+            try:
+                result = cnx.execute(text("SELECT * FROM GROUPE WHERE nomDuGroupe = '" + nom + "';"))
+                for row in result:
+                    return row
+            except:
+                print("Erreur lors de la récupération du groupe")
+                raise
+
         def get_groupe_with_idgroupe(cnx, idgroupe):
             try:
                 result = cnx.execute(text("SELECT * FROM GROUPE WHERE idgroupe = '" + idgroupe + "';"))
@@ -353,9 +386,9 @@ class Groupe:
         def get_membre_groupe(cnx, idGroupe):
             try:
                 res = []
-                result = cnx.execute(text("SELECT nom FROM MUSICIEN natural join APPARTIENT natural join GROUPE WHERE idGroupe = '" + idGroupe + "';"))
+                result = cnx.execute(text("SELECT * FROM MUSICIEN natural join APPARTIENT WHERE idGroupe = '" + idGroupe + "';"))
                 for row in result:
-                    res.append(row[0])
+                    res.append(row)
                 return res
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
@@ -407,6 +440,17 @@ class Groupe:
                 print("Erreur lors de la récupération du groupe")
                 raise
 
+        def get_groupe_with_idMusicien(cnx, idMusicien):
+            try:
+                res =  []
+                result = cnx.execute(text("SELECT * FROM GROUPE natural join APPARTIENT WHERE idMusicien = '" + idMusicien + "';"))
+                for row in result:
+                    res.append(row)
+                return res
+            except:
+                print("Erreur lors de la récupération du groupe")
+                raise
+
     class Insert:
         def insert_groupe(cnx, nom_groupe, description, reseausocial, photo, nb_personne):
             try:
@@ -415,6 +459,48 @@ class Groupe:
             except:
                 print("Erreur lors de l'insertion du groupe")
                 raise
+
+    class Update:
+        def update_description(cnx, idgroupe, description):
+            try:
+                cnx.execute(text("UPDATE GROUPE SET description = '" + description + "' WHERE idgroupe = '" + idgroupe + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour de la description")
+                raise
+
+        def update_nom_groupe(cnx, idgroupe, nom_groupe):
+            try:
+                cnx.execute(text("UPDATE GROUPE SET nomDuGroupe = '" + nom_groupe + "' WHERE idgroupe = '" + idgroupe + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du nom du groupe")
+                raise
+    class Delete:
+        def delete_membre_groupe(cnx, idGroupe, idMusicien):
+            try:
+                cnx.execute(text("DELETE FROM APPARTIENT WHERE idGroupe = '" + idGroupe + "' AND idMusicien = '" + idMusicien + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du membre")
+                raise
+
+        def delete_groupe(cnx, idGroupe):
+            try:
+                cnx.execute(text("DELETE FROM DORMIR WHERE idGroupe = '" + idGroupe + "';"))
+                listeMembre = Groupe.Get.get_membre_groupe(cnx, idGroupe)
+                for membre in listeMembre:
+                    cnx.execute(text("DELETE FROM JOUE WHERE idMusicien = '" + str(membre[0]) + "';"))
+                cnx.execute(text("DELETE FROM APPARTIENT WHERE idGroupe = '" + idGroupe + "';"))
+                cnx.execute(text("DELETE FROM PARTICIPE WHERE idGroupe = '" + idGroupe + "';"))
+                cnx.execute(text("DELETE FROM PRESENT WHERE idGroupe = '" + idGroupe + "';"))
+                cnx.execute(text("DELETE FROM STYLE WHERE idGroupe = '" + idGroupe + "';"))
+                cnx.execute(text("DELETE FROM GROUPE WHERE idGroupe = '" + idGroupe + "';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du groupe")
+                raise
+
 
 class Joue:
     class Get:
@@ -484,4 +570,13 @@ class Scene:
                     return row
             except:
                 print("Erreur lors de la récupération de la scène")
+                raise
+class Appartient:
+    class Insert:
+        def insert_membre(cnx, idMusicien, idGroupe):
+            try:
+                cnx.execute(text("INSERT INTO APPARTIENT(idGroupe, idMusicien ) VALUES ('" + str(idGroupe) + "', '" + str(idMusicien) + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de l'insertion du membre dans le groupe")
                 raise

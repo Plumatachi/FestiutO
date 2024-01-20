@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modifier.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+    <div class="container">
+        <div class="userInfo">
+            <h2> Informations sur le groupe </h2>
+            <p> Nom du groupe : {{ groupe[1]}} </p>
+            <p> Description du groupe : {{ groupe[2]}} </p>
+        </div>
+
+        <div class="form">
+            <h1> Ajouter un membre dans le groupe </h1>
+            <form role="form" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="input">
+                    <div class="element">
+                        {{ form.nomGroupe(size=50, class_="form-control element", placeholder="Nom du groupe actuelle") }}
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="element">
+                        {{ form.nomMembre(size=50, class_="form-control element", placeholder="Nom du membre à ajouter") }}
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <input type="submit" class="element elementSubmit" value="Ajouter le membre">
+                </div>
+            </form>
+        </div>
+        <div>
+            <h1> Liste de musicien qui ne sont pas dans le groupe </h1>
+            <ul>
+                {% for membre in membres %}
+                <li>{{ membre[1] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+</main>
+{% endblock %}
