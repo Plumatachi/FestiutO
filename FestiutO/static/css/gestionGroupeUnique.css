@@ -1,0 +1,84 @@
+.gestionCompte{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.gestionCompte div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+}
+
+.gestionCompte >    div{
+    background-color: bisque;
+    height: 80vh;
+    margin: 4em;
+    border-radius: 30px;
+}
+
+h1{
+    text-align: center;
+}
+
+main li{
+    list-style-type: none;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+}
+
+main li:hover{
+    background-color: #f5f5f596;
+}
+
+.alerte:hover {
+    background-color: #fd0000;
+    color: white;
+    
+
+}
+
+p{
+    padding-bottom: 10px;
+}
+
+
+img{
+    width: auto;
+    height: 30vh;
+}
+
+.gestionCompte ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.membre {
+    background-color:brown;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    height: 100px;
+    width: auto!important;
+    margin: 10px;
+    
+}
+
+.fonctionnalite{
+    flex-wrap: wrap;
+}
+
+.fonctionnalite h2{
+    text-align: center;
+    flex-basis: 100%;
+}

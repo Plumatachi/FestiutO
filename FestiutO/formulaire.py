@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import Groupe, Musicien, Scene, get_cnx , Spectateur
+from .requete import Appartient, Groupe, Hebergement, Musicien, Scene, get_cnx , Spectateur
 
 cnx = get_cnx()
 
@@ -139,7 +139,7 @@ class AjouterArtisteForm(FlaskForm):
     
     def ajouter_artiste(self):
         try:
-            Musicien.Insert.insert_musicien(cnx, self.nom.data,self.email.data, self.numeroTelephone.data, "imaginedragons.jpeg",0)
+            Musicien.Insert.insert_musicien(cnx, self.nom.data,self.email.data, self.numeroTelephone.data, "NULL")
             return True
         except: 
             return False
@@ -195,4 +195,87 @@ class AjouterGroupeForm(FlaskForm):
             Groupe.Insert.insert_groupe(cnx, self.nomGroupe.data,self.description.data, self.reseau.data, "NULL",0)
             return True
         except: 
+            return False
+        
+class ModifierNomGroupeForm(FlaskForm):
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    nouveauNomGroupe = StringField('Nouveau nom du groupe', validators=[DataRequired()])
+    nouveauNomGroupeVerif = StringField('Confirmer le nouveau nom du groupe', validators=[DataRequired()])
+    
+    def change_nom_groupe(self, idGroupe):
+        try:
+            if self.nouveauNomGroupe.data != self.nouveauNomGroupeVerif.data:
+                return False
+            Groupe.Update.update_nom_groupe(cnx, idGroupe, self.nouveauNomGroupe.data)
+            return True
+        except:
+            return False
+        
+
+class ModifierDescriptionGroupeForm(FlaskForm):
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    nouvelleDescriptionGroupe = StringField('Nouvelle description du groupe', validators=[DataRequired()])
+    nouvelleDescriptionGroupeVerif = StringField('Confirmer la nouvelle description du groupe', validators=[DataRequired()])
+    
+    def change_description_groupe(self, idGroupe):
+        try:
+            if self.nouvelleDescriptionGroupe.data != self.nouvelleDescriptionGroupeVerif.data:
+                return False
+            Groupe.Update.update_description(cnx, idGroupe, self.nouvelleDescriptionGroupe.data)
+            return True
+        except:
+            return False
+        
+class AjouterMembreGroupeForm(FlaskForm):
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    nomMembre = StringField('Nom du membre', validators=[DataRequired()])
+
+    def ajouter_membre_groupe(self):
+        try:
+            groupe = Groupe.Get.get_groupe_with_nom(cnx, self.nomGroupe.data)
+            print(groupe)
+            idMusicien = Musicien.Get.get_id_musicien_with_nom(cnx, self.nomMembre.data)
+            print(idMusicien)
+            Appartient.Insert.insert_membre(cnx, idMusicien ,groupe[0])
+            return True
+        except: 
+            return False
+
+class AjouterHebergementForm(FlaskForm):
+    nomHebergement = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+    nombreDePlace = IntegerField('Nombre de place', validators=[DataRequired()])
+    
+    def ajouter_hebergement(self):
+        try:
+            Hebergement.Insert.insert_hebergement(cnx,  self.nombreDePlace.data, self.nomHebergement.data)
+            return True
+        except: 
+            return False
+        
+class ModifierPlaceHebergementForm(FlaskForm):
+    nomHebergement = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+    nombreDePlace = IntegerField('Nombre de place', validators=[DataRequired()])
+    nombreDePlaceVerif = IntegerField('Confirmer le nombre de place', validators=[DataRequired()])
+    
+    def change_place_hebergement(self, idHebergement):
+        try:
+            if self.nombreDePlace.data != self.nombreDePlaceVerif.data:
+                return False
+            Hebergement.Update.update_place_hebergement(cnx, idHebergement, self.nombreDePlace.data)
+            return True
+        except: 
+            return False
+        
+class ModifierNomHebergementForm(FlaskForm):
+    nomHebergement = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+    nouveauNomHebergement = StringField('Nouveau nom de l\'hebergement', validators=[DataRequired()])
+    nouveauNomHebergementVerif = StringField('Confirmer le nouveau nom de l\'hebergement', validators=[DataRequired()])
+    
+    def change_nom_hebergement(self, idHebergement):
+        try:
+            if self.nouveauNomHebergement.data != self.nouveauNomHebergementVerif.data:
+                return False
+            Hebergement.Update.update_nom_hebergement(cnx, idHebergement, self.nouveauNomHebergement.data)
+            return True
+        except:
             return False

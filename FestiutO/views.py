@@ -4,7 +4,7 @@ from .formulaire import *
 from datetime import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import Scene, afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
+from .requete import Hebergement, Scene, afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
 
 
 cnx = get_cnx()
@@ -525,6 +525,118 @@ def ajouterGroupe():
         else:
             return render_template("ajouterGroupe.html", form=form, erreur="Erreur lors de l'ajout du groupe")
     return render_template("ajouterGroupe.html", form=form)
+
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>", methods=("GET","POST",))
+def gestionGroupeUnique(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    return render_template('gestionGroupeUnique.html', groupe=groupe)
+
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>/modifier-nom", methods=("GET","POST",))
+def modifierNomGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    form = ModifierNomGroupeForm()
+    if form.is_submitted():
+        res = form.change_nom_groupe(idGroupe)
+        if res:
+            return redirect(url_for('modifierNomGroupe', erreur="Groupe modifié", form=form, idGroupe=idGroupe))
+        else:
+            return render_template('modifierNomGroupe.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierNomGroupe.html', form=form, groupe=groupe)
+
+@app.route("/espace-organisateur/gestion-groupes/voir-membre/<idGroupe>")
+def voirMembreGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    membres = Groupe.Get.get_membre_groupe(cnx, idGroupe)
+    return render_template('voirMembreGroupe.html', groupe=groupe, membres=membres)
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>/delete")
+def supprimerGroupe(idGroupe):
+    Groupe.Delete.delete_groupe(cnx, idGroupe)
+    return redirect(url_for('gestionGroupe'))
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>/<idMembre>/delete-membre")
+def supprimerMembreGroupe(idGroupe, idMembre):
+    Groupe.Delete.delete_membre_groupe(cnx, idGroupe, idMembre)
+    return redirect(url_for('gestionGroupe'))
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>/ajouter-membre", methods=("GET","POST",))
+def ajouterMembreGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    form = AjouterMembreGroupeForm()
+    membres = Musicien.Get.get_all_musicien_not_in_groupe(cnx, idGroupe)
+
+    if form.validate_on_submit():
+        res = form.ajouter_membre_groupe()
+        if res:
+            return redirect(url_for("gestionGroupeUnique", idGroupe=idGroupe))
+        else:
+            return render_template("ajouterMembreGroupe.html", form=form, erreur="Erreur lors de l'ajout du membre",groupe=groupe,membres=membres)
+    return render_template("ajouterMembreGroupe.html", form=form, groupe=groupe,membres=membres)
+
+
+@app.route("/espace-organisateur/gestion-groupes/modifier/<idGroupe>/modifier-description", methods=("GET","POST",))
+def modifierDescriptionGroupe(idGroupe):
+    groupe = Groupe.Get.get_groupe_with_idgroupe(cnx, idGroupe)
+    form = ModifierDescriptionGroupeForm()
+    if form.is_submitted():
+        res = form.change_description_groupe(idGroupe)
+        if res:
+            return redirect(url_for('modifierDescriptionGroupe', erreur="Groupe modifié", form=form, idGroupe=idGroupe))
+        else:
+            return render_template('modifierDescriptionGroupe.html', form=form, erreur="Les informations ne sont pas valides")
+    return render_template('modifierDescriptionGroupe.html', form=form, groupe=groupe)
+
+@app.route("/espace-organisateur/gestion-hebergement")
+def gestionhebergement():
+    allHebergement = afficher_table(cnx, "HEBERGEMENT")
+    return render_template('gestionHebergement.html', allHebergement=allHebergement)
+
+@app.route("/espace-organisateur/gestion-hebergement/ajouter-hebergement", methods=("GET","POST",))
+def ajouterUnHebergement():
+    form = AjouterHebergementForm()
+    if form.validate_on_submit():
+        res = form.ajouter_hebergement()
+        if res:
+            return redirect(url_for("gestionhebergement"))
+        else:
+            return render_template("ajouterHebergement.html", form=form, erreur="Erreur lors de l'ajout de l'hebergement")
+    return render_template("ajouterHebergement.html", form=form)
+
+@app.route("/espace-organisateur/gestion-hebergement/<idHebergement>")
+def gestionHebergementUnique(idHebergement):
+    hebergement = Hebergement.Get.get_hebergement_with_id(cnx, idHebergement)
+    return render_template('gestionHebergementUnique.html', hebergement=hebergement)
+
+@app.route("/espace-organisateur/gestion-hebergement/modifier/<idHebergement>", methods=("GET","POST",))
+def modifierPlaceHebergement(idHebergement):
+    hebergement = Hebergement.Get.get_hebergement_with_id(cnx, idHebergement)
+    form = ModifierPlaceHebergementForm()
+    if form.is_submitted():
+        res = form.change_place_hebergement(idHebergement)
+        if res:
+            return redirect(url_for('modifierPlaceHebergement', erreur="Hebergement modifié", form=form, idHebergement=idHebergement))
+        else:
+            return render_template('modifierPlaceHebergement.html', form=form, erreur="Les informations ne sont pas valides", hebergement=hebergement)
+    return render_template('modifierPlaceHebergement.html', form=form, hebergement=hebergement)
+
+@app.route("/espace-organisateur/gestion-hebergement/modifier/<idHebergement>/modifier-nom", methods=("GET","POST",))
+def modifierNomHebergement(idHebergement):
+    hebergement = Hebergement.Get.get_hebergement_with_id(cnx, idHebergement)
+    form = ModifierNomHebergementForm()
+    if form.is_submitted():
+        res = form.change_nom_hebergement(idHebergement)
+        if res:
+            return redirect(url_for('modifierNomHebergement', erreur="Hebergement modifié", form=form, idHebergement=idHebergement))
+        else:
+            return render_template('modifierNomHebergement.html', form=form, erreur="Les informations ne sont pas valides", hebergement=hebergement)
+    return render_template('modifierNomHebergement.html', form=form, hebergement=hebergement)
+
+@app.route("/espace-organisateur/gestion-hebergement/modifier/<idHebergement>/delete", methods=("GET","POST",))
+def supprimerHebergement(idHebergement):
+    Hebergement.Delete.delete_hebergement(cnx, idHebergement)
+    return redirect(url_for('gestionhebergement'))
 
 # def gestionLieu():
 #     allLieu = afficher_table(cnx, "LIEU")
