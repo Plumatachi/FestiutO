@@ -7,16 +7,14 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/background-festival.css') }}"
 />
-{% endblock %} {% block content %}
+{% endblock %} 
+{% block content %}
 <main>
-  <h1>Gestion du groupe</h1>
+  <h1>Gestion du Concert</h1>
 
   <div class="gestionCompte">
-    <div> <h2>Information du groupe</h2>
-        <img
-        src="{{ url_for('static', filename='imagesHTML/' + groupe[4]) }}"
-        alt="photo du groupe"
-      />
+    <div> <h2>Information du </h2>
+        <img src="../static/imagesHtml/{{groupe[4]}}" alt="photo de profil">
     <p>nom : {{groupe[1]}}</p>
     <p>description : {{groupe[2]}}</p>
     <p><a href="https://{{groupe[3]}}">Twitter</a></p>

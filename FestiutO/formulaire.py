@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import Appartient, Groupe, Hebergement, Musicien, Scene, get_cnx , Spectateur
+from .requete import Appartient, Groupe, Hebergement, Musicien, Scene, get_cnx , Spectateur, Evenement
 
 cnx = get_cnx()
 
@@ -279,3 +279,127 @@ class ModifierNomHebergementForm(FlaskForm):
             return True
         except:
             return False
+        
+
+
+class AjouterConcertForm(FlaskForm):
+    nomJournee = StringField('Nom de la journée', validators=[DataRequired()])
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    montage = StringField('Montage', validators=[DataRequired()])
+    demontage = StringField('Démontage', validators=[DataRequired()])
+    scene = StringField('Scene', validators=[DataRequired()])
+    dateDebut = DateTimeField('Date de début', validators=[DataRequired()], format='%Y-%m-%d %H:%M:%S', default=datetime.datetime.now)
+    dateFin = DateTimeField('Date de Fin', validators=[DataRequired()], format='%Y-%m-%d %H:%M:%S', default=datetime.datetime.now)
+
+    def ajouter_concert(self):
+            try:
+                Evenement.Insert.insert_concert(cnx, self.nomGroupe.data ,self.montage.data, self.demontage.data, self.dateDebut.data, self.dateFin.data, self.scene.data, self.nomJournee.data)
+                return True
+            except:
+                return False
+            
+class ModifierNomGroupePourConcertForm(FlaskForm):
+    ancienNomDuGroupe = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+    nouveauNomGroupe = StringField('Nom de l\'hebergement', validators=[DataRequired()])
+
+    def change_nom_groupe(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_groupe(cnx, idEvenement, self.nouveauNomGroupe.data)
+            return True
+        except:
+            return False
+        
+
+
+class ModifierScenePourConcertForm(FlaskForm):
+    ancienScene = StringField('ancien scene', validators=[DataRequired()])
+    nouveauScene = StringField('nouveau scene', validators=[DataRequired()])
+
+    def change_scene(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_scene(cnx, idEvenement, self.nouveauScene.data)
+            return True
+        except:
+            
+            return False
+            
+class ModifierMontagePourConcertForm(FlaskForm):
+    tempsMontage = StringField('temps montage', validators=[DataRequired()])
+
+    def change_Montage(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_montage(cnx, idEvenement, self.tempsMontage.data)
+            return True
+        except:
+            return False
+        
+
+class ModifierDemontagePourConcertForm(FlaskForm):
+    tempsDemontage = StringField('temps montage', validators=[DataRequired()])
+
+    def change_demontage(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_demontage(cnx, idEvenement, self.tempsDemontage.data)
+            return True
+        except:
+            return False
+        
+
+class ModifierDateDebutPourConcertForm(FlaskForm):
+    dateDebut = DateTimeField('Date de début', validators=[DataRequired()], format='%Y-%m-%d %H:%M:%S', default=datetime.datetime.now)
+
+    def change_dateDebut(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_dateDebut(cnx, idEvenement, self.dateDebut.data)
+            return True
+        except:
+            return False
+        
+
+class ModifierDateFinPourConcertForm(FlaskForm):
+    dateFin = DateTimeField('Date de début', validators=[DataRequired()], format='%Y-%m-%d %H:%M:%S', default=datetime.datetime.now)
+
+    def change_dateFin(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_dateFin(cnx, idEvenement, self.dateFin.data)
+            return True
+        except:
+            return False
+        
+class ModifierNomActivitePourActiviteForm(FlaskForm):
+    nouveauNomActivite = StringField('nouveau nom activite', validators=[DataRequired()])
+
+    def change_nom_activite(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_nomActivite(cnx, idEvenement, self.nouveauNomActivite.data)
+            return True
+        except:
+            return False
+        
+
+class ModifierPrivatisationPourActiviteForm(FlaskForm):
+    nouveauPrivatisation = StringField('public ou priver', validators=[DataRequired()])
+
+    def change_privatisation(self, idEvenement):
+        try:
+            Evenement.Update.update_evenement_privatisation(cnx, idEvenement, self.nouveauPrivatisation.data)
+            return True
+        except:
+            return False
+        
+
+class AjouterActivteForm(FlaskForm):
+    nomJournee = StringField('Nom de la journée', validators=[DataRequired()])
+    nomGroupe = StringField('Nom du groupe', validators=[DataRequired()])
+    nomActivite = StringField('nomActivte', validators=[DataRequired()])
+    privatisation = StringField('privatisation', validators=[DataRequired()])
+    scene = StringField('Scene', validators=[DataRequired()])
+    dateDebut = DateTimeField('Date de début', validators=[DataRequired()], format='%Y-%m-%d %H:%M:%S', default=datetime.datetime.now)
+    dateFin = DateTimeField('Date de Fin', validators=[DataRequired()], format='%Y-%m-%d %H:%M:%S', default=datetime.datetime.now)
+
+    def ajouter_activite(self):
+            try:
+                Evenement.Insert.insert_activite(cnx, self.nomGroupe.data ,self.nomActivite.data, self.privatisation.data, self.dateDebut.data, self.dateFin.data, self.scene.data, self.nomJournee.data)
+                return True
+            except:
+                return False

@@ -638,14 +638,178 @@ def supprimerHebergement(idHebergement):
     Hebergement.Delete.delete_hebergement(cnx, idHebergement)
     return redirect(url_for('gestionhebergement'))
 
-# def gestionLieu():
-#     allLieu = afficher_table(cnx, "LIEU")
-#     return render_template('gestionLieu.html', allLieu=allLieu)
 
 
-# def gestionGroupe():
-#     allGroupe = afficher_table(cnx, "GROUPE")
-#     return render_template('gestionGroupe.html', allGroupe=allGroupe)
+@app.route("/espace-organisateur/gestion-concert")
+def gestionConcert():
+    allConcert = Evenement.Get.afficher_evenement_concert(cnx)
+    return render_template('gestionConcert.html', allConcert=allConcert)
+
+
+@app.route("/espace-organisateur/gestion-Concert/ajouter-concert", methods=("GET","POST",))
+def ajouterConcert():
+    form = AjouterConcertForm()
+    if form.validate_on_submit():
+        res = form.ajouter_concert()
+        if res:
+            return redirect(url_for("gestionConcert"))
+        else:
+            return render_template("ajouterConcert.html", form=form, erreur="Erreur lors de l'ajout du concert")
+    return render_template("ajouterConcert.html", form=form)
+
+
+@app.route("/espace-organisateur/gestion-Concert/<idEvenement>")
+def gestionConcertUnique(idEvenement):
+    concert = Evenement.Get.get_evenement_concert(cnx, idEvenement)
+    print(concert[0])
+    return render_template('gestionConcertUnique.html', concert=concert[0])
+
+@app.route("/espace-organisateur/gestion-Concert/supprimerEvenement/<idEvenement>", methods=("GET","POST",))
+def supprimerEvenement(idEvenement):
+    Evenement.Delete.delete_evenement(cnx, idEvenement)
+    return redirect(url_for('gestion'))
+
+
+@app.route("/espace-organisateur/gestion-consert/modifier/<idEvenement>/modifier-groupe", methods=("GET","POST",))
+def modifierGroupePourEvenement(idEvenement):
+    evenement = Evenement.Get.get_evenement_concert(cnx, idEvenement)
+    if(evenement == []):
+        evenement = Evenement.Get.get_evenement_activite(cnx, idEvenement)
+    
+    form = ModifierNomGroupePourConcertForm()
+    if form.is_submitted():
+        res = form.change_nom_groupe(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierNomGroupePourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierNomGroupePourEvenement.html', form=form, evenement=evenement[0])
+
+
+@app.route("/espace-organisateur/gestion-consert/modifier/<idEvenement>/modifier-Scene", methods=("GET","POST",))
+def modifierScenePourEvenement(idEvenement):
+    evenement = Evenement.Get.get_evenement_concert(cnx, idEvenement)
+    if(evenement == []):
+        evenement = Evenement.Get.get_evenement_activite(cnx, idEvenement)
+    print(evenement)
+    form = ModifierScenePourConcertForm()
+    if form.is_submitted():
+        res = form.change_scene(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierScenePourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierScenePourEvenement.html', form=form, evenement=evenement[0])
+
+
+@app.route("/espace-organisateur/gestion-consert/modifier/<idEvenement>/modifier-montage", methods=("GET","POST",))
+def modifierMontagePourConsert(idEvenement):
+    evenement = Evenement.Get.get_evenement_concert(cnx, idEvenement)
+    print(evenement)
+    form = ModifierMontagePourConcertForm()
+    if form.is_submitted():
+        res = form.change_Montage(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierMontagePourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierMontagePourEvenement.html', form=form, evenement=evenement[0])
 
 
 
+@app.route("/espace-organisateur/gestion-consert/modifier/<idEvenement>/modifier-demontage", methods=("GET","POST",))
+def modifierDemontagePourConsert(idEvenement):
+    evenement = Evenement.Get.get_evenement_concert(cnx, idEvenement)
+    print(evenement)
+    form = ModifierDemontagePourConcertForm()
+    if form.is_submitted():
+        res = form.change_demontage(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierDemontagePourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierDemontagePourEvenement.html', form=form, evenement=evenement[0])
+
+
+@app.route("/espace-organisateur/gestion-consert/modifier/<idEvenement>/modifier-dateDebut", methods=("GET","POST",))
+def modifierDateDebutPourEvenement(idEvenement):
+    evenement = Evenement.Get.get_evenement_concert(cnx, idEvenement)
+    if(evenement == []):
+        evenement = Evenement.Get.get_evenement_activite(cnx, idEvenement)
+    print(evenement)
+    form = ModifierDateDebutPourConcertForm()
+    if form.is_submitted():
+        res = form.change_dateDebut(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierDateDebutPourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierDateDebutPourEvenement.html', form=form, evenement=evenement[0])
+
+@app.route("/espace-organisateur/gestion-consert/modifier/<idEvenement>/modifier-dateFin", methods=("GET","POST",))
+def modifierDateFinPourEvenement(idEvenement):
+    evenement = Evenement.Get.get_evenement_concert(cnx, idEvenement)
+    if(evenement == []):
+        evenement = Evenement.Get.get_evenement_activite(cnx, idEvenement)
+    print(evenement)
+    form = ModifierDateFinPourConcertForm()
+    if form.is_submitted():
+        res = form.change_dateFin(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierDateFinPourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierDateFinPourEvenement.html', form=form, evenement=evenement[0])
+
+
+@app.route("/espace-organisateur/gestion-Activite")
+def gestionActivite():
+    allActivite = Evenement.Get.afficher_evenement_activite(cnx)
+    return render_template('gestionActivite.html', allActivite=allActivite)
+
+@app.route("/espace-organisateur/gestion-Activite/<idEvenement>")
+def gestionActiviteUnique(idEvenement):
+    concert = Evenement.Get.get_evenement_activite(cnx, idEvenement)
+    print(concert[0])
+    return render_template('gestionActiviteUnique.html', concert=concert[0])
+
+
+@app.route("/espace-organisateur/gestion-activite/modifier/<idEvenement>/modifier-nomActivite", methods=("GET","POST",))
+def modifierNomActivitePourEvenement(idEvenement):
+    evenement = Evenement.Get.get_evenement_activite(cnx, idEvenement)
+    print(evenement)
+    form = ModifierNomActivitePourActiviteForm()
+    if form.is_submitted():
+        res = form.change_nom_activite(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierNomActivitePourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierNomActivitePourEvenement.html', form=form, evenement=evenement[0])
+
+
+
+@app.route("/espace-organisateur/gestion-activite/modifier/<idEvenement>/modifier-privatisation", methods=("GET","POST",))
+def modifierPrivatisationPourEvenement(idEvenement):
+    evenement = Evenement.Get.get_evenement_activite(cnx, idEvenement)
+    form = ModifierPrivatisationPourActiviteForm()
+    if form.is_submitted():
+        res = form.change_privatisation(idEvenement)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierprivatisationourEvenement.html', form=form, erreur="Les informations ne sont pas valides", evenement=evenement[0])
+    return render_template('modifierprivatisationourEvenement.html', form=form, evenement=evenement[0])
+
+
+
+@app.route("/espace-organisateur/gestion-Concert/ajouter-activite", methods=("GET","POST",))
+def ajouterActvite():
+    form = AjouterActivteForm()
+    if form.validate_on_submit():
+        res = form.ajouter_activite()
+        if res:
+            return redirect(url_for("gestionActivite"))
+        else:
+            return render_template("ajouterActivite.html", form=form, erreur="Erreur lors de l'ajout du concert")
+    return render_template("ajouterActivite.html", form=form)

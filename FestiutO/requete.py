@@ -46,8 +46,144 @@ class Evenement:
             except:
                 print("Erreur lors de la récupération du nom de l'utilisateur")
                 raise
+        def afficher_evenement_concert(cnx):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT idEvenement,nomDuGroupe,photo,nomScene FROM EVENEMENT natural join CONCERT natural join SCENE natural join PARTICIPE natural join GROUPE;"))
+                for row in result:
+                    res.append(row)
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise    
+        
+        def afficher_evenement_activite(cnx):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT idEvenement,nomDuGroupe,photo,nomScene,nomActivite FROM EVENEMENT natural join ACTIVITE  natural join SCENE natural join PARTICIPE natural join GROUPE;"))
+                for row in result:
+                    res.append(row)
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise    
+
+        def get_evenement_concert(cnx,idEvenement):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT idEvenement,nomDuGroupe,photo,nomScene,montage,demontage,dateDebutE,dateFinE FROM EVENEMENT natural join CONCERT natural join SCENE natural join PARTICIPE natural join GROUPE WHERE idEvenement = '" + idEvenement + "';"))
+                for row in result:
+                    res.append(row)
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+
+        def get_evenement_activite(cnx,idEvenement):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT idEvenement,nomDuGroupe,photo,nomScene,nomActivite,privatitation,dateDebutE,dateFinE FROM EVENEMENT natural join ACTIVITE natural join SCENE natural join PARTICIPE natural join GROUPE WHERE idEvenement = '" + idEvenement + "';"))
+                for row in result:
+                    res.append(row)
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
 
 
+
+    class Update:
+        def update_evenement_groupe(cnx, idEvenement, nomGroupe):
+            try:
+                # Récupérer l'idGroupe
+                idGroupe = cnx.execute(text("SELECT idGroupe FROM GROUPE WHERE nomDuGroupe = :nomGroupe"), {"nomGroupe": nomGroupe}).scalar()
+
+                # Mettre à jour la participation
+                cnx.execute(text("UPDATE PARTICIPE SET idGroupe = :idGroupe WHERE idEvenement = :idEvenement"), {"idGroupe": idGroupe, "idEvenement": idEvenement})
+
+                cnx.commit()
+            except Exception as e:
+                print("Erreur lors de la mise à jour du concert:", str(e))
+                cnx.rollback()
+                raise
+        def update_evenement_scene(cnx, idEvenement, nomScene):
+            try:
+                # Récupérer l'idScene
+                print(nomScene)
+                idScene = cnx.execute(text("SELECT idScene FROM SCENE WHERE nomScene = :nomScene"), {"nomScene": nomScene}).scalar()
+
+                # Mettre à jour la participation
+                cnx.execute(text("UPDATE EVENEMENT SET idScene = :idScene WHERE idEvenement = :idEvenement"), {"idScene": idScene, "idEvenement": idEvenement})
+
+                cnx.commit()
+            except Exception as e:
+                print("Erreur lors de la mise à jour du concert:", str(e))
+                cnx.rollback()
+                raise
+        def update_evenement_montage(cnx, idEvenement, montage):
+            try:
+                idConsert = cnx.execute(text("select idConcert from EVENEMENT where idEvenement = '" + idEvenement + "';"))
+                cnx.execute(text("UPDATE CONCERT SET montage = :montage WHERE idConcert = :idConcert"), {"montage": montage, "idConcert": idConsert})
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du Evenement")
+                raise
+
+        def update_evenement_demontage(cnx, idEvenement, montage):
+            try:
+                idConsert = cnx.execute(text("select idConcert from EVENEMENT where idEvenement = '" + idEvenement + "';"))
+                cnx.execute(text("UPDATE CONCERT SET montage = :montage WHERE idConcert = :idConcert"), {"montage": montage, "idConcert": idConsert})
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du Evenement")
+                raise
+
+        def update_evenement_dateDebut(cnx, idEvenement, dateDebutE):
+            try:
+                cnx.execute(text("UPDATE EVENEMENT SET dateDebutE = :dateDebutE WHERE idEvenement = :idEvenement"), {"dateDebutE": dateDebutE, "idEvenement": idEvenement})
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du Evenement")
+                raise
+
+        def update_evenement_dateFin(cnx, idEvenement, dateFinE):
+            try:
+                cnx.execute(text("UPDATE EVENEMENT SET dateFinE = :dateFinE WHERE idEvenement = :idEvenement"), {"dateFinE": dateFinE, "idEvenement": idEvenement})
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du Evenement")
+                raise
+
+        def update_evenement_nomActivite(cnx, idEvenement, nomActivite):
+            try:
+                idActivite = cnx.execute(text("select idActivite from EVENEMENT where idEvenement = '" + idEvenement + "';"))
+                cnx.execute(text("UPDATE ACTIVITE SET nomActivite = :nomActivite WHERE idActivite = :idActivite"), {"nomActivite": nomActivite, "idActivite": idActivite})
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du Evenement")
+                raise
+
+        def update_evenement_privatisation(cnx, idEvenement, privatitation):
+            try:
+                idActivite = cnx.execute(text("select idActivite from EVENEMENT where idEvenement = '" + idEvenement + "';"))
+                cnx.execute(text("UPDATE ACTIVITE SET privatitation = :privatitation WHERE idActivite = :idActivite"), {"privatitation": privatitation, "idActivite": idActivite})
+                cnx.commit()
+            except:
+                print("Erreur lors de la mise à jour du Evenement")
+                raise
+
+    class Delete:
+        def delete_evenement(cnx, idEvenement):
+            try:
+                cnx.execute(text("DELETE FROM BILLETEVENEMENT WHERE idEvenement = '" + idEvenement + "';"))
+                cnx.execute(text("DELETE FROM PARTICIPE WHERE idEvenement = '" + idEvenement + "';"))
+                cnx.execute(text("DELETE FROM EVENEMENT WHERE idEvenement = '" + idEvenement + "';"))
+                cnx.execute(text("DELETE FROM CONCERT WHERE idConcert IN (SELECT idConcert FROM EVENEMENT WHERE idEvenement = + '" + idEvenement + "');"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression de l'evenement")
+                raise
+        
     class Insert:
         def insert_billet_evenement(idSpectateur,idEvenement):
             try:
@@ -57,6 +193,73 @@ class Evenement:
             except:
                 print("Erreur lors de l'insertion du favoris1")
                 raise
+
+        def insert_concert(cnx, nomGroupe,montage ,demontage , dateDebutE, dateFinE,scene,nomJournee):
+            try:
+                # Récupérer l'idScene
+                idScene = cnx.execute(text("SELECT idScene FROM SCENE WHERE nomScene = :scene"), {"scene": scene}).scalar()
+
+                # Récupérer l'idJournee
+                idJournee = cnx.execute(text("SELECT idJournee FROM JOURNEE WHERE nomJournee = :nomJournee"), {"nomJournee": nomJournee}).scalar()
+
+                # Insérer le concert
+                cnx.execute(text("INSERT INTO CONCERT(montage, demontage) VALUES (:montage, :demontage)"), {"montage": montage, "demontage": demontage})
+
+                # Récupérer l'idConcert
+                idConcert = cnx.execute(text("SELECT idConcert FROM CONCERT ORDER BY idConcert DESC LIMIT 1")).scalar()
+
+                # Insérer l'événement
+                cnx.execute(text("INSERT INTO EVENEMENT(dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert) VALUES (:dateDebutE, :dateFinE, :idScene, :idJournee, NULL, :idConcert)"),
+                            {"dateDebutE": dateDebutE, "dateFinE": dateFinE, "idScene": idScene, "idJournee": idJournee, "idConcert": idConcert})
+
+                # Récupérer l'idEvenement
+                idEvenement = cnx.execute(text("SELECT idEvenement FROM EVENEMENT ORDER BY idEvenement DESC LIMIT 1")).scalar()
+
+                # Récupérer l'idGroupe
+                idGroupe = cnx.execute(text("SELECT idGroupe FROM GROUPE WHERE nomDuGroupe = :nomGroupe"), {"nomGroupe": nomGroupe}).scalar()
+
+                # Insérer la participation
+                cnx.execute(text("INSERT INTO PARTICIPE(idEvenement, idGroupe) VALUES (:idEvenement, :idGroupe)"),
+                            {"idEvenement": idEvenement, "idGroupe": idGroupe})
+
+                cnx.commit()
+            except Exception as e:
+                print("Erreur lors de l'insertion du concert:", str(e))
+                cnx.rollback()
+                raise
+
+        def insert_activite(cnx, nomGroupe, privatitation, dateDebutE, dateFinE, scene, nomJournee, nomActivite):
+            try:
+                # Récupérer l'idScene
+                idScene = cnx.execute(text("SELECT idScene FROM SCENE WHERE nomScene = :scene"), {"scene": scene}).scalar()
+
+                # Récupérer l'idJournee
+                idJournee = cnx.execute(text("SELECT idJournee FROM JOURNEE WHERE nomJournee = :nomJournee"), {"nomJournee": nomJournee}).scalar()
+
+                # Insérer l'activité
+                cnx.execute(text("INSERT INTO ACTIVITE(nomActivite, privatitation) VALUES (:nomActivite, :privatitation)"),
+                            {"nomActivite": nomActivite, "privatitation": privatitation})
+
+                # Récupérer l'idActivite
+                idActivite = cnx.execute(text("SELECT idActivite FROM ACTIVITE ORDER BY idActivite DESC LIMIT 1")).scalar()
+
+                # Insérer l'événement
+                cnx.execute(text("INSERT INTO EVENEMENT(dateDebutE, dateFinE, idScene, idJournee, idActivite, idConcert) VALUES (:dateDebutE, :dateFinE, :idScene, :idJournee, :idActivite, NULL)"),
+                            {"dateDebutE": dateDebutE, "dateFinE": dateFinE, "idScene": idScene, "idJournee": idJournee, "idActivite": idActivite})
+
+                # Récupérer l'idEvenement
+                idEvenement = cnx.execute(text("SELECT idEvenement FROM EVENEMENT ORDER BY idEvenement DESC LIMIT 1")).scalar()
+
+                # Récupérer l'idGroupe
+                idGroupe = cnx.execute(text("SELECT idGroupe FROM GROUPE WHERE nomDuGroupe = :nomGroupe"), {"nomGroupe": nomGroupe}).scalar()
+
+                # Insérer la participation
+                cnx.execute(text("INSERT INTO PARTICIPE(idEvenement, idGroupe) VALUES (:idEvenement, :idGroupe)"),
+                            {"idEvenement": idEvenement, "idGroupe": idGroupe})
+
+                cnx.commit()
+            except Exception as e:
+                print("Erreur lors de l'insertion de l'activité:")
 
 class Journee:
     class Get:
