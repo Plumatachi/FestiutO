@@ -2,7 +2,7 @@ import datetime
 from wtforms import StringField, HiddenField, FileField, SubmitField, SelectField, TextAreaField, DateField,PasswordField, BooleanField, IntegerField, FloatField, RadioField, SelectMultipleField, widgets, FieldList, FormField, DecimalField, TimeField, DateTimeField, DateField, EmailField
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
-from .requete import Appartient, Groupe, Hebergement, Musicien, Scene, get_cnx , Spectateur, Evenement
+from .requete import Appartient, Groupe, Hebergement, Musicien, Scene, get_cnx , Spectateur, Evenement,Reserver
 
 cnx = get_cnx()
 
@@ -403,3 +403,12 @@ class AjouterActivteForm(FlaskForm):
                 return True
             except:
                 return False
+
+
+class ModifierJourneeBilletForm(FlaskForm):
+    nomJournee = StringField('Nom de la journée', validators=[DataRequired()])
+    
+    def change_journee(self, idJournee,idSpectateur):
+
+            Reserver.Update.update_journee(cnx, idJournee,idSpectateur, self.nomJournee.data)
+   

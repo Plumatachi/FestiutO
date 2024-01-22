@@ -4,7 +4,7 @@ from .formulaire import *
 from datetime import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from .app import app
-from .requete import Hebergement, Scene, afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement
+from .requete import Hebergement, Scene, afficher_table, get_cnx , Spectateur, Journee , Musicien, FAVORIS, FONCTION, Groupe , Evenement , Reserver
 
 
 cnx = get_cnx()
@@ -813,3 +813,34 @@ def ajouterActvite():
         else:
             return render_template("ajouterActivite.html", form=form, erreur="Erreur lors de l'ajout du concert")
     return render_template("ajouterActivite.html", form=form)
+
+
+
+@app.route("/espace-organisateur/gestion-billetFestival")
+def gestionBilletFestival():
+    allBillet = Reserver.Get.afficher_billet_festival(cnx)
+    return render_template('gestionBilletFestival.html', allBillet=allBillet)
+
+@app.route("/espace-organisateur/gestion-Billet/<idSpectateur>/<idJournee>")
+def gestionBilletFestivalUnique(idSpectateur,idJournee):
+    billet = Reserver.Get.get_Billet(cnx, idSpectateur,idJournee)
+    print(billet)
+    return render_template('gestionBilletUnique.html', billet=billet)
+
+@app.route("/espace-organisateur/gestion-Billet/supprimerBillet/<idSpectateur>/<idJournee>", methods=("GET","POST",))
+def supprimerBilletFestival(idSpectateur,idJournee):
+    Reserver.Delete.delete_billet(cnx, idSpectateur,idJournee)
+    return redirect(url_for('gestionBilletFestival'))
+
+
+@app.route("/espace-organisateur/gestion-Billet/modifierJourneeBillet/<idSpectateur>/<idJournee>", methods=("GET","POST",))
+def changerJourneeBilletFestival(idSpectateur,idJournee):
+    billet = Reserver.Get.afficher_billet_festival(cnx)
+    form = ModifierJourneeBilletForm()
+    if form.is_submitted():
+        res = form.change_journee(idJournee,idSpectateur)
+        if res:
+            return redirect(url_for('organisation'))
+        else:
+            return render_template('modifierJourneeBillet.html', form=form, erreur="Les informations ne sont pas valides", billet=billet[0])
+    return render_template('modifierJourneeBillet.html', form=form, billet=billet[0])

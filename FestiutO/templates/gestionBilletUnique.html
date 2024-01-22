@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gestionComptesUnique.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1> Gestion du billet</h1>
+    <h2> Liste des fonctionnalités </h2>
+    <ul>
+        <li> <a href="{{ url_for('changerJourneeBilletFestival', idSpectateur=billet[0] , idJournee=billet[1]) }}"> Modifier la journee </a> </li>
+        <li> <a href="{{ url_for('supprimerBilletFestival', idSpectateur=billet[0]  , idJournee=billet[1] ) }}">supprimer le billet</a> </li>
+    </ul>
+</div>
+</main>
+
+
+
+
+{% endblock %}

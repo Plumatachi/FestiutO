@@ -851,3 +851,53 @@ class Appartient:
             except:
                 print("Erreur lors de l'insertion du membre dans le groupe")
                 raise
+
+
+class Reserver:
+    class Get:
+
+        def afficher_billet_festival(cnx):
+            try:
+                res = []
+                result = cnx.execute(text("SELECT idSpectateur,idJournee,nombreDePlace,nomJournee , mail FROM RESERVER natural join JOURNEE natural join SPECTATEUR ;"))
+                for row in result:
+                    res.append((row[0],row[1],row[2],row[3],row[4]))
+                return res
+            except:
+                print("Erreur lors de la récupération du nom de l'utilisateur")
+                raise
+
+
+        def get_Billet(cnx, idpectateur,idJournee):
+            try:
+                result = cnx.execute(text("SELECT * FROM RESERVER WHERE idSpectateur = '" + idpectateur + "'and idJournee ='"+idJournee+"';"))
+                for row in result:
+                    print(row)
+                    return row
+            except:
+                print("Erreur lors de la récupération du billet")
+                raise
+
+    class Delete:
+        def delete_billet(cnx, idSpectateur,idJournee):
+            try:
+                cnx.execute(text("DELETE FROM RESERVER WHERE idSpectateur = '" + idSpectateur + "'and idJournee ='"+idJournee+"';"))
+                cnx.commit()
+            except:
+                print("Erreur lors de la suppression du billet")
+                raise
+
+    class Update:
+        def update_journee(cnx, idSpectateur, oldIdJournee,nomJournee):
+            try:
+                # Récupérer l'idJournee à partir du nomJournee
+                result = cnx.execute(text("SELECT idJournee FROM JOURNEE WHERE nomJournee = :nomJournee"), {"nomJournee": nomJournee})
+                idJournee= result.scalar()  # Utiliser scalar() pour obtenir la valeur unique
+
+                # Mettre à jour RESERVER avec le nouvel idJournee
+                cnx.execute(text("UPDATE RESERVER SET idJournee = :idJournee WHERE idSpectateur = :idSpectateur AND idJournee = :oldIdJournee"), {"idJournee": idJournee, "idSpectateur": idSpectateur, "oldIdJournee": oldIdJournee})
+                
+                cnx.commit()
+            except Exception as e:
+                print("Erreur lors de la mise à jour du billet:", str(e))
+                raise
