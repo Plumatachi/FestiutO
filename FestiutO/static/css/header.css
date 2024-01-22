@@ -1,0 +1,24 @@
+nav ul {
+    align-items: space-between;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: end;
+}   
+
+nav ul li {
+    margin: 15px;
+    height: 100%;
+}
+
+nav ul li a:hover {
+    color: rgb(238, 76, 44);
+    text-decoration: underline;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.3em;
+
+}

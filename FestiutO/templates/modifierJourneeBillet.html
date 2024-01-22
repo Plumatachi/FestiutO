@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modifier.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+    <div class="container">
+        <div class="userInfo">
+            <h2> Informations sur le billet </h2>
+            <p>{{billet[3]}} </p>
+                <p>{{billet[4]}} </p>
+        </div>
+
+        <div class="form">
+            <h1> Modification de la journee </h1>
+            <form role="form" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="input">
+                    <div class="element">
+                        {{ form.nomJournee(size=50, class_="form-control element", placeholder="nom de la journee") }}
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <input type="submit" class="element elementSubmit" value="Changer le nom">
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+
+
+
+{% endblock %}

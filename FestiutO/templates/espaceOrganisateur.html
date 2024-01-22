@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/espaceOrganisateur.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <ul>
+        <li><a href="{{ url_for('gestionComptes_avant') }}">Gestion des comptes</a></li>
+        <li><a href="{{ url_for('gestionArtiste') }}">Gestion des artistes</a></li>
+        <li><a href="{{ url_for('gestionLieu') }}">Gestion des lieux</a></li>
+        <li><a href="{{ url_for('gestionGroupe') }}">Gestion des groupes</a></li>
+        <li><a href="{{ url_for('gestionhebergement') }}">Gestion des hébergement</a></li>
+        <li><a href="{{ url_for('gestionConcert') }}">Gestion des concerts</a></li>
+        <li><a href="{{ url_for('gestionActivite') }}">Gestion des Activite</a></li>
+        <li><a href="{{ url_for('gestionBilletFestival') }}">Gestion des billets</a></li>
+    </ul>
+</main>
+{% endblock %}

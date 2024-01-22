@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modifier.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+        {% if erreur  %}
+        <p class="erreur"> {{ erreur }} </p>
+        {% endif %} 
+
+        <div class="form mdp">
+            <form role="form" method="POST">
+                <div class="divForm">
+                    <h1> Ajouter un Activte </h1>
+
+                    {{ form.hidden_tag() }}
+                    <div class="input">
+                        <div class="element">
+                            {{ form.nomGroupe(size=50, class_="form-control element", placeholder="Nom du groupe") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.nomJournee(size=50, class_="form-control element", placeholder="Nom de la journée") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.nomActivite(size=50, class_="form-control element", placeholder="nom de l'activite") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.privatisation(size=50, class_="form-control element", placeholder="public ou prive") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.scene(size=50, class_="form-control element", placeholder="nom de la scene") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.dateDebut(size=50, class_="form-control element", placeholder="date de debut") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.dateFin(size=50, class_="form-control element", placeholder="date de debut") }}
+                        </div>
+                    </div>
+                    <div class="btn-container">
+                        <input type="submit" class="element elementSubmit" value="Ajouter un concert" />
+                    </div>
+                </div>
+            </form>
+        </div>
+</main>
+
+{% endblock %}

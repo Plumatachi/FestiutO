@@ -1,0 +1,67 @@
+{% extends 'base.html' %} {% block styles %} {{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/gestionGroupeUnique.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/background-festival.css') }}"
+/>
+{% endblock %} {% block content %}
+<main>
+  <h1>Gestion de l'activite</h1>
+
+  <div class="gestionCompte">
+    <div> <h2>Information de l'activite</h2>
+      <img src="../static/imagesHtml/{{concert[2]}}" alt="photo de profil">
+      <p>nom du groupe : {{concert[1]}}</p>
+      <p>nom de la scene : {{concert[3]}}</p>
+      <p>nom de l'activite : {{concert[4]}}</p>
+      <p>privatisation : {{concert[5]}}</p>
+      <p>date debut du Concert : {{concert[6]}}</p>
+      <p>date fin du Concert : {{concert[7]}}</p>
+</div>
+    <div>
+      <ul class="fonctionnalite">
+        <h2>Liste des fonctionnalités</h2>
+        <li>
+          <a href="{{ url_for('modifierGroupePourEvenement', idEvenement=concert[0]) }}">
+            Modifier le groupe du consert
+          </a>
+        </li>
+        <li>
+            <a href="{{ url_for('modifierScenePourEvenement', idEvenement=concert[0]) }}">
+              modifier la scene du concert
+            </a>
+          </li>
+        <li>
+          <a href="{{ url_for('modifierNomActivitePourEvenement', idEvenement=concert[0]) }}">
+            modifier le nom de l'activite
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('modifierPrivatisationPourEvenement', idEvenement=concert[0]) }}">
+            modifier la privatisation
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('modifierDateDebutPourEvenement', idEvenement=concert[0]) }}">
+            modifier la date de debut du concert
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('modifierDateFinPourEvenement', idEvenement=concert[0]) }}">
+            modifier la date de fin du concert
+          </a>
+        </li>
+        <li class="alerte" >
+          <a href="{{ url_for('supprimerEvenement', idEvenement=concert[0]) }}">
+            Supprimer l'activite
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</main>
+{% endblock %}

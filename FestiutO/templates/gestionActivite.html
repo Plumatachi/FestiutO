@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gestionConcert.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <h1> Gestion des Activite </h1>
+    <a class="buttonAjout" href="{{ url_for('ajouterActvite') }}"> Ajouter un Activite </a>
+    <h2> Liste des Activite </h2>
+    <div class="listActivte">
+        {% for groupe in allActivite %}
+            <div>
+                <p>{{groupe[3]}}</p>
+                <div>
+                    <img src="../static/imagesHtml/{{groupe[2]}}" alt="photo de profil">
+                </div>
+                <p>{{groupe[1]}}</p>
+                <a href="{{ url_for('gestionActiviteUnique', idEvenement=groupe[0]) }}">Modifier</a>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

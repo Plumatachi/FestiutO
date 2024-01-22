@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/groupe.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="groupeInfo">
+{% for info in groupe %}
+    {% if info != groupe[4] %}
+        {% if info != groupe[0] and info != groupe[5] %}
+            <p>{{ info }}</p>
+        {% endif %}
+    {% endif %}
+{% endfor %}    
+</div>
+<div class="groupeAccess flex">
+<img class="groupeImage" src="{{ url_for('static', filename='imagesHtml/' + groupe[4]) }}" alt="Photo du groupe {{ groupe[1] }}">
+<div class="touch flex">
+    <div class="like">
+            {% if like == 0 %}
+            <a href="{{ url_for('like', idUser=session['utilisateur'][0], idGroupe=groupe[0]) }}"><img src="{{ url_for('static', filename='imagesHtml/like_down.png') }}" alt="une image non likée"></a>
+            {% else %}
+            <a href="{{ url_for('dislike',  idUser=session['utilisateur'][0], idGroupe=groupe[0]) }}"><img src="{{ url_for('static', filename='imagesHtml/like_up.png') }}" alt="une image likée"></a>
+            {% endif %}
+    </div>
+    
+</div>
+</div>
+<div class="Musiciens">
+    <h1>Musicien : </h1>
+    {% for musicien in listeMucisien %}
+        <div class="divMusicien">
+            <h2>{{musicien[1]}}</h2>
+            <p>{{musicien[2]}}
+        </div>
+    {% endfor %}   
+</div>
+
+{% endblock %}

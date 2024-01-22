@@ -1,0 +1,53 @@
+.listeUser{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.listeUser > div{
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 230px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: bisque;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.button{
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.button:hover{
+    background-color: #f1f1f1;
+}
+
+.buttonAjout{
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    justify-content: space-around;
+
+}
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

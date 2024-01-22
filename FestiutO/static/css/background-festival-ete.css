@@ -1,0 +1,23 @@
+html {
+    background-image: url("../imagesHtml/festival_musique_ete.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
+    background-color: rgb(25, 22, 14);
+}
+
+
+.divCentral{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titreFestio {
+    position: absolute;
+    font-size: 3em;
+    font-weight: bold;
+    color: rgb(61, 56, 56);
+    text-shadow: 2px 2px 2px black;
+    margin-left: 2em;
+}

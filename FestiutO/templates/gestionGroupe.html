@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gestionGroupe.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <h1> Gestion des groupes </h1>
+    <a class="buttonAjout" href="{{ url_for('ajouterGroupe') }}"> Ajouter un groupe </a>
+    <h2> Liste des groupes </h2>
+    <div class="listArtiste">
+        {% for groupe in allGroupe %}
+            <div>
+                <div>
+                    <img src="../static/imagesHtml/{{groupe[4]}}" alt="photo de profil">
+                </div>
+
+                <p>{{ groupe [1] }}</p>
+                <a href="{{ url_for('gestionGroupeUnique', idGroupe=groupe[0]) }}">Modifier</a>
+
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

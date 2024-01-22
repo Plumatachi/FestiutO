@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profil.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival-ete.css') }}">
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<main>
+<div>
+    {% if session['utilisateur'][1] == "Organisateur" %}
+    <ul class="a-container flex">
+        <li><a href="{{ url_for('modifier_mdp') }}">Changer le mot de passe</a></li>
+        <li><a href="{{ url_for('modifier_email') }}">Changer l'email</a></li>
+        <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+    </ul>
+    {% else %}    
+    <ul class="a-container flex">
+        <li><a href="{{ url_for('modifier_mdp') }}">Changer le mot de passe</a></li>
+        <li><a href="{{ url_for('modifier_email') }}">Changer l'email</a></li>
+        <li><a href="{{ url_for('favoris', idUser=user) }}">Mes favoris</a></li>
+        <li><a href="{{ url_for('billet', idUser=user) }}">Mes billets</a></li>
+        <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+    </ul>
+    {% endif %}
+</main>
+
+{% endblock %}
+

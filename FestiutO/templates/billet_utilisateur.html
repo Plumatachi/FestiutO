@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/billet_utilisateur.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival-ete.css') }}">
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+<h1>Mes Billets</h1>
+<h3>Billet journée</h3>
+<div class="groupeList">
+{% for billet in billetsJournee %}
+    <div class="billet">
+        <p>{{ billet[1]}} commence à {{billet[2]}} vous avez {{billet[3]}} billet(s) pour cette journée</p>
+    </div>
+    {% endfor %}
+</div>
+
+<h3>Billet evenement</h3>
+<div class="groupeList">
+{% for billet in billetsEvenement %}
+    <div class="billet">
+        <p>{{ billet[1]}} commence à {{billet[2]}} est situé à {{billet[3]}} billet(s) pour cet évènement</p>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

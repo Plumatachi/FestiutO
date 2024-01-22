@@ -1,0 +1,208 @@
+.htmlBillet{
+    /* background-color: black; */
+        background-image: url("./images/festival_de_musique.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-position: top center;
+        background-color: RGB(67, 50, 56);
+}
+
+
+.bodyAccueille {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+    position: relative;
+}
+
+
+.positionMessageVersBillet{
+    position: absolute;
+    top: 35vw;
+    width: 93vw;
+    height: 26vw;
+}
+
+.messageVersBillet{
+    background-color: RGBA(0, 0, 0,0.95);
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement les éléments dans le conteneur */
+    justify-content: center;
+}
+
+.titreMessageVersBillet{
+    color: aliceblue;
+}
+
+.lienMessaegVersBillet{
+    font-size: 2vw;
+    color: blue;
+}
+
+.positionListeGroupeMusique{
+    position: absolute;
+    top: 23vw;
+    width: 93vw;
+    height: 26vw;
+}
+
+.listeGroupeMusique{
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.titreGroupeMusique{
+    color: aliceblue;
+    font-size: 2vw;
+}
+
+.divChoixGroupeMusique{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.boutonChoixGroupe{
+    font-size: 10vw;
+    color: aliceblue;
+    background: none;
+    border: none;
+}
+
+.conteneurGroupe{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-left: 59%;
+    margin-right: 59%;
+}
+.imageGroupe{
+    width: 100%;
+    height: 100%;
+}
+
+.imageGroupe1{
+    position: absolute;
+    left: -68%;
+    top: 7%;
+    z-index: -1;
+    width: 18vw;    
+    height: 18vw;
+    display: inline-block;
+}
+
+.imageGroupe2{
+    display: inline-block;
+    width: 20vw;
+    height: 20vw;
+}
+
+.imageGroupe3{
+    position: absolute;
+    left: 80%;
+    top: 5%;
+    z-index: -1;
+    width: 18vw;
+    height: 18vw;
+    display: inline-block;
+}
+
+
+
+
+.positionMessageVersActiviter{
+    position: absolute;
+    top: 110vw;
+    width: 93vw;
+    height: 26vw;
+}
+
+.messageVersActiviter{
+    background-color: RGBA(0, 0, 0,0.95);
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement les éléments dans le conteneur */
+    justify-content: center;
+}
+
+
+.lienMessageVersActiviter{
+    font-size: 2vw;
+    color: blue;
+}
+
+.imageCacher{
+    display: none;
+}
+.positionEvenements{
+    position: absolute;
+    top: 58vw;
+    width: 93vw;
+    height: 26vw;
+}
+
+.divCaseEvenements{
+    background-color: RGBA(0, 0, 0,0.95);
+    width: auto;
+    height: auto;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement les éléments dans le conteneur */
+    justify-content: center;
+    padding: 2%;
+}
+
+.texteEvenement{
+    color: aliceblue;
+    font-size: 1.5vw;
+    margin-left: 5%;
+    margin-right: 2%;
+}
+
+.buttonInscription{
+    margin-left: 2%;
+    background-color: aqua;
+    color: green;
+    border-radius: 30px;
+    height: 3vw;
+    margin-top: 1vw;
+    width: 6vw;
+
+}
+
+.h2Evenement{
+    color: aliceblue;
+    font-size: 2.2vw;
+    margin-bottom: 2%;
+}
+
+
+.divContientTexteDateEvenement{
+    background-color: blueviolet;
+    border-radius: 30px;
+    width: 90%;
+    margin: 2%;
+}
+
+
+.divPetBoutonProgramme{
+    display : flex;
+    background-color: black;
+    margin: 2%;
+    border-radius: 30px;
+    width: auto;
+}

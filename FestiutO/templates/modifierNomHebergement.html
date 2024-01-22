@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modifier.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+    <div class="container">
+        <div class="userInfo">
+            <h2> Informations sur l'hebergement' </h2>
+            <p> Nom d'hébergement : {{ hebergement[2]}} </p>
+            <p> Nombre de place : {{ hebergement[1]}} </p>
+        </div>
+
+        <div class="form">
+            <h1> Modification du nom d'hébergement </h1>
+            <form role="form" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="input">
+                    <div class="element">
+                        {{ form.nomHebergement(size=50, class_="form-control element", placeholder="Nom d'hébergement actuelle") }}
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="element">
+                        {{ form.nouveauNomHebergement(size=50, class_="form-control element", placeholder="Nouveau nom d'hébergement") }}
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="element">
+                        {{ form.nouveauNomHebergementVerif(size=50, class_="form-control element", placeholder="Confirmer le nouveau nom d'hébergement") }}
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <input type="submit" class="element elementSubmit" value="Changer le nom">
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

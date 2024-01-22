@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% block styles %} {{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/gestionGroupeUnique.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/background-festival.css') }}"
+/>
+{% endblock %} 
+{% block content %}
+<main>
+  <h1>Gestion du Concert</h1>
+
+  <div class="gestionCompte">
+    <div> <h2>Information du </h2>
+        <img src="../static/imagesHtml/{{groupe[4]}}" alt="photo de profil">
+    <p>nom : {{groupe[1]}}</p>
+    <p>description : {{groupe[2]}}</p>
+    <p><a href="https://{{groupe[3]}}">Twitter</a></p>
+  
+</div>
+    <div>
+      <ul class="fonctionnalite">
+        <h2>Liste des fonctionnalités</h2>
+        <li>
+          <a href="{{ url_for('modifierNomGroupe', idGroupe=groupe[0]) }}">
+            Modifier le nom du groupe
+          </a>
+        </li>
+        <li>
+            <a href="{{ url_for('modifierDescriptionGroupe', idGroupe=groupe[0]) }}">
+              Modifier la description du groupe
+            </a>
+          </li>
+        <li>
+          <a href="{{ url_for('voirMembreGroupe', idGroupe=groupe[0]) }}">
+            voir les membre du groupe</a
+          >
+        </li>
+        <li class="alerte" >
+          <a href="{{ url_for('supprimerGroupe', idGroupe=groupe[0]) }}">
+            Supprimer le groupe
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</main>
+{% endblock %}

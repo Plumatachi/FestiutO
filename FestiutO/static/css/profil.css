@@ -1,0 +1,70 @@
+main{
+    margin: 9em;
+}
+
+.a-container li {
+    list-style-type: none;
+    background-color: transparent;
+}
+
+
+li a {
+    color: black;
+    box-shadow: 1em black;
+
+}
+
+.a-container li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.a-container{
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.a-container li a{
+    border-radius: 10px;
+    padding: 1.4em;
+    font-weight: bold;
+}
+
+.a-container li {
+    border-radius: 10px;
+}
+
+
+
+.flex{
+    display: flex;
+}
+
+.groupe{
+    margin: 30px;
+    background-color: aqua;
+    width: 700px;
+    height: 300px;
+    border-radius: 10px;
+}
+
+main .a-container li {
+    list-style-type: none;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: bisque;
+} 
+
+main a{
+    text-decoration: none;
+    color: black;
+}
+
+main a:hover{
+    color: #ff0000;
+    text-decoration: underline #ff0000;
+}

@@ -1,0 +1,26 @@
+.ficheDePayement{
+    background-color: antiquewhite;
+    border-radius: 30px;
+}
+
+.positionFicheDePayement{
+    position: absolute;
+    top: 25vw;
+    right: 30vw;
+}
+
+.conteneurTextArea{
+    margin: 5%;
+}
+
+
+.positionRecapitulatif{
+    position: absolute;
+    top: 10vw;
+    right: 30vw;
+}
+
+.recapitulatif{
+    background-color: antiquewhite;
+    border-radius: 30px;
+}

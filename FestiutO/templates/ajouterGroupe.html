@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modifier.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+        {% if erreur  %}
+        <p class="erreur"> {{ erreur }} </p>
+        {% endif %} 
+
+        <div class="form mdp">
+            <form role="form" method="POST">
+                <div class="divForm">
+                    <h1> Ajouter un groupe </h1>
+
+                    {{ form.hidden_tag() }}
+                    <div class="input">
+                        <div class="element">
+                            {{ form.nomGroupe(size=50, class_="form-control element", placeholder="Nom du groupe") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.description(size=50, height=200, class_="form-control element", placeholder="Description du groupe") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.reseau(size=50, class_="form-control element", placeholder="Réseau social du groupe") }}
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="element">
+                            {{ form.photo(size=auto, class_="form-control element") }}
+                        </div>
+                    </div>
+                    <div class="btn-container">
+                        <input type="submit" class="element elementSubmit" value="Ajouter un groupe" />
+                    </div>
+                </div>
+            </form>
+        </div>
+</main>
+
+{% endblock %}

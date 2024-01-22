@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modifier.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background-festival.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+    <div class="container">
+        <div class="userInfo">
+            <h2> Informations sur l'utilisateur </h2>
+            <p> Nom : {{ user[1]}} </p>
+            <p> Mail : {{ user[3]}} </p>
+            <p> Numéro : {{ user[2]}} </p>
+        </div>
+
+        <div class="form">
+            <h1> Modification du numéro de téléphone </h1>
+            <form role="form" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="input">
+                    <div class="element">
+                        {{ form.emailField(size=50, class_="form-control element", placeholder="Email actuel") }}
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="element">
+                        {{ form.numeroTelephone(size=50, class_="form-control element", placeholder="Nouveau numéro de téléphone") }}
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="element">
+                        {{ form.numeroTelephoneVerif(size=50, class_="form-control element", placeholder="Vérification du nouveau numéro de téléphone") }}
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <input type="submit" class="element elementSubmit" value="Changer le numéro de téléphone" />
+                </div>
+            </form>
+        </div>
+    </div>
+        
+</main>
+
+
+
+
+{% endblock %}
